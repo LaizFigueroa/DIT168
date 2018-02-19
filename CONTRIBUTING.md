@@ -2,29 +2,32 @@ Contributing to DIT168 - Group 13
 
 Welcome to our project!!!
 
-This project follow the GLP v.3 license, so please check the LICENSE file for more information about it.
-To know how to get started and what is the project about check the README file. 
+This project follows the GLP v.3 license, so please check the LICENSE file for more information about it.
+To know what is the project about and how to get started to check the README file. 
 
 If you would like to contribute to this project's development, there are a number of ways you can help.
 
-First, identify yourself on the code you contribuite following the guide provided below:
+First, identify yourself on the code's header where you have contributed following the guide provided below:
 
-  -> Maintainers: Contributors who are responsible for driving the vision and managing the organizational aspects of the project. (They may also be authors or owners of the project.)
-  -> Contributors: Everyone who has contributed something back to the project.
-  -> Community Members: People who use the project. They might be active in conversations or express their opinion on the project’s direction.
+  -> Maintainers: If you want to be responsible for driving the vision and managing the organizational aspects of the project.
+  
+  -> Contributors: If you want to contribute to the project.
+  
+  -> Community Members: If you use the project, by being active in conversations or express their opinion on the project’s direction.
 
-Please use the following tools to help us to organize the project:
-
-BUGS
-If you find a bug, please report it to us using the issue tracker. On the comment section you also can provide a solution to fix it, or just explain when and how the bug happens.
+Parts in which you can contribute:
 
 FUNCTIONALITY/CODE
-Any new code added to the repository needs to go through a approvation process. A pull request must be created to be evaluated by two authors of the project. If it is accepted it will be merged into the project.
-Please, test your code and/or changes. Make sure your it does not break the existing project.
-Contribute in the style of the project to the best of your abilities. This may mean using indents, semi-colons or comments differently than you would in your own repository, but makes it easier for the maintainer to merge, others to understand and maintain in the future.
+Before a new code is added to the master branch (final version of the project), it needs to go through the approval process. This is done when you create a Pull request for each commit, after that, it must be evaluated by two authors of the project. If it is accepted it will be merged into the project.
+Please, test your code and/or changes with existing tests or with your own test. However, in that case, you should add also your test to the test section. 
+Very important is that you make sure your code does not break the existing project.
+Contribute in the style of the project to the best of your abilities. This may mean using indents, semi-colons or comments differently than you would in your own repository. The code guidelines for this project is present in the CODE_STANDARD file.
+
+BUGS
+If you find a bug, please report it to us using the Issue tracker. On the comment section, you also can provide a solution to fix it, or just explain when and how the bug happens.
 
 DOCUMENTATION
-This project has a documentation folder that contains all the bug reports, project description and any other documentation created. If you develop a new functionality or find a bug, please add the respective documentation. 
+This project has a documentation folder that contains all the bug reports, project requirements and any other documentation created along its lifecycle. If you develop a new functionality or find a bug, please add it the respective documentation. 
 
 OTHER
 For any other questions about the project, please contact us:
