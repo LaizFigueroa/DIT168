@@ -16,7 +16,7 @@ First, identify yourself on the code's header where you have contributed followi
 ## Parts in which you can contribute:
 
 ### Functionality / Code
-Before a new code is added to the master branch (final version of the project), it needs to go through the approval process. This is done when you create a Pull request for each commit, after that, it must be evaluated by two authors of the project. If it is accepted it will be merged into the project.
+Before a new code is added to the master branch (final version of the project), it needs to go through the approval process. This is done when you create a Pull request for each commit, after that, it must be evaluated by one author of the project. If it is accepted it will be merged into the project.
 Please, test your code and/or changes with existing tests or with your own test. However, in that case, you should add also your test to the test section. 
 Very important is that you make sure your code does not break the existing project.
 Contribute in the style of the project to the best of your abilities. This may mean using indents, semi-colons or comments differently than you would in your own repository. The code guidelines for this project is present in the [CODE_STANDARD file](https://github.com/LaizFigueroa/DIT168/blob/master/CODE_STANDARD.md).
