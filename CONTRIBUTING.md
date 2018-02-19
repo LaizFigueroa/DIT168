@@ -20,6 +20,8 @@ If you find a bug, please report it to us using the issue tracker. On the commen
 
 FUNCTIONALITY/CODE
 Any new code added to the repository needs to go through a approvation process. A pull request must be created to be evaluated by two authors of the project. If it is accepted it will be merged into the project.
+Please, test your code and/or changes. Make sure your it does not break the existing project.
+Contribute in the style of the project to the best of your abilities. This may mean using indents, semi-colons or comments differently than you would in your own repository, but makes it easier for the maintainer to merge, others to understand and maintain in the future.
 
 DOCUMENTATION
 This project has a documentation folder that contains all the bug reports, project description and any other documentation created. If you develop a new functionality or find a bug, please add the respective documentation. 
