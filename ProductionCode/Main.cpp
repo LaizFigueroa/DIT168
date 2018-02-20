@@ -3,11 +3,9 @@
 
 #include "cluon/UDPSender.hpp"
 #include "cluon/UDPReceiver.hpp"
-#include "PrimeChecker.hpp"
+
 
 int main(int /*argc*/, char** /*argv*/) {
-    PrimeChecker pc;
-    std::cout << "Hello World = " << pc.isPrime(43) << std::endl;
 
     cluon::UDPSender sender{"225.0.0.111", 1236};
     sender.send("Hello World!");
