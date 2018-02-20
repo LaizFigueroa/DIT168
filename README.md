@@ -25,23 +25,14 @@ Outside this folders, there are documents that are important for the project's o
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
 ### Cloning
-You can clone the project by adding the following command on your terminal/bash:
+The project can be cloned using the URL provided in the github webpage of the project or you can clone the project by adding the following command on your terminal/bash:
 ```
 git clone https://github.com/LaizFigueroa/DIT168.git
 ```
 ### Building
-
-
-### Runnind the tests
-
-Description how to clone, build, and test the project (1 paragraph)
-Clone:
-The project can be cloned using the URL provided in the github webpage of the project.
-
-Build: 
 The Docker builds the project following the instructions in the dockerfile. A docker container is launched by running a docker image that will be loaded to the minature car. The docker image loaded is an executable package to run an application–the code, a runtime, libraries, environment variables, and configuration files.
 
-Test: 
+### Runnind the tests
 Automated tests:There will be automated tests generated working hand-in-hand with the production code.
 Manual Tests:  upon pull request and integration testing, the features implemented will be tested in the simulation environment first. Afterwards, at each milestone  the current version of the development stage  will be uploaded to the car as docker image. Hence, the manual testing can be automatically executed by testing the behaviour of the car.
 
