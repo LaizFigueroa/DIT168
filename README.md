@@ -3,7 +3,7 @@
 
 
 ## Introduction
-(1 paragraph)
+Our project is about an autonomous car that is able to navigate the road during driving process, and communicate with other similar cars. Our goal is to develop the system that is completely independent from human operators, and can safely operate by itself.
 
 
 ## Organization
