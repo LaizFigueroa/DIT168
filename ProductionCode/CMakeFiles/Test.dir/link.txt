@@ -1,0 +1,1 @@
+/usr/bin/c++      CMakeFiles/Test.dir/Main.cpp.o  -o Test -rdynamic -lcluon -lpthread 
