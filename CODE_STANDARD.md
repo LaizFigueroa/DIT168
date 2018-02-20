@@ -1,6 +1,6 @@
 # DIT168 - GP13
 
-This Project will follow the [Google C++ Style Guide] (https://google.github.io/styleguide/cppguide.html)
+This Project will follow the [Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html)
 
 ## The most important rules are listed bellow:
 
