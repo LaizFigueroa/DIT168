@@ -1,0 +1,18 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/leo/GIT/DIT168/Main.cpp
+chrono
+-
+iostream
+-
+cluon/UDPSender.hpp
+/home/leo/GIT/DIT168/cluon/UDPSender.hpp
+cluon/UDPReceiver.hpp
+/home/leo/GIT/DIT168/cluon/UDPReceiver.hpp
+

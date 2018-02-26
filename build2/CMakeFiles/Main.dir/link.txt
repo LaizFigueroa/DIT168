@@ -1,0 +1,1 @@
+/usr/bin/c++    -Wall -Wextra -Werror   CMakeFiles/Main.dir/Main.cpp.o  -o Main -rdynamic 
