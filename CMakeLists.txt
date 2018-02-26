@@ -8,6 +8,6 @@ find_package(libcluon REQUIRED)
 
 include_directories(SYSTEM ${CLUON_INCLUDE_DIRS})
 
-add_executable(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/test1.cpp)
+add_executable(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/ProductionCode/test1.cpp)
 
 target_link_libraries(${PROJECT_NAME} ${CLUON_LIBRARIES})
