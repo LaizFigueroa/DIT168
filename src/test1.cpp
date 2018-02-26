@@ -10,7 +10,7 @@ int main(int /*argc*/, char** /*argv*/) {
     std::this_thread::sleep_for(5s);
     //std::cout << "Operational " << std::endl;
 
-cluon::UDPReceiver receiver("225.0.0.111", 1236,//"127.0.0.1",1234
+cluon::UDPReceiver receiver("255.0.0.111", 1236,
         [](std::string &&data, std::string &&/*from*/,
            std::chrono::system_clock::time_point &&/*timepoint*/) 
 
@@ -20,7 +20,7 @@ noexcept {
     });
 
 
-	cluon::UDPSender sender{"225.0.0.111", 1236};
+	cluon::UDPSender sender{"255.0.0.111", 1236};
     sender.send("Testing");
 
 
