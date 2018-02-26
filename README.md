@@ -38,7 +38,7 @@ docker save dockerimg > dit168.tar
 
 cat dit168.tar | docker load
 ```
-### Runnind the tests
+### Running the tests
 Automated tests:There will be automated tests generated working hand-in-hand with the production code.
 Manual Tests:  upon pull request and integration testing, the features implemented will be tested in the simulation environment first. Afterwards, at each milestone  the current version of the development stage  will be uploaded to the car as docker image. Hence, the manual testing can be automatically executed by testing the behaviour of the car.
 ```
