@@ -14,7 +14,7 @@ RUN cd /opt/sources && \
     mkdir build && \
     cd build && \
     cmake -D CMAKE_BUILD_TYPE=Release .. && \
-    make &&  cp testComm /tmp
+    make &&  cp test /tmp
 
 # Deploy.
 FROM alpine:3.7
@@ -23,5 +23,5 @@ RUN apk update && \
     apk add libcluon --no-cache --repository https://chrberger.github.io/libcluon/alpine/v3.7 --allow-untrusted && \
     mkdir /opt
 WORKDIR /opt
-COPY --from=builder /tmp/testComm .
-CMD ["/opt/testComm"]
+COPY --from=builder /tmp/test .
+CMD ["/opt/test"]
