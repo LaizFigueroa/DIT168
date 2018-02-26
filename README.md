@@ -35,6 +35,8 @@ The Docker builds the project following the instructions in the dockerfile. A do
 docker build -t dockerimg -f dockerfile/Dockerfile.txt .
 
 docker save dockerimg > dit168.tar
+
+cat dit168.tar | docker load
 ```
 ### Runnind the tests
 Automated tests:There will be automated tests generated working hand-in-hand with the production code.
