@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.2)
 
-project(test)
+project(main)
 
 set(CMAKE_CXX_STANDARD 14)
 
@@ -8,6 +8,6 @@ find_package(libcluon REQUIRED)
 
 include_directories(SYSTEM ${CLUON_INCLUDE_DIRS})
 
-add_executable(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/src/test1.cpp)
+add_executable(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp)
 
 target_link_libraries(${PROJECT_NAME} ${CLUON_LIBRARIES})

@@ -11,10 +11,10 @@ RUN apk update && \
 ADD . /opt/sources
 WORKDIR /opt/sources
 RUN cd /opt/sources && \
-    mkdir build && \
-    cd build && \
+    mkdir build1 && \
+    cd build1 && \
     cmake -D CMAKE_BUILD_TYPE=Release .. && \
-    make &&  cp test /tmp
+    make &&  cp main /tmp
 
 # Deploy.
 FROM alpine:3.7
@@ -23,5 +23,5 @@ RUN apk update && \
     apk add libcluon --no-cache --repository https://chrberger.github.io/libcluon/alpine/v3.7 --allow-untrusted && \
     mkdir /opt
 WORKDIR /opt
-COPY --from=builder /tmp/test .
-CMD ["/opt/test"]
+COPY --from=builder /tmp/main .
+CMD ["/opt/main"]
