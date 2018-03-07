@@ -1,3 +1,0 @@
-/home/leo/GIT/DIT168/build2/CMakeFiles/edit_cache.dir
-/home/leo/GIT/DIT168/build2/CMakeFiles/rebuild_cache.dir
-/home/leo/GIT/DIT168/build2/CMakeFiles/Main.dir
