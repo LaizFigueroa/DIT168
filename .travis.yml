@@ -1,5 +1,7 @@
 language: cpp 
-install: make get-deps
+
 compiler:
   - clang
   - gcc
+  
+script: "docker build -t dit168 . && docker run --rm --net=host dit168" 
