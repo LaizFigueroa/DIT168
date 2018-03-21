@@ -1,7 +1,17 @@
+sudo: required
+
 language: cpp 
 
 compiler:
   - clang
   - gcc
+
+services:
+  - docker
   
-script: "docker build -t dit168 . && docker run --rm --net=host dit168" 
+before_install:
+  - docker build -t dit168 .
+  - docker run --rm --net=host dit168
+
+script:
+  - docker ps -a
