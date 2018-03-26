@@ -19,9 +19,11 @@ script:
 deploy:
   provider: script
   script: bash docker_push
+  on:
+    branch: master
     
 notifications:
    slack: 
        secure: "VWHQNJNa3EFt+c6RXavYiLNfzq2uLNF1nPrWypw8nO8t+Db/2H2WM2CeyRkGyaYfcnw3gbVlq/Wt1ttBSDAOfpUNaBO9EMfSFmPfDdyHkFKdLB0CR/dDSJj2RZ3T6tMf9KHJzU39C4W8JFm+gyq+xr2ekDPFNdFZgQ/r5UaMsrwpf/IXVlyy4aSNry4azf8nkcP1DJuarJKFB9mulHDU5DeXFfmzBIXtVoOTPvcTczWsyRw7yQ3ZcKQ0iTwBZos4H74PmCFrkEpCpmnrr2kSS01n+s9EmVie8B9u29FeltYAz5ZDwH9+hX821+ymTr9da+txgdXMvf55YXD42VIr0DMVlLe8mo5XvMTGMoh9BOX0E0BCXQSY1oJcuaqYbz3rjGril0XgPB76BKj+UbyLMfPQ/89RGiM9GxHQPLt+pmDw++r98TBfVieGIMh2FoFW9jwJ0FkPJ30UdX+VTaBaC+hHcSuqieeCNA8U3cKf8Xp0IVKtO/OCA8+2fShcX2oVoHGbmGT1ZhWk9htuXfT+5fd9rSjB4mOnFQ9E9c1FGfNbcviPgJ/1iJ9h+tGGifmWTnhW30m8CfwhfAKbyLVRfBG4VIg06JsLxW+RkZo8I817HzqK8PjP9bidYIjHZw2PdgY0cAn0/FC9Gw09KnunVAqHXhkb9D58est5U/3btA8="
-   on_success: change
+   on_success: always
    on_failure: always
