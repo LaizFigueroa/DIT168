@@ -15,3 +15,8 @@ before_install:
 
 script:
   - docker ps -a
+
+notifications:
+   slack: dit168group13:yZbuGhcJe2rGqwREIHRspcYi
+   on_success: change
+   on_failure: always
