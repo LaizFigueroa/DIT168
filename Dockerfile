@@ -4,7 +4,7 @@ MAINTAINER Christian Berger christian.berger@gu.se
 RUN apk update && \
     apk --no-cache add \
         ca-certificates \
-        build-essential \
+        #build-essential \
         cmake \
         g++ \
         cppcheck \
