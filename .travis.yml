@@ -20,13 +20,12 @@ jobs:
       script:  
       - docker run --rm --net=host $DOCKER_USERNAME/dit168
 
-after_success:
-  deploy:
-    provider: script
-    script: bash docker_push.sh
-    skip_cleanup: true
-    on:
-      branch: Laiz
+deploy:
+  provider: script
+  script: bash docker_push.sh
+  skip_cleanup: true
+  on:
+    branch: Laiz
     
 notifications:
    slack: 
