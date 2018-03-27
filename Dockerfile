@@ -2,10 +2,8 @@
 FROM alpine:3.7 as builder
 MAINTAINER Christian Berger christian.berger@gu.se
 RUN apk update && \
-    apk add && \
     apk --no-cache add \
         ca-certificates \
-        build-essential \
         cmake \
         g++ \
         cppcheck \
