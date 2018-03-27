@@ -10,8 +10,8 @@ RUN apk update && \
         flawfinder \
         pmccabe \
         valgrind \
-        vera++ \
         make && \
+    apk add vera++ --no-cache --repository https://bitbucket.org/verateam/vera.git --allow-untrusted && \
     apk add libcluon --no-cache --repository https://chrberger.github.io/libcluon/alpine/v3.7 --allow-untrusted
 ADD . /opt/sources
 WORKDIR /opt/sources
