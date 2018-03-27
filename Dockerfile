@@ -10,8 +10,8 @@ RUN apk update && \
         unzip \
         valgrind \
         make && \
-    apk add vera++ --no-cache --repository http://dl-3.alpinelinux.org/alpine/edge/testing/armhf/vera%2b%2b-1.3.0-r0.apk --allow-untrusted && \   
-    apk add flawfinder --no-cache --repository http://dl-3.alpinelinux.org/alpine/edge/testing/armhf/flawfinder-2.0.4-r0.apk --allow-untrusted && \
+    apk add vera++ --no-cache --repository http://dl-3.alpinelinux.org/alpine/edge/testing/ --allow-untrusted && \   
+    apk add flawfinder --no-cache --repository http://dl-3.alpinelinux.org/alpine/edge/testing/ --allow-untrusted && \
     apk add libcluon --no-cache --repository https://chrberger.github.io/libcluon/alpine/v3.7 --allow-untrusted
 ADD . /opt/sources
 WORKDIR /opt/sources
