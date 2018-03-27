@@ -2,7 +2,7 @@
 FROM alpine:3.7 as builder
 MAINTAINER Christian Berger christian.berger@gu.se
 RUN apk update && \
-    apt-get install -y && \
+    apk add && \
     apk --no-cache add \
         ca-certificates \
         build-essential \
