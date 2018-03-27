@@ -16,20 +16,17 @@ jobs:
       script:
       - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
       - docker build -t dit168 .
-      - docker images
-      - docker tag dit168 $DOCKER_USERNAME/dit168
-      - docker push $DOCKER_USERNAME/dit168
     - stage: test
       script:  
       - docker run --rm --net=host $DOCKER_USERNAME/dit168
-      - docker ps -a
 
-deploy:
-  provider: script
-  script: bash docker_push.sh
-  skip_cleanup: true
-  on:
-    branch: Laiz
+after_success:
+  deploy:
+    provider: script
+    script: bash docker_push.sh
+    skip_cleanup: true
+    on:
+      branch: Laiz
     
 notifications:
    slack: 
