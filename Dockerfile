@@ -9,7 +9,7 @@ RUN apk update && \
         cppcheck \
         valgrind \
         make && \
-    apk add flawfinder --no-cache --repository https://sourceforge.net/projects/flawfinder/files/flawfinder-2.0.5.tar.gz/download --allow-untrusted && \
+    #apk add flawfinder --no-cache --repository https://sourceforge.net/projects/flawfinder/files/flawfinder-2.0.5.tar.gz/download --allow-untrusted && \
     #apk add pmccabe --no-cache --repository && \
     apk add vera++ --no-cache --repository https://bitbucket.org/verateam/vera.git --allow-untrusted && \
     apk add libcluon --no-cache --repository https://chrberger.github.io/libcluon/alpine/v3.7 --allow-untrusted
