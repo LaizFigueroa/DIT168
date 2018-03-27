@@ -4,13 +4,14 @@ MAINTAINER Christian Berger christian.berger@gu.se
 RUN apk update && \
     apk --no-cache add \
         ca-certificates \
+        build-essential \
         cmake \
         g++ \
         cppcheck \
-        flawfinder \
-        pmccabe \
+        #flawfinder \
+        #pmccabe \
         valgrind \
-        vera++ \
+        #vera++ \
         make && \
     apk add libcluon --no-cache --repository https://chrberger.github.io/libcluon/alpine/v3.7 --allow-untrusted
 ADD . /opt/sources
