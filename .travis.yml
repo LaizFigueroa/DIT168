@@ -1,7 +1,34 @@
+sudo: required
+
 language: cpp 
 
-compiler:
-  - clang
-  - gcc
+services:
+  - docker
   
-script: "docker build -t dit168 . && docker run --rm --net=host dit168" 
+env:
+  global:
+    - secure: "dhj0ZiCRAnIVVC851Ll9t5eLlLFUNxC+2X+cOxbj8GuY2emYKC/9USByKP6qtCQGJBLA5t4erkeKs32xg2upCkcPG+lWbfJnWTlcqZNu/MnXhuaR/EW6kc5h9pBTVOyAlGRA8x0hGZstg8/6vfR9uYUKGALhdDBqz5qKjub4UIr1p/7i2UVhyBiVwJex2vYhGkoH+XB4jzOpK2Od7s4Kp9yC6T806s35ns/VgImqyofKSE6MPfhnYm9ohM4b6/xuHhTOQlJbE8iFRpwYmAL8Ny2pADCAvrQEIOMdA0E0tsw8cwxZulB93TyyoFXgMpK5FkC/99OofrC7OXHmJHqMMCVN03rHeTvKT4BavXbA5D4/Wufar+U9no2rXQS0Jnn166dWcKR6umq2bifQnHMokCwulYdd7y98VNsEMkt9NEF4aXL0Y0XHW1947W2Qz6Lv5f8vykn+BPPgrI/Wyr9GIKqhK7Oy9u+jY2fmAckA1J5o+tco+iP7aV/XDvdvSEGUx0ziAL+rbJG8iEGWUeCZEhCFABpcxNQdMVxKdGJFtpEaz/1KS65JgwxWCCV9a0xKpG3surQi1W0xtclvMMXTceDA6MtGOX4X4tOBR+4pRm7cM9rfWHJ0/a3pX9T2+nEIS6DHzz3yjVmbe0ajxuf1E6byLkuPjmphWlU4GB3w2ns="
+    - secure: "FFf02gl7O4UWuthmA3shX9zDmIvy+5dWnW3M14NWJ1pe4RHNs5ZoPbM71szDnHNtToke6cPEYwiGXCs9XTUrSl/vYgmqlLkt3sv69JGlzwox4EbwIxDRXKz3XXVBgL4WEFOuL+pajdqJZFL8xrtFZZPU1I/pmmk9OmMJ45tesx+OoPjYCkIUpWuHUy+UruZRGg4Wk5OlemFcdlIfCnXtGHux10Lqn1eQZj1Vi3OX/89/+eJXAvUfYh2XSSk6un4qYS1eOCVQIPhIcgzasuifDP6ma8NeusVM7qdOURmnzuM6pD9sT3ThD7b0pOVjTOLERQFms9xkMV2cWEKNiVIx2CfntDzJt7GBFfLLH0DUb5S/ALmJv0pM06EjtohcNIR12myhDnKus33lSOSBLukCw18zFRy2L3zebkdDuEDA//a5e8FBGqDfdQYBRfpO82FlkMhHde9YCMjUhg/sLDQmArPvgT2HRD2w469zRfOrVXuTKeNSyvj8BEJSm7CB5bBoeyPt7ZP3rklCoCy7kKFFer9GUQjuEQf1aQC3fuDdCgmyeJ1HVZ3kcnkcIrrzs1T1zPk+76UZ+Jkv0BvavLgirzxLjDACLP3+PmIQC7zIGbnHmfLgK0fzio4eVqjDZh0R01SAjs4dIwqFhHGAGaQI2Zr4y9NvWBILP3QL617V3ls="
+
+jobs:
+  include:
+    - stage: build docker image
+      script:
+      - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+      - docker build -t dit168 .
+    - stage: test
+      script:  
+      - docker run --rm --net=host $DOCKER_USERNAME/dit168
+
+deploy:
+  provider: script
+  script: bash docker_push.sh
+  skip_cleanup: true
+  on:
+    branch: Laiz
+    
+notifications:
+   slack: 
+       secure: "VWHQNJNa3EFt+c6RXavYiLNfzq2uLNF1nPrWypw8nO8t+Db/2H2WM2CeyRkGyaYfcnw3gbVlq/Wt1ttBSDAOfpUNaBO9EMfSFmPfDdyHkFKdLB0CR/dDSJj2RZ3T6tMf9KHJzU39C4W8JFm+gyq+xr2ekDPFNdFZgQ/r5UaMsrwpf/IXVlyy4aSNry4azf8nkcP1DJuarJKFB9mulHDU5DeXFfmzBIXtVoOTPvcTczWsyRw7yQ3ZcKQ0iTwBZos4H74PmCFrkEpCpmnrr2kSS01n+s9EmVie8B9u29FeltYAz5ZDwH9+hX821+ymTr9da+txgdXMvf55YXD42VIr0DMVlLe8mo5XvMTGMoh9BOX0E0BCXQSY1oJcuaqYbz3rjGril0XgPB76BKj+UbyLMfPQ/89RGiM9GxHQPLt+pmDw++r98TBfVieGIMh2FoFW9jwJ0FkPJ30UdX+VTaBaC+hHcSuqieeCNA8U3cKf8Xp0IVKtO/OCA8+2fShcX2oVoHGbmGT1ZhWk9htuXfT+5fd9rSjB4mOnFQ9E9c1FGfNbcviPgJ/1iJ9h+tGGifmWTnhW30m8CfwhfAKbyLVRfBG4VIg06JsLxW+RkZo8I817HzqK8PjP9bidYIjHZw2PdgY0cAn0/FC9Gw09KnunVAqHXhkb9D58est5U/3btA8="
+   on_success: change
+   on_failure: always

@@ -41,3 +41,8 @@ Manual Tests: Upon pull request and integration testing, the features implemente
 ```
 docker run dockerimg
 ```
+### Docker Image
+A docker image is available on our [Docker hub repository](https://hub.docker.com/r/laiz/dit168/) or you can add the following command to your terminal:
+```
+docker pull laiz/dit168
+```
