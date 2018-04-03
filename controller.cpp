@@ -107,7 +107,7 @@ int main() {
         const int delay = 1000;
         
             // STOP CAR
-            if (buf == 0){
+            if (buf[0] == 0){
                
                     std::cout << "Now Stop ..." << std::endl;
                     msgPedal.percent(0.0);
@@ -117,7 +117,7 @@ int main() {
             }
         
             // MOVE FORWARD
-            if (buf == 1){
+            if (buf[0] == 1){
                 std::cout << " move forward ..." << std::endl;
                 msgSteering.steeringAngle(0.0);
                 od4.send(msgSteering);
@@ -126,7 +126,7 @@ int main() {
                 std::this_thread::sleep_for(std::chrono::milliseconds(2 * delay));
             }
             // MOVE LEFT
-            if (buf == 2){
+            if (buf[0] == 2){
                 std::cout << "turn left a little bit ..." << std::endl;
                 msgPedal.percent(0.2);
                 od4.send(msgPedal);
@@ -135,7 +135,7 @@ int main() {
                 std::this_thread::sleep_for(std::chrono::milliseconds(delay));
             }
             // MOVE RIGHT
-            if (buf == 3){
+            if (buf[0] == 3){
                 std::cout << "Turn right a little bit ..." << std::endl;
                 msgSteering.steeringAngle(15.0);
                 od4.send(msgSteering);
