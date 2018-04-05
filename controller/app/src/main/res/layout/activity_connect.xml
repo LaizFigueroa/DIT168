@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.rema.controller.ConnectActivity"
+    tools:context="com.example.fahddebbiche.controller.ConnectActivity"
     android:orientation="vertical">
     <Button
         android:id="@+id/connect"

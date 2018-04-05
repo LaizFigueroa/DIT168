@@ -1,22 +1,17 @@
-
 #include <iostream>
 #include <string.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
-#include <stdlib.h>
-#include <unistd.h>
 
 using namespace std;
-
+int SOCKET_BUFFER_SIZE=10;
 
 
 int main() {
     sockaddr_in server_addr;
     int  server;
-    bool isExit = false;
-    char incoming_data[1024];
     socklen_t size = sizeof(server_addr);
 
 
@@ -31,21 +26,19 @@ int main() {
     cout << "\n=> Socket server has been created..." << endl;
 
     server_addr.sin_family = AF_INET;
-    server_addr.sin_addr.s_addr = INADDR_ANY;
-    server_addr.sin_port = htons(8080);
+    server_addr.sin_addr.s_addr = inet_addr("127.0.0.1");
+    server_addr.sin_port = htons(8888);
 
     printf("Waiting for a connection...");
 
     bind(server, (sockaddr *)&server_addr, sizeof(server_addr));
 
-   // if (     ){
-
-      //  cout << "=> Error binding connection, the socket has already been established..." << endl;
-  //  }
-
     cout << "=> Looking for clients..." << endl;
 
-
+    /**
+     * currently not needed due to UDP coomunication protocol
+     */
+/**
     int listen_client = listen(server, 1);
 
     if (listen_client < 0) {
@@ -53,24 +46,69 @@ int main() {
     }
 
 
-    int clientCount = 1;
+        cout << "=> trying to accept clients..." << endl;
+
+        int client = accept(server, (struct sockaddr *) &server_addr, &size);
+
+        cout << "=> Accepting clients..." << endl;
+
+        if (client < 0) {
+
+            perror("Accept failed");
+        } else {
+            printf("Accept client socket");
+
+        }
+        cout << "=> CLIENT ACCPTED ..." << endl;
+
+        // first check if it is valid or not
+        if (server < 0)
+            cout << "=> Error on accepting..." << endl;
+
+**/
+
+    /**
+     * this while loop continously listening to data from the java client 
+     */
+    while (1) {
+        char buffer[SOCKET_BUFFER_SIZE];
+        int command;
+        string data;
+        size_t pos = 0;
+
+        // empty messagestring
+        string message = "";
+
+        // empty buffer
+        memset(buffer, 0, sizeof(buffer));
 
 
-    int client = accept (server, (struct sockaddr *) &server_addr, &size);
+        while ((command = recvfrom(server, buffer, size, 0, (struct sockaddr *)&server_addr, reinterpret_cast<socklen_t *>(size)) > 0)) {
+            cout << "=> start ..." << endl;
 
 
-    if (client < 0) {
+            cout << command << endl;
+            cout << "received: " << buffer << endl;
 
-        perror("Accept failed");
-    } else {
-        printf("Accept client socket");
+            message.append(buffer);
+
+            std::string delimiter = "//";
+
+            while ((pos = message.find(delimiter)) != std::string::npos) {
+                data = message.substr(0, pos);
+                std::cout << data << std::endl;
+                message.erase(0, pos + delimiter.length());
+
+                memset(buffer, 0, sizeof(buffer));
+
+                cout << "message is now: " << message << endl;
+
+            }
+
+
+        }
+
 
     }
-
-    // first check if it is valid or not
-    if (server < 0)
-        cout << "=> Error on accepting..." << endl;
-
-
 
 }

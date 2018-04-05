@@ -1,8 +1,7 @@
-package com.example.rema.controller;
+package com.example.fahddebbiche.controller;
 
 import android.content.Context;
 import android.graphics.PorterDuff;
-import android.os.CountDownTimer;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -13,11 +12,10 @@ import android.graphics.Paint;
 import android.view.View;
 import android.view.View.OnTouchListener;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -151,29 +149,51 @@ class JoystickClass extends SurfaceView implements SurfaceHolder.Callback, OnTou
     }
 
     @Override
-    public boolean onTouch( View v, MotionEvent event) {
+    public boolean onTouch( View v, final MotionEvent event) {
 
-        if(v.equals(this)) {
+        if (v.equals(this)) {
+            int move = 0;
             positions.add((float) 0);
 
             float displacement = (float) Math.sqrt(Math.pow(event.getX() - centerPosX, 2) + Math.pow(event.getY() - centerPosY, 2));
 
             positions.add(event.getY());
-            if(event.getAction()!= event.ACTION_UP ) {
+            if (event.getAction() != event.ACTION_UP) {
 
-                if ( displacement < circRad) {
+                if (displacement < circRad) {
                     drawJoystick(event.getX(), event.getY());
                     joystickCallback.onJoystickMoved(event.getX(), event.getY());
-                    if (positions.get(count) < positions.get(count+1) ) {
+                    if (positions.get(count) < positions.get(count + 1)) {
 
-                        set_speed (event.getX(), event.getY() , true );
-                    } else
+                        move = set_speed(event.getX(), event.getY(), true);
+                    } else {
 
-                        set_speed (event.getX(), event.getY() , false );
 
-                }
+                        move = set_speed(event.getX(), event.getY(), false);
+                    }
 
-                else  {
+                    ExecutorService concurrent = Executors.newCachedThreadPool(); // Executor to concurrently run the main flow of app AND listen to server
+
+                    final int finalMove = move;
+                    Future<Void> server = concurrent.submit(new Callable<Void>() { // Listen to server in one thread
+                        public Void call() throws Exception {
+                            UDPCommand.sendCommands((int) get_angle(event.getX(), event.getY()), finalMove);
+                            return null;
+                        }
+                    });
+
+                    {
+                        try {
+                            server.get();
+                        } catch (InterruptedException e1) {
+                            e1.printStackTrace();
+                        } catch (ExecutionException e1) {
+                            e1.printStackTrace();
+                        }
+                    }
+
+
+                } else {
 
                     float ratio = circRad / displacement;
                     float limitX = centerPosX + (event.getX() - centerPosX) * ratio;
@@ -183,31 +203,63 @@ class JoystickClass extends SurfaceView implements SurfaceHolder.Callback, OnTou
                     drawJoystick(limitX, limitY);
 
                     joystickCallback.onJoystickMoved(event.getX(), (event.getY()));
-/**
- try {
- //  TCPClient.sendCommands((int) get_angle(event.getX(), (event.getY())), 0);
- } catch (IOException e) {
- e.printStackTrace();
- }
- **/
 
+                    ExecutorService concurrent = Executors.newCachedThreadPool(); // Executor to concurrently run the main flow of app AND listen to server
+
+                    final int finalMove = set_speed(event.getX(), event.getY(), true);
+
+                    Future<Void> server = concurrent.submit(new Callable<Void>() { // Listen to server in one thread
+                        public Void call() throws Exception {
+                            UDPCommand.sendCommands((int) get_angle(event.getX(), event.getY()), finalMove);
+                            return null;
+                        }
+                    });
+
+                    {
+                        try {
+                            server.get();
+                        } catch (InterruptedException e1) {
+                            e1.printStackTrace();
+                        } catch (ExecutionException e1) {
+                            e1.printStackTrace();
+                        }
+                    }
 
                 }
 
             } else if (event.getAction() == event.ACTION_UP) {
 
                 drawJoystick(centerPosX, centerPosY);
+
+                ExecutorService concurrent = Executors.newCachedThreadPool(); // Executor to concurrently run the main flow of app AND listen to server
+
+                Future<Void> server = concurrent.submit(new Callable<Void>() { // Listen to server in one thread
+                    public Void call() throws Exception {
+                        UDPCommand.sendCommands(0,0);
+                        return null;
+                    }
+                });
+
+                {
+                    try {
+                        server.get();
+                    } catch (InterruptedException e1) {
+                        e1.printStackTrace();
+                    } catch (ExecutionException e1) {
+                        e1.printStackTrace();
+                    }
+                }
             }
 
 
         }
-
-
         return true;
+
     }
     /**
      * This method allows any interaction with the joystick
      */
+
     public interface JoystickListener
 
     {
@@ -217,7 +269,8 @@ class JoystickClass extends SurfaceView implements SurfaceHolder.Callback, OnTou
     }
 
     private int  set_speed (float X , float Y , boolean direction ) {
-        int accelerator=5;
+
+        int accelerator=0;
         double angle= get_angle(X,Y);
         double coefficient=  10/Y;
 
@@ -250,7 +303,7 @@ class JoystickClass extends SurfaceView implements SurfaceHolder.Callback, OnTou
                 alphaD=Math.toDegrees(Math.acos(cosinalpha));
             } else
 
-                alphaD=Math.toDegrees((2*Math.PI - Math.acos(cosinalpha)));
+            alphaD=Math.toDegrees((2*Math.PI - Math.acos(cosinalpha)));
 
 
         } else if (eventY  >= centerPosY ) {
@@ -271,3 +324,7 @@ class JoystickClass extends SurfaceView implements SurfaceHolder.Callback, OnTou
     }
 
 }
+
+
+
+

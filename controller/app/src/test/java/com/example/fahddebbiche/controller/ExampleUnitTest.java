@@ -1,4 +1,4 @@
-package com.example.rema.controller;
+package com.example.fahddebbiche.controller;
 
 import org.junit.Test;
 
