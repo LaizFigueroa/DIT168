@@ -16,7 +16,7 @@ import java.net.UnknownHostException;
 public class UDPCommand extends Thread {
 
 
-    public static Void sendCommands(final Integer angle, final Integer speed) {
+    public static void sendCommands(final Integer angle, final Integer speed) {
 
         Thread thread = new Thread(new Runnable() {
             public void run() {
@@ -61,8 +61,6 @@ public class UDPCommand extends Thread {
         });
         thread.start();
 
-
-        return null;
 
     }
 }
