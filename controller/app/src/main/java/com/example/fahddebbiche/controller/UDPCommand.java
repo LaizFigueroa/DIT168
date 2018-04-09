@@ -21,38 +21,36 @@ public class UDPCommand extends Thread {
         Thread thread = new Thread(new Runnable() {
             public void run() {
                 try {
-                    byte[] sendData;
-                    //String command = "" + angle + "//" + speed;
-                    String command = "test";
+                    byte[] sendData= new byte[1024];;
+
+                    String command = "" + angle + "//" + speed;
+                    //String command = "test";
                     sendData = command.getBytes();
                     System.out.println("hereeeeee" + sendData);
 
                     InetAddress serverC = InetAddress.getByName("10.132.27.127");
-                    System.out.println("serverrrrrrr" + serverC.getHostName() + "/// " + serverC.getAddress() + "//////" + serverC.toString());
+                    System.out.println("server" + serverC + "first" +   serverC.getHostName() + "/// " + serverC.getAddress() + "//////" + serverC.toString());
 
                     //System.out.println("this is the angle " + angle.byteValue() + "this is the speed " + speed.byteValue());
-                    DatagramSocket clientSocket = null;
-
-                    //clientSocket = new DatagramSocket(8888, serverC.);
-                    InetSocketAddress address = new InetSocketAddress("localhost", 8080);
-                    //clientSocket.connect(address);
-                    // clientSocket.bind(address);
-
+                    DatagramSocket clientSocket = new DatagramSocket();
+                    InetSocketAddress address = new InetSocketAddress(serverC.getHostName(), 8080);
+                    clientSocket.connect(address);
 
                     try {
-                        DatagramPacket ToServer = new DatagramPacket(sendData, sendData.length, InetAddress.getLocalHost(), 8080);
+                        DatagramPacket ToServer = new DatagramPacket(sendData, sendData.length, serverC, 8080);
                         System.out.print("senntttttt: " + command + ", ");
-                        for (int i = 0; i < ToServer.getLength(); i++) {
-                            System.out.print(ToServer.getData()[i] + " ");
-                        }
+                        
                         System.out.println();
                         clientSocket.send(ToServer);
+                        System.out.print("Package been sent : " + command + ", ");
+
 
                     } catch (UnknownHostException e) {
                         e.printStackTrace();
                     }
 
-                    //client.close();
+                    clientSocket.close();
+
 
 
                 } catch (Exception e) {
