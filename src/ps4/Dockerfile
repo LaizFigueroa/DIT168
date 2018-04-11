@@ -1,1 +1,0 @@
-IMAGE_ARM=seresearch/2018-dit-168:v0.3.5-armhf
