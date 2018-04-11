@@ -5,6 +5,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <sys/select.h>
+#include <thread>
 
 /* libraries for the commands */
 #include "cluon/OD4Session.hpp"
@@ -14,6 +15,10 @@
 
 using namespace std;
 int SOCKET_BUFFER_SIZE = 1024;
+socklen_t *addrlen;
+int on=1;
+string speed;
+string angle;
 
 int main() {
     sockaddr_in server_addr;
@@ -37,35 +42,60 @@ int main() {
      * this while loop continously listening to data from the java client
      */
     while (1) {
+        int command;
+        int returnvalue=0;
         char buffer[SOCKET_BUFFER_SIZE];
-        int returnvalue = 0;
-        string angle;
         size_t pos = 0;
-        
-        // empty speedstring
-        string speed = "";
-        // empty buffer
-        memset(buffer, 0, sizeof(buffer));
-        
-        // loop for reciving the data
+
+        // the message that contains the command
+        string message = "";
+
         while (1) {
-            // recvfrom() function call
-            if (recvfrom(server, & buffer, sizeof(buffer), 0, (struct sockaddr * ) & server_addr, & size) < 0) {
+
+            char * element;
+            size_t i;
+            size_t array = sizeof(buffer);
+
+            cout << "before  ..." << endl;
+            memset(buffer, 0, sizeof(buffer));
+
+            if (recvfrom(server, &buffer, sizeof(buffer), 0, (struct sockaddr *) &server_addr, &size) < 0) // recvfrom() function call
+            {
                 cout << "Fatal: Failed to receive data" << endl;
                 break;
             } else
-                cout << "received: " << buffer << endl;
-            speed.append(buffer);
+
+                cout << "=> start ..." << endl;
+            cout << buffer << endl;
+            buffer[strlen(buffer)] = '\0';
+            char* end_of_buffer = buffer;
+            std::size_t remaining_space = sizeof(buffer);
+
+            message=buffer;
+            //message.append(buffer);
+            cout << "the incoming stream : " << message << endl;
+
             std::string delimiter = "//";
-            
-            // loop for gathering the speed
-            while ((pos = speed.find(delimiter)) != std::string::npos) {
-                angle = speed.substr(0, pos);
-                std::cout << "angle: " << angle << std::endl;
-                
-                speed.erase(0, pos + delimiter.length());
-                memset(buffer, 0, sizeof(buffer));
-                cout << "speed: " << speed << endl;
+            while ((pos = message.find(delimiter)) != std::string::npos) {
+
+                angle = message.substr(0, pos);
+                std::cout << angle << std::endl;
+                message.erase(0, pos + delimiter.length());
+                speed =message;
+                cout << "message isa now: " << angle << "/" << speed <<  endl;
+
+            }
+            memset(buffer, 0, array);
+            //buffer[SOCKET_BUFFER_SIZE] ; // buff is full of zeros
+
+
+
+
+            if (setsockopt(server, SOL_SOCKET, SO_REUSEADDR, (char*)&on, sizeof(on)) < 0)
+            {
+                perror("cannot unbind") ;
+            }
+
                 
                 // converting string to float
                 float anglef = stof(angle);
@@ -99,7 +129,7 @@ int main() {
                 std::this_thread::sleep_for(std::chrono::milliseconds(2 * delay));
                 
             }
-            buffer[strlen(buffer) - 1] = '\0';
+           // buffer[strlen(buffer) - 1] = '\0';
         }
     }
     
