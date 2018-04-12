@@ -1,0 +1,3 @@
+/opt/sources/ProductionCode/build/CMakeFiles/edit_cache.dir
+/opt/sources/ProductionCode/build/CMakeFiles/rebuild_cache.dir
+/opt/sources/ProductionCode/build/CMakeFiles/Project.dir
