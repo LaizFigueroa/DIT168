@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/opt/sources/ProductionCode/Main.cpp
+chrono
+-
+iostream
+-
+cluon/UDPSender.hpp
+/opt/sources/ProductionCode/cluon/UDPSender.hpp
+cluon/UDPReceiver.hpp
+/opt/sources/ProductionCode/cluon/UDPReceiver.hpp
+PrimeChecker.hpp
+/opt/sources/ProductionCode/PrimeChecker.hpp
+
