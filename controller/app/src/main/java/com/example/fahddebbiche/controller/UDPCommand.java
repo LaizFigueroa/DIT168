@@ -24,21 +24,16 @@ public class UDPCommand extends Thread {
                     byte[] sendData= new byte[1024];;
 
                     String command = "" + angle + "//" + speed;
-                    //String command = "test";
                     sendData = command.getBytes();
-                    System.out.println("hereeeeee" + sendData);
 
-                    InetAddress serverC = InetAddress.getByName("10.132.27.127");
-                    System.out.println("server" + serverC + "first" +   serverC.getHostName() + "/// " + serverC.getAddress() + "//////" + serverC.toString());
+                    InetAddress serverC = InetAddress.getByName("192.168.8.1");
 
-                    //System.out.println("this is the angle " + angle.byteValue() + "this is the speed " + speed.byteValue());
                     DatagramSocket clientSocket = new DatagramSocket();
                     InetSocketAddress address = new InetSocketAddress(serverC.getHostName(), 8080);
                     clientSocket.connect(address);
 
                     try {
                         DatagramPacket ToServer = new DatagramPacket(sendData, sendData.length, serverC, 8080);
-                        System.out.print("senntttttt: " + command + ", ");
                         
                         System.out.println();
                         clientSocket.send(ToServer);
