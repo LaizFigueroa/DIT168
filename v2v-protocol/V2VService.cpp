@@ -38,9 +38,9 @@ int main() {
             }
             case 5: while(1){
 
-                        cluon::OD4Session od4(224,[](cluon::data::Envelope &&envelope) noexcept {
-                            extern float angle;
-                            extern float speed;
+                        cluon::OD4Session od4(224,[v2vService](cluon::data::Envelope &&envelope) noexcept {
+                            float angle = 0;
+                            float speed = 0;
                             if (envelope.dataType() == opendlv::proxy::GroundSteeringReading::ID()) {
                                 opendlv::proxy::GroundSteeringReading receivedMsg = cluon::extractMessage<opendlv::proxy::GroundSteeringReading>(std::move(envelope));
                                 std::cout << "Sent a message for ground steering to " << receivedMsg.steeringAngle() << "." << std::endl;
@@ -53,9 +53,9 @@ int main() {
             
                                 speed = receivedMsg.percent();
                             }
-
+                            v2vService->leaderStatus(speed, angle, 100);
                         });
-                        v2vService->leaderStatus(speed, angle, 100);
+
                     } break;
             case 6: v2vService->followerStatus(); break;
             default: exit(0);
