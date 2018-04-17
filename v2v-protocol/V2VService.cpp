@@ -47,7 +47,7 @@ int main() {
             
                                 angle = receivedMsg.steeringAngle();
                             }
-                            else if (envelope.dataType() == opendlv::proxy::PedalPositionReading::ID()) {
+                            if (envelope.dataType() == opendlv::proxy::PedalPositionReading::ID()) {
                                 opendlv::proxy::PedalPositionReading receivedMsg = cluon::extractMessage<opendlv::proxy::PedalPositionReading>(std::move(envelope));
                                 std::cout << "Sent a message for pedal position to " << receivedMsg.percent() << "." << std::endl;
             
@@ -240,10 +240,6 @@ void V2VService::followerStatus() {
  */
 void V2VService::leaderStatus(float speed, float steeringAngle, uint8_t distanceTraveled) {
     if (followerIp.empty()) return;
-    
-    //Recieves values from internal services such as ps4controller.
-
-    
     LeaderStatus leaderStatus;
     leaderStatus.timestamp(getTime());
     leaderStatus.speed(speed);
