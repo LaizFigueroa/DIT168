@@ -2,7 +2,8 @@
 
 int main() {
     std::shared_ptr<V2VService> v2vService = std::make_shared<V2VService>();
-
+                            float angle = 0;
+                            float speed = 0;
     while (1) {
         int choice;
         std::string groupId;
@@ -38,24 +39,27 @@ int main() {
             }
             case 5: while(1){
 
-                        cluon::OD4Session od4(224,[v2vService](cluon::data::Envelope &&envelope) noexcept {
-                            float angle = 0;
-                            float speed = 0;
+                        cluon::OD4Session od4(224,[&angle, &speed](cluon::data::Envelope &&envelope) noexcept {
+
                             if (envelope.dataType() == opendlv::proxy::GroundSteeringReading::ID()) {
                                 opendlv::proxy::GroundSteeringReading receivedMsg = cluon::extractMessage<opendlv::proxy::GroundSteeringReading>(std::move(envelope));
                                 std::cout << "Sent a message for ground steering to " << receivedMsg.steeringAngle() << "." << std::endl;
-            
+                                std::cout << "setting angle..." << std::endl;
                                 angle = receivedMsg.steeringAngle();
+                                std::cout << "set angle!" << std::endl;
                             }
                             if (envelope.dataType() == opendlv::proxy::PedalPositionReading::ID()) {
                                 opendlv::proxy::PedalPositionReading receivedMsg = cluon::extractMessage<opendlv::proxy::PedalPositionReading>(std::move(envelope));
                                 std::cout << "Sent a message for pedal position to " << receivedMsg.percent() << "." << std::endl;
-            
+                                
+                                std::cout << "setting speed..." << std::endl;
                                 speed = receivedMsg.percent();
+                                std::cout << "set speed!" << std::endl;
                             }
-                            v2vService->leaderStatus(speed, angle, 100);
-                        });
+                            std::cout << "assigning vars for send..." << std::endl;
 
+                        });
+                        v2vService->leaderStatus(speed, angle, 100);
                     } break;
             case 6: v2vService->followerStatus(); break;
             default: exit(0);
@@ -153,6 +157,7 @@ V2VService::V2VService() {
                                  << "' from '" << sender << "'!" << std::endl;
 
                        /* TODO: implement follow logic */
+                       std::cout << PedalPositionReading::percent() << std::endl;
 
                        break;
                    }
@@ -266,6 +271,25 @@ uint32_t V2VService::getTime() {
  * @return pair consisting of the message ID (extracted from the header) and the message data
  */
 std::pair<int16_t, std::string> V2VService::extract(std::string data) {
+    if (data.length() < 10) return std::pair<int16_t, std::string>(-1, "");
+    int id, len;
+    std::stringstream ssId(data.substr(0, 4));
+    std::stringstream ssLen(data.substr(4, 10));
+    ssId >> std::hex >> id;
+    ssLen >> std::hex >> len;
+    return std::pair<int16_t, std::string> (
+            data.length() -10 == len ? id : -1,
+            data.substr(10, data.length() -10)
+    );
+};
+
+/**
+ * The command extraction function is used to extract the leaderStatus message data into a array.
+ *
+ * @param data - message data to extract header and data from
+ * @return pair consisting of the message ID (extracted from the header) and the message data
+ */
+std::float[] V2VService::cmdextract(std::string data) {
     if (data.length() < 10) return std::pair<int16_t, std::string>(-1, "");
     int id, len;
     std::stringstream ssId(data.substr(0, 4));
