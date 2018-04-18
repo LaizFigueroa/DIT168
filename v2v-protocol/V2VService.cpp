@@ -155,10 +155,12 @@ V2VService::V2VService() {
                        LeaderStatus leaderStatus = decode<LeaderStatus>(msg.second);
                        std::cout << "received '" << leaderStatus.LongName()
                                  << "' from '" << sender << "'!" << std::endl;
+                       float turn = leaderStatus.steeringAngle();
+
+                       std::cout << turn << std::endl;
 
                        /* TODO: implement follow logic */
-                       std::cout << PedalPositionReading::percent() << std::endl;
-
+                       //std::cout << PedalPositionReading::percent() << std::endl;
                        break;
                    }
                    default: std::cout << "¯\\_(ツ)_/¯" << std::endl;
@@ -271,25 +273,6 @@ uint32_t V2VService::getTime() {
  * @return pair consisting of the message ID (extracted from the header) and the message data
  */
 std::pair<int16_t, std::string> V2VService::extract(std::string data) {
-    if (data.length() < 10) return std::pair<int16_t, std::string>(-1, "");
-    int id, len;
-    std::stringstream ssId(data.substr(0, 4));
-    std::stringstream ssLen(data.substr(4, 10));
-    ssId >> std::hex >> id;
-    ssLen >> std::hex >> len;
-    return std::pair<int16_t, std::string> (
-            data.length() -10 == len ? id : -1,
-            data.substr(10, data.length() -10)
-    );
-};
-
-/**
- * The command extraction function is used to extract the leaderStatus message data into a array.
- *
- * @param data - message data to extract header and data from
- * @return pair consisting of the message ID (extracted from the header) and the message data
- */
-std::float[] V2VService::cmdextract(std::string data) {
     if (data.length() < 10) return std::pair<int16_t, std::string>(-1, "");
     int id, len;
     std::stringstream ssId(data.substr(0, 4));
