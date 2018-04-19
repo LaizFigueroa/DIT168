@@ -2,8 +2,8 @@
 
 int main() {
     std::shared_ptr<V2VService> v2vService = std::make_shared<V2VService>();
-                            float angle = 0;
-                            float speed = 0;
+    float angle = 0;
+    float speed = 0;
     while (1) {
         int choice;
         std::string groupId;
@@ -165,12 +165,14 @@ V2VService::V2VService() {
                        LeaderStatus leaderStatus = decode<LeaderStatus>(msg.second);
                        std::cout << "received '" << leaderStatus.LongName()
                                  << "' from '" << sender << "'!" << std::endl;
-                       float turn = leaderStatus.steeringAngle();
-		       view->send(leaderStatus);
-                       std::cout << turn << std::endl;
+                       float turnAngle = leaderStatus.steeringAngle();
+		               view->send(leaderStatus);
+		               float speedPercentage = leaderStatus.speed();
+		               view->send(leaderStatus);
+                       std::cout << "steeringAngle of leader: " << turnAngle << std::endl;
+                       std::cout << "speed of leader" << speedPercentage << std::endl;
 
                        /* TODO: implement follow logic */
-                       //std::cout << PedalPositionReading::percent() << std::endl;
                        break;
                    }
                    default: std::cout << "¯\\_(ツ)_/¯" << std::endl;
