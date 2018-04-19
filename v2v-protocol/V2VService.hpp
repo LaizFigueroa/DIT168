@@ -13,8 +13,8 @@
 
 /** ADD YOUR CAR_IP AND GROUP_ID HERE:  *****************/
 
-static const std::string YOUR_CAR_IP    = "192.168.1.65";
-static const std::string YOUR_GROUP_ID  = "2";
+static const std::string YOUR_CAR_IP    = "172.20.10.2";
+static const std::string YOUR_GROUP_ID  = "13";
 
 /********************************************************/
 /** DON'T CHANGE STUFF BELOW THIS LINE. *****************/
@@ -22,6 +22,7 @@ static const std::string YOUR_GROUP_ID  = "2";
 
 static const int BROADCAST_CHANNEL = 250;
 static const int DEFAULT_PORT = 50001;
+static const int INTERNAL_CHANNEL = 240;
 
 static const int ANNOUNCE_PRESENCE = 1001;
 static const int FOLLOW_REQUEST = 1002;
@@ -48,6 +49,7 @@ private:
     std::string followerIp;
 
     std::shared_ptr<cluon::OD4Session>  broadcast;
+    std::shared_ptr<cluon::OD4Session>  view;
     std::shared_ptr<cluon::UDPReceiver> incoming;
     std::shared_ptr<cluon::UDPSender>   toLeader;
     std::shared_ptr<cluon::UDPSender>   toFollower;

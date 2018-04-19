@@ -1,3 +1,0 @@
-/home/leo/v2v-protocol/build/CMakeFiles/edit_cache.dir
-/home/leo/v2v-protocol/build/CMakeFiles/rebuild_cache.dir
-/home/leo/v2v-protocol/build/CMakeFiles/V2V.Service.dir
