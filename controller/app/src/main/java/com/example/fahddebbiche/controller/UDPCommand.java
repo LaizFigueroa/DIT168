@@ -12,6 +12,10 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.net.UnknownHostException;
 
+/**
+ * this class create a datagram socket for UDP communication between the android client and the server.
+ * it sends the data of the car which  are speed and angle to the server in order to control the car remotely
+ */
 
 public class UDPCommand extends Thread {
 
@@ -26,7 +30,7 @@ public class UDPCommand extends Thread {
                     String command = "" + angle + "//" + speed;
                     sendData = command.getBytes();
 
-                    InetAddress serverC = InetAddress.getByName("192.168.8.1");
+                    InetAddress serverC = InetAddress.getByName("172.20.10.2");
 
                     DatagramSocket clientSocket = new DatagramSocket();
                     InetSocketAddress address = new InetSocketAddress(serverC.getHostName(), 8080);

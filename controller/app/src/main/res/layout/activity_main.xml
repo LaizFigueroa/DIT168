@@ -20,8 +20,11 @@
         android:layout_height="wrap_content"
         android:onClick=""
         android:paddingLeft="10dp"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:paddingRight="10dp"
         android:text="Break"
-        tools:ignore="OnClick" />
-
+        android:clickable="true"
+        android:focusable="true" />
 
 </FrameLayout>

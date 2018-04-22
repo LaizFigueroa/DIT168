@@ -8,7 +8,9 @@ import android.util.Log;
 import android.view.View;
 import android.util.DisplayMetrics;
 
-
+/**
+ * This class load the interface of the application
+ */
 
 public class MainActivity extends AppCompatActivity implements JoystickClass.JoystickListener {
 
