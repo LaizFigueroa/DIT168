@@ -20,6 +20,9 @@ int on=1;
 string speed;
 string angle;
 
+ cluon::OD4Session od4(240, [](cluon::data::Envelope && envelope) noexcept {
+
+                });
 int main() {
     sockaddr_in server_addr;
     int server;
@@ -34,7 +37,7 @@ int main() {
     cout << "\n=> Socket server has been created..." << endl;
     server_addr.sin_family = AF_INET;
     //10.132.27.127
-    server_addr.sin_addr.s_addr = inet_addr("192.168.1.249");
+    server_addr.sin_addr.s_addr = inet_addr("172.20.10.2");
     server_addr.sin_port = htons(8080);
     bind(server, (sockaddr * ) & server_addr, size);
     
@@ -86,30 +89,13 @@ int main() {
 
             }
             memset(buffer, 0, array);
-            //buffer[SOCKET_BUFFER_SIZE] ; // buff is full of zeros
-
-
-
-
-            if (setsockopt(server, SOL_SOCKET, SO_REUSEADDR, (char*)&on, sizeof(on)) < 0)
-            {
-                perror("cannot unbind") ;
-            }
+           // std::this_thread::sleep_for(std::chrono::milliseconds(100));
 
                 
                 // converting string to float
                 float anglef = stof(angle);
                 float speedf = stof(speed);
-                
-                cluon::OD4Session od4(111, [](cluon::data::Envelope && envelope) noexcept {
-                    if (envelope.dataType() == opendlv::proxy::GroundSteeringReading::ID()) {
-                        opendlv::proxy::GroundSteeringReading receivedMsg = cluon::extractMessage < opendlv::proxy::GroundSteeringReading > (std::move(envelope));
-                        std::cout << "Sent a message for ground steering to " << receivedMsg.steeringAngle() << "." << std::endl;
-                    } else if (envelope.dataType() == opendlv::proxy::PedalPositionReading::ID()) {
-                        opendlv::proxy::PedalPositionReading receivedMsg = cluon::extractMessage < opendlv::proxy::PedalPositionReading > (std::move(envelope));
-                        std::cout << "Sent a message for pedal position to " << receivedMsg.percent() << "." << std::endl;
-                    }
-                });
+               
                 
                 if (od4.isRunning() == 0) {
                     std::cout << "ERROR: No od4 running!!!" << std::endl;
@@ -118,7 +104,7 @@ int main() {
                 
                 opendlv::proxy::GroundSteeringReading msgSteering;
                 opendlv::proxy::PedalPositionReading msgPedal;
-                const int delay = 1000;
+                const int delay = 100;
                 
                 // HANDELING MOVMENT
                 std::cout << " EXECUTING SOME MOVEMENTS ..." << std::endl;
@@ -126,10 +112,9 @@ int main() {
                 od4.send(msgSteering);
                 msgPedal.percent(speedf);
                 od4.send(msgPedal);
-                std::this_thread::sleep_for(std::chrono::milliseconds(2 * delay));
+                std::this_thread::sleep_for(std::chrono::milliseconds(100));
                 
             }
-           // buffer[strlen(buffer) - 1] = '\0';
         }
     }
     
