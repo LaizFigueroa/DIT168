@@ -9,9 +9,9 @@ Our project is about an autonomous car that is able to navigate the road during 
 ## Organization
 At this point of the project, the start, the repository is divided into five main folders: 
 
-**1. Documentation:** Where all the documentation created along the project will be listed. 
+**1. Joystick:** Where the code for the Android app is stored. 
 
-**2. src:** Where all the code will be available. Probably this folder will have subfolders when the development phase is advancing.
+**2. src:** Where all the code will be available. 
 
 **3. lib:** Libraries, images, anything used as a resource to the project will be available in this folder.
 
