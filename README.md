@@ -9,7 +9,7 @@ Our project is about an autonomous car that is able to navigate the road during 
 ## Organization
 At this point of the project, the start, the repository is divided into five main folders: 
 
-**1. Documentation:** Where all the documentation created along the project will be listed. 
+**1. Joystick:** Where the code for the Android app is stored. 
 
 **2. src:** Where all the code will be available.
       **2.1. v2v-microservice:** On this folder you can find the microservice for communication across vehicles.
