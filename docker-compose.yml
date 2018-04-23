@@ -80,3 +80,12 @@ services:
         volumes:
           - /dev/mem:/dev/mem
         command: "/usr/bin/opendlv-device-adc-bbblue --cid=111 --freq=5 --channel=3 --id=1"
+ 
+ # Our microservice. // NEEDS FIXING 
+    example:
+        image: example
+	depends_on:
+	- proxy-miniature-pwm-motor
+        network_mode: "host"
+        restart: always
+        command: "/opt/example --cid=111 --freq=10"

@@ -11,7 +11,9 @@ At this point of the project, the start, the repository is divided into five mai
 
 **1. Joystick:** Where the code for the Android app is stored. 
 
-**2. src:** Where all the code will be available. 
+**2. src:** Where all the code will be available.
+      **2.1. v2v-microservice:** On this folder you can find the microservice for communication across vehicles.
+      **2.2. ps4:** This folder contains the ps4 microservice.
 
 **3. lib:** Libraries, images, anything used as a resource to the project will be available in this folder.
 
