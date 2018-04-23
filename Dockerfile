@@ -1,5 +1,4 @@
 FROM alpine:3.7 as builder
-MAINTAINER Yue Kang yuek@chalmers.se
 RUN apk update && \
     apk --no-cache add \
         ca-certificates \
@@ -17,11 +16,9 @@ RUN cd /opt/sources && \
 
 # Deploy.
 FROM alpine:3.7
-MAINTAINER Yue Kang yuek@chalmers.se
 RUN apk update && \
     apk add libcluon --no-cache --repository https://chrberger.github.io/libclu$
     mkdir /opt
 WORKDIR /opt
 COPY --from=builder /tmp/example .
 CMD ["/opt/example"]
-
