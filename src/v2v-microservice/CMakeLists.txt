@@ -37,7 +37,7 @@ add_custom_command(OUTPUT ${CMAKE_BINARY_DIR}/cluon-msc
     DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/${CLUON_COMPLETE})
 
 ################################################################################
-# Generate example.{hpp,cpp} from ${MESSAGE_SET} file.
+# Generate messages.{hpp,cpp} from ${MESSAGE_SET} file.
 add_custom_command(OUTPUT ${CMAKE_BINARY_DIR}/messages.cpp
         WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
         COMMAND cluon-msc --cpp-sources --cpp-add-include-file=messages.hpp --out=${CMAKE_BINARY_DIR}/messages.cpp ${CMAKE_CURRENT_SOURCE_DIR}/messages.odvd
@@ -45,14 +45,8 @@ add_custom_command(OUTPUT ${CMAKE_BINARY_DIR}/messages.cpp
         DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/messages.odvd)
 
 ################################################################################
-# Gather all object code first to avoid double compilation.
-add_library(${PROJECT_NAME}-core OBJECT ${CMAKE_BINARY_DIR}/messages.cpp)
-set(LIBRARIES Threads::Threads)
-
-
-################################################################################
 # Create executable.
-add_executable(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME}.cpp $<TARGET_OBJECTS:${PROJECT_NAME}-core>)
+add_executable(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/Server.cpp ${CMAKE_BINARY_DIR}/messages.cpp)
 target_link_libraries(${PROJECT_NAME} ${LIBRARIES})
 
 ################################################################################
