@@ -29,9 +29,8 @@ RUN mkdir build && \
     make && make install
 
 
-# Part to deploy ping-pong.
+# Part to deploy V2V.
 FROM alpine:3.7
-
 WORKDIR /usr/bin
 COPY --from=builder /tmp/bin/V2VService .
 CMD ["/usr/bin/V2VService"]

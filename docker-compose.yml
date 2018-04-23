@@ -47,7 +47,7 @@ devices:
 - "/dev/input/js0:/dev/input/js0"
 command: "/opt/opendlv.miniature/bin/opendlv-proxy-miniature-ps4controller --cid=224 --freq=10 --verbose=1"
 
-# Micro service for ultrassonic sensors.
+# Micro service for ultrassonic sensor.
 device-ultrasonic-srf08-front:
 image: chalmersrevere/opendlv-device-ultrasonic-srf08-armhf:v0.0.6
 network_mode: "host"
@@ -55,31 +55,6 @@ privileged: true
 volumes:
 - /dev/i2c-1:/dev/i2c-1
 command: "/usr/bin/opendlv-device-ultrasonic-srf08 --dev=/dev/i2c-1 --bus-address=112 --cid=111 --freq=5 --id=0"
-
-device-ultrasonic-srf08-rear:
-image: chalmersrevere/opendlv-device-ultrasonic-srf08-armhf:v0.0.6
-network_mode: "host"
-privileged: true
-volumes:
-- /dev/i2c-1:/dev/i2c-1
-command: "/usr/bin/opendlv-device-ultrasonic-srf08 --dev=/dev/i2c-1 --bus-address=113 --cid=111 --freq=5 --id=1"
-
-# Micro service for infrared sensors.
-device-adc-bbblue-left:
-image: chalmersrevere/opendlv-device-adc-bbblue-armhf:v0.0.6
-network_mode: "host"
-privileged: true
-volumes:
-- /dev/mem:/dev/mem
-command: "/usr/bin/opendlv-device-adc-bbblue --cid=111 --freq=5 --channel=2 --id=0"
-
-device-adc-bbblue-right:
-image: chalmersrevere/opendlv-device-adc-bbblue-armhf:v0.0.6
-network_mode: "host"
-privileged: true
-volumes:
-- /dev/mem:/dev/mem
-command: "/usr/bin/opendlv-device-adc-bbblue --cid=111 --freq=5 --channel=3 --id=1"
 
 # Micro service for Android Application's server.
 android-application's-server:
@@ -106,7 +81,7 @@ privileged: true
 command:
 - "/opt/bin/websocketd"
 - "--staticdir=/opt/signal-viewer"
-- "--port=8080"
+- "--port=8081"
 - "--binary=true"
 - "/bin/cluon-OD4toStdout"
 
