@@ -15,7 +15,7 @@ At this point of the project, the start, the repository is divided into five mai
       **2.1. v2v-microservice:** On this folder you can find the microservice for communication across vehicles.
       **2.2. ps4:** This folder contains the ps4 microservice.
 
-**3. lib:** Libraries, images, anything used as a resource to the project will be available in this folder.
+**3. test:** This folder contains the TDD tests designed at the begining of the project and the dockerfile to build the test environment.
 
 Outside this folders, there are documents that are important for the project's organization, existence, and maintenance, such as the code conventions used to build the project, the license, the contributing and the code of conduct.
 
