@@ -12,20 +12,31 @@ env:
 
 jobs:
   include:
-    - stage: build microservices images
+    - stage: build v2v
+    before_script: cd $TRAVIS_BUILD_DIR/src/v2v-microservice
       script:
       - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
-      - docker build -t v2v . -f src/v2v-microservice/Dockerfile.armhf
-      - docker build -t app . -f src/app-server/Dockerfile
-      - docker build -t interceptor . -f src/Interceptor/Dockerfile
-    - stage: v2v
+      - docker build -t v2v . -f Dockerfile.armhf
+
+    - stage: run v2v
+    before_script: cd $TRAVIS_BUILD_DIR/src/v2v
       script:  
       - docker run --rm -ti --net=host -p 8081:8081 $DOCKER_USERNAME/v2v
-    - stage: app
-      script:     
+      
+    - stage: build/run app
+      script:
+      - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+      - docker build -t app . -f Dockerfile
       - docker run --rm -ti --net=host $DOCKER_USERNAME/app
-    - stage: interceptor
-      script:      
+      
+    - stage: build interceptor
+    before_script:cd $TRAVIS_BUILD_DIR/Interceptor
+      script:
+      - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+      - docker build -t interceptor .
+   
+    - stage: run interceptor 
+      script:  
       - docker run --rm -ti --net=host $DOCKER_USERNAME/interceptor
 
 deploy:
