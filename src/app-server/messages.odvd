@@ -16,37 +16,6 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-/*
-* V2V Protocol Messages Provided at https://github.com/DIT168-V2V-responsibles/v2v-protocol/blob/master/Messages.odvd 
-*/
-
-message AnnouncePresence [id = 1001] {
-  string vehicleIp [id = 1];
-  string groupId [id = 3];
-}
-
-message FollowRequest [id = 1002] {
-  uint8 frequest [id = 1];
-}
-
-message FollowResponse [id = 1003] {
-  uint8 fresponse [id = 1];
-}
-
-message StopFollow [id = 1004] {
-  uint8 stop [id = 1];
-}
-
-message LeaderStatus [id = 2001] {
-  uint32 timestamp [id = 1];
-  float speed [id = 2];
-  float steeringAngle [id = 3];
-  uint8 distanceTraveled [id = 4];
-}
-
-message FollowerStatus [id = 3001] {
-  uint8 fstatus [id = 1];
-}
 
 /*
 /* Internal
@@ -58,8 +27,4 @@ message opendlv.proxy.GroundSteeringReading [id = 1045] {
 
 message opendlv.proxy.PedalPositionReading [id = 1041] {
   float percent [id = 1];
-}
-
-message opendlv.proxy.DistanceReading [id = 1039] {
-  float distance [id = 1];
 }

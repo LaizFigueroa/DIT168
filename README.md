@@ -5,11 +5,10 @@
 ## Introduction
 Our project is about an autonomous car that is able to navigate the road during driving process, and communicate with other similar cars. Our goal is to develop the system that is completely independent from human operators, and can safely operate by itself.
 
-
 ## Organization
 At this point of the project, the start, the repository is divided into five main folders: 
 
-**1. Joystick:** Where the code for the Android app is stored.
+**1. Joystick:** Where the code for the Android app is stored. 
 
 **2. src:** Where all the code will be available.
       **2.1. v2v-microservice:** On this folder you can find the microservice for communication across vehicles.
@@ -32,7 +31,6 @@ git clone https://github.com/LaizFigueroa/DIT168.git
 ### Building
 The Docker builds the project following the instructions in the dockerfile. A docker container is launched by running a docker image that will be loaded to the minature car. The docker image loaded is an executable package to run an application–the code, a runtime, libraries, environment variables, and configuration files. To be able to build each microservice indenpendly you should access `src/<microservice>` and then:
 
-
 - To build and send to the car using a .tar file
 ```
 docker build -t dockerimg -f Dockerfile.manual.
@@ -41,6 +39,7 @@ docker save dockerimg > dit168.tar
 
 cat dit168.tar | docker load
 ```
+
 - To build and send to docker hub repository
 ```
 docker build -t dockerimg -f Dockerfile.manual.

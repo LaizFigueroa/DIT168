@@ -12,20 +12,43 @@ env:
 
 jobs:
   include:
-    - stage: build docker image
+    - stage: build images
       script:
       - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
-      - docker build -t dit168 .
-    - stage: test
-      script:  
-      - docker run --rm --net=host $DOCKER_USERNAME/dit168
+      - docker build -t v2v . -f src/v2v-microservice/Dockerfile.armhf
+      - docker build -t app . -f src/app-server/Dockerfile
+      - docker build -t interceptor . -f src/Interceptor/Dockerfile
+
+  #  - stage: run v2v
+  #    script:  
+  #    - docker run -ti --net=host -p 8081:8081 $DOCKER_USERNAME/v2v
+      
+  #  - stage: run app
+  #    script:
+  #    - docker run -ti --net=host $DOCKER_USERNAME/app
+    
+  #  - stage: run interceptor 
+  #    script:  
+  #    - docker run -ti --net=host $DOCKER_USERNAME/interceptor
 
 deploy:
-  provider: script
-  script: bash docker_push.sh
-  skip_cleanup: true
-  on:
-    branch: master
+  - provider: script
+    script: bash docker_pushV2v.sh
+    skip_cleanup: true
+    on:
+      branch: master
+      
+  - provider: script
+    script: bash docker_pushInterceptor.sh
+    skip_cleanup: true
+    on:
+      branch: master
+      
+  - provider: script
+    script: bash docker_pushApp.sh
+    skip_cleanup: true
+    on:
+      branch: master
     
 notifications:
    slack: 
