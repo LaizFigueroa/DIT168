@@ -13,12 +13,12 @@ RUN apk update && \
 ADD . /src/v2v-microservice
 WORKDIR /src/v2v-microservice
 RUN cd /src/v2v-microservice && \
-    ls && \
-    mkdir build && \
-    cd build && \
-    cmake -D CMAKE_BUILD_TYPE=Release -D CMAKE_INSTALL_PREFIX=/tmp .. && \
-    ls &&\
-    make && make install
+    cd /src/v2v-microservice && ls && \
+    cd /src/v2v-microservice && mkdir build && \
+    cd /src/v2v-microservice && cd build && \
+    cd /src/v2v-microservice && cmake -D CMAKE_BUILD_TYPE=Release -D CMAKE_INSTALL_PREFIX=/tmp .. && \
+    cd /src/v2v-microservice && ls &&\
+    cd /src/v2v-microservice && make && make install
 RUN [ "cross-build-end" ]
 
 # Deploy.
