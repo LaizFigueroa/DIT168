@@ -10,15 +10,15 @@ RUN apk update && \
         g++ \
         make && \
     apk add libcluon --no-cache --repository https://chrberger.github.io/libcluon/alpine/v3.7 --allow-untrusted
-#ADD . src/v2v-microservice
-WORKDIR src/v2v-microservice
-RUN cd src/v2v-microservice && \
+ADD . opt/v2v
+WORKDIR opt/v2v
+RUN cd opt/v2v && \
     ls && \
     mkdir build && \
     cd build && \
     cmake -D CMAKE_BUILD_TYPE=Release -D CMAKE_INSTALL_PREFIX=/tmp .. && \
-    && ls &&\
-    && make && make install
+    ls &&\
+    make && make install
 RUN [ "cross-build-end" ]
 
 # Deploy.
@@ -27,5 +27,3 @@ RUN [ "cross-build-start" ]
 WORKDIR /usr/bin
 COPY --from=builder /tmp/bin/ .
 CMD ["/usr/bin/V2VService"]
-
-#
