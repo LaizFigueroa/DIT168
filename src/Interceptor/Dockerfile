@@ -13,7 +13,7 @@ RUN apk update && \
 ADD . /src/Interceptor
 WORKDIR /src/Interceptor
 RUN ls &&\
-    cd /src/Interceptor && \
+    cd src/Interceptor && \
     mkdir build && \
     cd build && \
     cmake -D CMAKE_BUILD_TYPE=Release .. && \
