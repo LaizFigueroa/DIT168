@@ -30,6 +30,7 @@ ADD . /src/app-server
 WORKDIR /src/app-server
 RUN ls &&\
     cd /src/app-server && \
+    ls &&\
     mkdir build && \
     cd build && \
     cmake -D CMAKE_BUILD_TYPE=Release -D CMAKE_INSTALL_PREFIX=/tmp .. && \
