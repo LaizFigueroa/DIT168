@@ -56,19 +56,26 @@ volumes:
 - /dev/i2c-1:/dev/i2c-1
 command: "/usr/bin/opendlv-device-ultrasonic-srf08 --dev=/dev/i2c-1 --bus-address=112 --cid=111 --freq=5 --id=0"
 
-# Micro service for Android Application's server.
-android-application's-server:
-image: seresearch/2018-dit-168:v0.3.5-armhf
+# Micro service for Interceptor.
+interceptor:
+image: laiz/interceptor
 network_mode: "host"
 restart: always
-command: "/usr/bin/app-server --cid=224 --freq=10"
+command: "/opt/interceptor --cid=224 --freq=10"
+
+# Micro service for Android Application's server.
+android-application's-server:
+image: laiz/app
+network_mode: "host"
+restart: always
+command: "/usr/bin/app-server --cid=111 --freq=10"
 
 # Micro service for V2V.
 V2V-service:
 image: laiz/v2v
 network_mode: "host"
 restart: always
-command: "/opt/main --cid=111 --freq=10"
+command: "/usr/bin/V2VService --cid=224 --freq=10"
 
 # Micro service for web-Visualisation.
 web-visualisation:
