@@ -10,9 +10,9 @@ RUN apk update && \
         g++ \
         make && \
     apk add libcluon --no-cache --repository https://chrberger.github.io/libcluon/alpine/v3.7 --allow-untrusted
-ADD . opt/v2v
-WORKDIR opt/v2v
-RUN cd opt/v2v && \
+ADD . /src/v2v-microservice
+WORKDIR /src/v2v-microservice
+RUN cd /src/v2v-microservice && \
     ls && \
     mkdir build && \
     cd build && \
