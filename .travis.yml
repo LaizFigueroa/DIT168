@@ -15,10 +15,18 @@ jobs:
     - stage: build docker image
       script:
       - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
-      - docker build -t dit168 .
-    - stage: test
+      - docker build -t v2v . -f /src/v2v-microservice/Dockerfile.amd64
+      - docker build -t app . -f /src/app-server/Dockerfile
+      - docker build -t interceptor . -f /src/Interceptor/Dockerfile
+    - stage: v2v
       script:  
-      - docker run --rm --net=host $DOCKER_USERNAME/dit168
+      - docker run --rm -ti --net=host -p 8081:8081 $DOCKER_USERNAME/v2v
+    - stage: app
+      script:     
+      - docker run --rm -ti --net=host $DOCKER_USERNAME/app
+    - stage: interceptor
+      script:      
+      - docker run --rm -ti --net=host $DOCKER_USERNAME/interceptor
 
 deploy:
   provider: script
