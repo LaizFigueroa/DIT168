@@ -12,11 +12,15 @@ env:
 
 jobs:
   include:
-    - stage: build docker image
+    - stage: build v2v
       script:
       - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
       - docker build -t v2v . -f src/v2v-microservice/Dockerfile.armhf
+    - stage: build app
+      script:
       - docker build -t app . -f src/app-server/Dockerfile
+    - stage: build interceptor
+      script:
       - docker build -t interceptor . -f src/Interceptor/Dockerfile
     - stage: v2v
       script:  
