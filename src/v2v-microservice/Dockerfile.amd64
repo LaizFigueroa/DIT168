@@ -21,8 +21,8 @@ RUN apk update && \
         g++ \
         make && \
     apk add libcluon --no-cache --repository https://chrberger.github.io/libcluon/alpine/v3.7 --allow-untrusted
-ADD . /opt/sources
-WORKDIR /opt/sources
+ADD . /opt/v2vcomp
+WORKDIR /opt/v2vcomp
 RUN mkdir build
 RUN cd build 
 RUN cmake -D CMAKE_BUILD_TYPE=Release -D CMAKE_INSTALL_PREFIX=/tmp/ ..
