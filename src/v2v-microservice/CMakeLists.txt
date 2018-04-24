@@ -41,7 +41,7 @@ include_directories(SYSTEM ${CMAKE_BINARY_DIR})
 ################################################################################
 # Create executable.
 
-add_executable(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/Server.cpp ${CMAKE_BINARY_DIR}/messages.cpp)
+add_executable(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/V2VService.cpp ${CMAKE_BINARY_DIR}/messages.cpp)
 target_link_libraries(${PROJECT_NAME} ${CLUON_LIBRARIES})
 
 ################################################################################
