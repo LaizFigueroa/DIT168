@@ -12,32 +12,24 @@ env:
 
 jobs:
   include:
-    - stage: build v2v
+    - stage: build images
       script:
       - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
       - docker build -t v2v . -f src/v2v-microservice/Dockerfile.armhf
-
-    - stage: run v2v
-      script:  
-      - docker run --rm -ti --net=host -p 8081:8081 $DOCKER_USERNAME/v2v
-      
-    - stage: build app
-      script:
-      - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
       - docker build -t app . -f src/app-server/Dockerfile
-      
-    - stage: build/run app
-      script:
-      - docker run --rm -ti --net=host $DOCKER_USERNAME/app
-      
-    - stage: build interceptor
-      script:
-      - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
       - docker build -t interceptor . -f src/Interceptor/Dockerfile
-   
-    - stage: run interceptor 
-      script:  
-      - docker run --rm -ti --net=host $DOCKER_USERNAME/interceptor
+
+  #  - stage: run v2v
+  #    script:  
+  #    - docker run -ti --net=host -p 8081:8081 $DOCKER_USERNAME/v2v
+      
+  #  - stage: run app
+  #    script:
+  #    - docker run -ti --net=host $DOCKER_USERNAME/app
+    
+  #  - stage: run interceptor 
+  #    script:  
+  #    - docker run -ti --net=host $DOCKER_USERNAME/interceptor
 
 deploy:
   provider: script
