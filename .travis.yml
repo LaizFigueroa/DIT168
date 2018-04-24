@@ -19,11 +19,12 @@ jobs:
       - docker build -t v2v . -f Dockerfile.armhf
 
     - stage: run v2v
-    before_script: cd $TRAVIS_BUILD_DIR/src/v2v
+    before_script: cd $TRAVIS_BUILD_DIR/src/v2v-microservice
       script:  
       - docker run --rm -ti --net=host -p 8081:8081 $DOCKER_USERNAME/v2v
       
     - stage: build/run app
+    before_script: cd $TRAVIS_BUILD_DIR/src/app-server
       script:
       - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
       - docker build -t app . -f Dockerfile
