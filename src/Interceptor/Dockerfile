@@ -31,4 +31,4 @@ RUN apk update && \
 WORKDIR /opt
 COPY --from=builder /tmp/Interceptor .
 RUN [ "cross-build-end" ]
-CMD ["/opt/example"]
+CMD ["/opt/Interceptor"]
