@@ -15,7 +15,7 @@ jobs:
     - stage: build v2v
       script:
       - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
-      - docker build -t v2v . -f Dockerfile.armhf
+      - docker build -t v2v . -f src/v2v-microservice/Dockerfile.armhf
 
     - stage: run v2v
       script:  
@@ -24,7 +24,7 @@ jobs:
     - stage: build app
       script:
       - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
-      - docker build -t app . -f Dockerfile
+      - docker build -t app . -f src/app-server/Dockerfile
       
     - stage: build/run app
       script:
@@ -33,7 +33,7 @@ jobs:
     - stage: build interceptor
       script:
       - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
-      - docker build -t interceptor .
+      - docker build -t interceptor . -f src/Interceptor/Dockerfile
    
     - stage: run interceptor 
       script:  
