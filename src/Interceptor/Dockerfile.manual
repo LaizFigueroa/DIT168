@@ -13,7 +13,6 @@ RUN apk update && \
 ADD . /src/Interceptor
 WORKDIR /src/Interceptor
 RUN ls &&\
-    cd src/Interceptor && \
     mkdir build && \
     cd build && \
     cmake -D CMAKE_BUILD_TYPE=Release .. && \
@@ -32,4 +31,4 @@ RUN apk update && \
 WORKDIR /opt
 COPY --from=builder /tmp/Interceptor .
 RUN [ "cross-build-end" ]
-CMD ["/opt/interceptor"]
+CMD ["/opt/example"]

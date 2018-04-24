@@ -18,74 +18,77 @@ version: '2'
 
 services:
 
-    odsupercomponent:
-        image: seresearch/2018-dit-168:v0.3.5-armhf
-        network_mode: "host"
-        restart: always
-        volumes:
-        - .:/opt/miniature.data
-        command: "/opt/od4/bin/odsupercomponent --cid=111 --verbose=1 --configuration=/opt/miniature.data/configuration"
+odsupercomponent:
+image: seresearch/2018-dit-168:v0.3.5-armhf
+network_mode: "host"
+restart: always
+volumes:
+- .:/opt/miniature.data
+command: "/opt/od4/bin/odsupercomponent --cid=111 --verbose=1 --configuration=/opt/miniature.data/configuration"
 
-    proxy-miniature-pwm-motor:
-        image: seresearch/2018-dit-168:v0.3.5-armhf
-        depends_on:
-        - odsupercomponent
-        network_mode: "host"
-        restart: always
-        privileged: true
-        volumes:
-        - /sys/:/sys/
-        - /dev/:/dev/
-        command: "/opt/opendlv.miniature/bin/opendlv-proxy-miniature-pwm-motor --cid=111 --freq=50 --id=1"
+proxy-miniature-pwm-motor:
+image: seresearch/2018-dit-168:v0.3.5-armhf
+depends_on:
+- odsupercomponent
+network_mode: "host"
+restart: always
+privileged: true
+volumes:
+- /sys/:/sys/
+- /dev/:/dev/
+command: "/opt/opendlv.miniature/bin/opendlv-proxy-miniature-pwm-motor --cid=111 --freq=50 --id=1"
 
-    # Micro service for PS4 controller.
-    proxy-miniature-ps4controller:
-        image: seresearch/2018-dit-168:v0.3.5-armhf
-        network_mode: "host"
-        restart: always
-        devices:
-        - "/dev/input/js0:/dev/input/js0"
-        command: "/opt/opendlv.miniature/bin/opendlv-proxy-miniature-ps4controller --cid=224 --freq=10 --verbose=1"
- 
-    # Micro service for ultrassonic sensors.
-    device-ultrasonic-srf08-front:
-        image: chalmersrevere/opendlv-device-ultrasonic-srf08-armhf:v0.0.6
-        network_mode: "host"
-        privileged: true
-        volumes:
-          - /dev/i2c-1:/dev/i2c-1
-        command: "/usr/bin/opendlv-device-ultrasonic-srf08 --dev=/dev/i2c-1 --bus-address=112 --cid=111 --freq=5 --id=0"
-    
-    device-ultrasonic-srf08-rear:
-        image: chalmersrevere/opendlv-device-ultrasonic-srf08-armhf:v0.0.6
-        network_mode: "host"
-        privileged: true
-        volumes:
-          - /dev/i2c-1:/dev/i2c-1
-        command: "/usr/bin/opendlv-device-ultrasonic-srf08 --dev=/dev/i2c-1 --bus-address=113 --cid=111 --freq=5 --id=1"
-    
-    # Micro service for infrared sensors.
-    device-adc-bbblue-left:
-        image: chalmersrevere/opendlv-device-adc-bbblue-armhf:v0.0.6
-        network_mode: "host"
-        privileged: true
-        volumes:
-          - /dev/mem:/dev/mem
-        command: "/usr/bin/opendlv-device-adc-bbblue --cid=111 --freq=5 --channel=2 --id=0"
-    
-    device-adc-bbblue-right:
-        image: chalmersrevere/opendlv-device-adc-bbblue-armhf:v0.0.6
-        network_mode: "host"
-        privileged: true
-        volumes:
-          - /dev/mem:/dev/mem
-        command: "/usr/bin/opendlv-device-adc-bbblue --cid=111 --freq=5 --channel=3 --id=1"
- 
- # Our microservice. // NEEDS FIXING 
-    example:
-        image: example
-	depends_on:
-	- proxy-miniature-pwm-motor
-        network_mode: "host"
-        restart: always
-        command: "/opt/example --cid=111 --freq=10"
+# Micro service for PS4 controller.
+proxy-miniature-ps4controller:
+image: seresearch/2018-dit-168:v0.3.5-armhf
+network_mode: "host"
+restart: always
+devices:
+- "/dev/input/js0:/dev/input/js0"
+command: "/opt/opendlv.miniature/bin/opendlv-proxy-miniature-ps4controller --cid=224 --freq=10 --verbose=1"
+
+# Micro service for ultrassonic sensor.
+device-ultrasonic-srf08-front:
+image: chalmersrevere/opendlv-device-ultrasonic-srf08-armhf:v0.0.6
+network_mode: "host"
+privileged: true
+volumes:
+- /dev/i2c-1:/dev/i2c-1
+command: "/usr/bin/opendlv-device-ultrasonic-srf08 --dev=/dev/i2c-1 --bus-address=112 --cid=111 --freq=5 --id=0"
+
+# Micro service for Interceptor.
+interceptor:
+image: laiz/interceptor
+network_mode: "host"
+restart: always
+command: "/opt/interceptor --cid=224 --freq=10"
+
+# Micro service for Android Application's server.
+android-application's-server:
+image: laiz/app
+network_mode: "host"
+restart: always
+command: "/usr/bin/app-server --cid=111 --freq=10"
+
+# Micro service for V2V.
+V2V-service:
+image: laiz/v2v
+network_mode: "host"
+restart: always
+command: "/usr/bin/V2VService --cid=224 --freq=10"
+
+# Micro service for web-Visualisation.
+web-visualisation:
+image: laiz/web
+network_mode: "host"
+ports:
+- "8081:8081"
+restart: always
+privileged: true
+command:
+- "/opt/bin/websocketd"
+- "--staticdir=/opt/signal-viewer"
+- "--port=8081"
+- "--binary=true"
+- "/bin/cluon-OD4toStdout"
+
