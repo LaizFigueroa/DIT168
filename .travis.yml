@@ -15,7 +15,7 @@ jobs:
     - stage: build docker image
       script:
       - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
-      - docker build -t v2v . -f src/v2v-microservice/Dockerfile.amd64
+      - docker build -t v2v . -f src/v2v-microservice/Dockerfile.armhf
       - docker build -t app . -f src/app-server/Dockerfile
       - docker build -t interceptor . -f src/interceptor/Dockerfile
     - stage: v2v
