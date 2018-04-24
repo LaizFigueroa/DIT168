@@ -10,9 +10,9 @@ RUN apk update && \
         g++ \
         make && \
     apk add libcluon --no-cache --repository https://chrberger.github.io/libcluon/alpine/v3.7 --allow-untrusted
-ADD . /opt/sources
-WORKDIR /opt/sources
-RUN cd /opt/sources && \
+ADD . /opt/int
+WORKDIR /opt/int
+RUN cd /opt/int && \
     mkdir build && \
     cd build && \
     cmake -D CMAKE_BUILD_TYPE=Release .. && \
