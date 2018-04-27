@@ -29,7 +29,7 @@ jobs:
     - stage: run v2v on ubuntu
       script:  
       - docker run -ti --net=host $DOCKER_USERNAME/v2v_ubuntu
-      - docker run -ti --net=host $DOCKER_USERNAME/webview_ubuntu
+      - docker run -ti --net=host -p 8082:8082 $DOCKER_USERNAME/webview_ubuntu --cid=240
 
 deploy:
   - provider: script
