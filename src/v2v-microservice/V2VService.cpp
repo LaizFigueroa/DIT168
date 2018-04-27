@@ -1,4 +1,6 @@
 #include "V2VService.hpp"
+ 
+ cluon::OD4Session od3(224, {});
 
 int main(int argc, char **argv) {
     std::shared_ptr<V2VService> v2vService = std::make_shared<V2VService>();
@@ -167,16 +169,23 @@ V2VService::V2VService() {
                        break;
                    }
                    case LEADER_STATUS: {
-                       LeaderStatus leaderStatus = decode<LeaderStatus>(msg.second);
+                        LeaderStatus leaderStatus = decode<LeaderStatus>(msg.second);
                        std::cout << " Received '" << leaderStatus.LongName()
                                  << "' from '" << sender << "'!" << std::endl;
 		               
                        std::cout << " Leader's steeringAngle: " << leaderStatus.steeringAngle() << std::endl;
                        std::cout << "Leader's speed: " << leaderStatus.speed() << std::endl;
-		       std::cout << "Distance traveled" << leaderStatus.distanceTraveled() << "'!" << std::endl;
+		        	   std::cout << "Distance traveled" << leaderStatus.distanceTraveled() << "'!" << std::endl;
 
-		       internal->send(leaderStatus);
+		      // internal->send(leadersStatus);
                        /* TODO: implement follow logic */
+
+ 		       		   opendlv::proxy::GroundSteeringReading followerAngle;
+                       followerAngle.steeringAngle(leaderStatus.steeringAngle());
+                       opendlv::proxy::PedalPositionReading followerSpeed;
+                       followerSpeed.percent(leaderStatus.speed());
+                       od3.send(followerAngle);
+                       od3.send(followerSpeed);
                        break;
                    }
                    default: std::cout << "¯\\_(ツ)_/¯" << std::endl;
