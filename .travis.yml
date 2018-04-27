@@ -12,24 +12,19 @@ env:
 
 jobs:
   include:
-    - stage: build images
+    - stage: build car images
       script:
       - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
       - docker build -t v2v . -f src/v2v-microservice/Dockerfile.armhf
       - docker build -t app . -f src/app-server/Dockerfile
       - docker build -t interceptor . -f src/Interceptor/Dockerfile
+      - docker build -t webview . -f src/opendlv-signal-viewer/Dockerfile.armhf
 
-  #  - stage: run v2v
-  #    script:  
-  #    - docker run -ti --net=host -p 8081:8081 $DOCKER_USERNAME/v2v
-      
-  #  - stage: run app
-  #    script:
-  #    - docker run -ti --net=host $DOCKER_USERNAME/app
-    
-  #  - stage: run interceptor 
-  #    script:  
-  #    - docker run -ti --net=host $DOCKER_USERNAME/interceptor
+    - stage: build ubuntu V2V & Webview image
+      script:
+      - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+      - docker build -t v2v_ubuntu . -f src/v2v-microservice/Dockerfile.amd64
+      - docker build -t webview_ubuntu . -f src/opendlv-signal-viewer/Dockerfile.amd64
 
 deploy:
   - provider: script
@@ -46,6 +41,18 @@ deploy:
       
   - provider: script
     script: bash docker_pushApp.sh
+    skip_cleanup: true
+    on:
+      branch: master
+      
+  - provider: script
+    script: bash docker_pushV2v_ubuntu.sh
+    skip_cleanup: true
+    on:
+      branch: master
+      
+  - provider: script
+    script: bash docker_pushWebview_ubuntu.sh
     skip_cleanup: true
     on:
       branch: master

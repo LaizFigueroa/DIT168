@@ -1,0 +1,6 @@
+[submodule "src/opendlv-signal-viewer"]
+	path = src/opendlv-signal-viewer
+	url = https://github.com/LaizFigueroa/opendlv-signal-viewer.git
+[submodule "src/opendlv.miniature"]
+	path = src/opendlv.miniature
+	url = https://github.com/LaizFigueroa/opendlv.miniature.git
