@@ -25,11 +25,6 @@ jobs:
       - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
       - docker build -t v2v_ubuntu . -f src/v2v-microservice/Dockerfile.amd64
       - docker build -t webview_ubuntu . -f src/opendlv-signal-viewer/Dockerfile.amd64
-         
-    - stage: run v2v on ubuntu
-      script:  
-      - docker run -ti --net=host $DOCKER_USERNAME/v2v_ubuntu
-      - docker run -ti --net=host -p 8082:8082 $DOCKER_USERNAME/webview_ubuntu --cid=240
 
 deploy:
   - provider: script
