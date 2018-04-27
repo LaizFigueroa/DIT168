@@ -21,10 +21,10 @@ RUN apk update && \
         g++ \
         make && \
     apk add libcluon --no-cache --repository https://chrberger.github.io/libcluon/alpine/v3.7 --allow-untrusted
-ADD . /opt/v2vcomp
-WORKDIR /opt/v2vcomp
+ADD . /src/v2v-microservice
+WORKDIR /src/v2v-microservice
 RUN ls &&\
-    cd /opt/v2vcomp &&\
+    cd /src/v2v-microservice &&\
     ls &&\
     mkdir build &&\
     cd build &&\
