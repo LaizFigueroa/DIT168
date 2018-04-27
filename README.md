@@ -11,19 +11,12 @@ This repository is divided into three main folders:
 **1. Joystick:** Where the code for the Android app is stored. 
 
 **2. src:** Where all the source code is available, including links to other repositories forked.
-      
       **2.1. Ancient:** Code that was used in the development phases and is not required anymore.
-      
       **2.2. Interceptor:** This folder contains the interceptor microservice, which is responsible to handle sensors and internal communications. It is possible to build a docker image directly on this folder to run the related microservice individually.
-      
       **2.3. app-server:** On this folder the server microservice to run on the car for the android application can be found.
-      
       **2.4. opendlv-signal-viewer:** On this submodule, you are going to be redirected to a new repository. This code is used to visualize the data exchanged during the communication.
-      
       **2.5. opendlv.miniature:** On this submodule, you can find the ps4 microservice. By clicking on that you will be redirected to a new repository. There you should select the `dit168` branch, go under `usecases/latest/test.ps4controller` and run docker-compose up.
-      
       **2.6. v2v-microservice:** On this folder you can find the microservice for communication across vehicles.
-      
       **2.7. docker-compose.yml & configuration:** Files to run all the microservices on the car at the same time.
 
 **3. test:** This folder contains the TDD tests designed at the beginning of the project, but not used along the development phases and the dockerfile to build the test environment.
