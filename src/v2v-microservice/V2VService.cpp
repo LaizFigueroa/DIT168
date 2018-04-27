@@ -175,12 +175,12 @@ V2VService::V2VService() {
 		               
                        std::cout << " Leader's steeringAngle: " << leaderStatus.steeringAngle() << std::endl;
                        std::cout << "Leader's speed: " << leaderStatus.speed() << std::endl;
-		        	   std::cout << "Distance traveled" << leaderStatus.distanceTraveled() << "'!" << std::endl;
+		        	         std::cout << "Distance traveled" << leaderStatus.distanceTraveled() << "'!" << std::endl;
 
-		      // internal->send(leadersStatus);
+		                  internal->send(leadersStatus);
                        /* TODO: implement follow logic */
 
- 		       		   opendlv::proxy::GroundSteeringReading followerAngle;
+ 		       		         opendlv::proxy::GroundSteeringReading followerAngle;
                        followerAngle.steeringAngle(leaderStatus.steeringAngle());
                        opendlv::proxy::PedalPositionReading followerSpeed;
                        followerSpeed.percent(leaderStatus.speed());
