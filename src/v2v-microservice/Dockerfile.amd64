@@ -25,6 +25,7 @@ ADD . /opt/v2vcomp
 WORKDIR /opt/v2vcomp
 RUN ls &&\
     cd /opt/v2vcomp &&\
+    ls &&\
     mkdir build &&\
     cd build &&\
     cmake -D CMAKE_BUILD_TYPE=Release -D CMAKE_INSTALL_PREFIX=/tmp/ .. &&\
