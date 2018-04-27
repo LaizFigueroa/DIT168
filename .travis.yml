@@ -50,6 +50,12 @@ deploy:
     skip_cleanup: true
     on:
       branch: master
+
+  - provider: script
+    script: bash docker_pushWebview.sh
+    skip_cleanup: true
+    on:
+      branch: master
       
   - provider: script
     script: bash docker_pushWebview_ubuntu.sh
