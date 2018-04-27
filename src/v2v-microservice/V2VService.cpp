@@ -177,7 +177,7 @@ V2VService::V2VService() {
                        std::cout << "Leader's speed: " << leaderStatus.speed() << std::endl;
 		        	         std::cout << "Distance traveled" << leaderStatus.distanceTraveled() << "'!" << std::endl;
 
-		                  internal->send(leadersStatus);
+		                  internal->send(leaderStatus);
                        /* TODO: implement follow logic */
 
  		       		         opendlv::proxy::GroundSteeringReading followerAngle;
