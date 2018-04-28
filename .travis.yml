@@ -19,10 +19,6 @@ jobs:
       - docker build -t app . -f src/app-server/Dockerfile
       - docker build -t interceptor . -f src/Interceptor/Dockerfile
       - docker build -t webview . -f src/opendlv-signal-viewer/Dockerfile.armhf
-
-    - stage: build ubuntu V2V & Webview image
-      script:
-      - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
       - docker build -t v2v_ubuntu . -f src/v2v-microservice/Dockerfile.amd64
       - docker build -t webview_ubuntu . -f src/opendlv-signal-viewer/Dockerfile.amd64
 
