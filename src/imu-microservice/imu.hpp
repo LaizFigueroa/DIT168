@@ -12,20 +12,35 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
-//  imu.cpp
 //
-//  Created by Laiz Heckmann Barbalho de Figueroa on 2018-04-28.
+//  Created by Laiz Figueroa on 2018-04-28.
 
 #ifndef imu_hpp
 #define imu_hpp
 
 #include <stdio.h>
+#include "cluon/OD4Session.hpp"
+#include "cluon/Envelope.hpp"
+#include "messages.hpp"
+#include "cluon-complete.hpp"
 
-typedef enum rc_accel_fsr_t {
-    A_FSR_2G,
-    A_FSR_4G,
-    A_FSR_8G,
-    A_FSR_16G
-} rc_accel_fsr_t;
+extern "C"
+{
+#include <roboticscape.h>
+}
+
+/********************************************/
+/** INTERNAL COMMUNICATIONS *****************/
+/********************************************/
+
+static const int IMU_CHANNEL    = 243;
+static const int INTERNAL_CHANNEL    = 240;
+
+class Imu {
+private:
+    std::shared_ptr<cluon::OD4Session>  imu;
+    std::shared_ptr<cluon::OD4Session>  internal;
+
+}
 
 #endif /* imu_hpp */
