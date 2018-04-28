@@ -3,21 +3,22 @@
 
 
 ## Introduction
-This project is about an autonomous car that is able to be controlled via ps4 controller or by our Android app to navigate the road during driving process. The main feature of this car is a platooning system in which the car connects to other cars using the V2V-protocol and safely follow or lead the others, by sending/receiving the commands.
+This project is about a car that is controlled via ps4 controller or by our Android app to navigate the road during driving process. The main feature of this car is a platooning system in which the car connects to other cars using the V2V-protocol and safely follow or lead the others, by sending/receiving the commands.
 
 ## Organization
-This repository is divided into three main folders: 
+This repository is divided into three main folders:
 
 **1. Joystick:** Where the code for the Android app is stored. 
 
-**2. src:** Where all the source code is available, including links to other repositories forked.
+**2. src:** Where all the source code is available, including links to other repositories forked and the docker-compose file used to run the microservices.
       **2.1. Ancient:** Code that was used in the development phases and is not required anymore.
-      **2.2. Interceptor:** This folder contains the interceptor microservice, which is responsible to handle sensors and internal communications. It is possible to build a docker image directly on this folder to run the related microservice individually.
-      **2.3. app-server:** On this folder the server microservice to run on the car for the android application can be found.
-      **2.4. opendlv-signal-viewer:** On this submodule, you are going to be redirected to a new repository. This code is used to visualize the data exchanged during the communication.
-      **2.5. opendlv.miniature:** On this submodule, you can find the ps4 microservice. By clicking on that you will be redirected to a new repository. There you should select the `dit168` branch, go under `usecases/latest/test.ps4controller` and run docker-compose up.
-      **2.6. v2v-microservice:** On this folder you can find the microservice for communication across vehicles.
-      **2.7. docker-compose.yml & configuration:** Files to run all the microservices on the car at the same time.
+      **2.2. imu-microservice:** On this folder the code for running the imu microservice can be found.
+      **2.3. Interceptor:** This folder contains the interceptor microservice, which is responsible to handle sensors and internal communications. It is possible to build a docker image directly on this folder to run the related microservice individually.
+      **2.4. app-server:** On this folder the server microservice to run on the car for the android application can be found.
+      **2.5. opendlv-signal-viewer:** On this submodule, you are going to be redirected to a new repository. This code is used to visualize the data exchanged during the communication.
+      **2.6. opendlv.miniature:** On this submodule, you can find the ps4 microservice. By clicking on that you will be redirected to a new repository. There you should select the `dit168` branch, go under `usecases/latest/test.ps4controller` and run docker-compose up.
+      **2.7. v2v-microservice:** On this folder you can find the microservice for communication across vehicles.
+      **2.8. docker-compose.yml & configuration:** Files to run all the microservices on the car at the same time.
 
 **3. test:** This folder contains the TDD tests designed at the beginning of the project, but not used along the development phases and the dockerfile to build the test environment.
 
@@ -67,6 +68,7 @@ docker pull laiz/v2v
 docker pull laiz/interceptor
 docker pull laiz/app
 docker pull laiz/webview
+docker pull laiz/imu
 ```
 Two docker images are built for the Ubuntu, in case of need or for testing purposes. They can be found on our [Webview_Ubuntu Docker hub repository](https://hub.docker.com/r/laiz/webview_ubuntu/), and [V2V_Ubuntu Docker hub repository](https://hub.docker.com/r/laiz/v2v_ubuntu/) or you can add the following command to your terminal:
 
