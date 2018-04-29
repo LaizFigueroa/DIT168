@@ -30,7 +30,6 @@
 #ifdef __cplusplus
 extern "C"{
 #include <roboticscape.h>
-#include <rc_usefulincludes.h>
 }
 #endif
 
@@ -38,7 +37,7 @@ extern "C"{
 /** INTERNAL COMMUNICATIONS *****************/
 /********************************************/
 
-static const int IMU_CHANNEL    = 243;
+static const int IMU_CHANNEL    = 249;
 static const int INTERNAL_CHANNEL    = 240;
 
 /********************************************/
@@ -55,6 +54,6 @@ class Imu {
 private:
     std::shared_ptr<cluon::OD4Session>  imu;
     std::shared_ptr<cluon::OD4Session>  internal;
-}
+};
 
 #endif /* imu_hpp */
