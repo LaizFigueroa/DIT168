@@ -14,7 +14,7 @@
 
 /** ADD YOUR CAR_IP AND GROUP_ID HERE:  *****************/
 
-static std::string CAR_IP = "172.20.10.7";
+static std::string CAR_IP;
 static const std::string YOUR_GROUP_ID  = "100";
 
 /********************************************************/
@@ -35,7 +35,7 @@ static const int FOLLOWER_STATUS 	= 3001;
 /** INTERNAL COMMUNICATIONS *****************/
 /********************************************************/
 
-static const int INTERNAL_CHANNEL	= 111;
+static const int INTERNAL_CHANNEL	= 240;
 
 static const int PEDAL_POSITION		= 1041;
 static const int GROUND_STEERING	= 1045;
