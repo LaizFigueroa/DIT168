@@ -23,7 +23,7 @@ int main(){
     rc_initialize();
     rc_set_state(RUNNING);
     
-    while (rec_get_state() != EXITING || rec_get_state() != PAUSED) {
+    while (rc_get_state() == RUNNING) {
         if (rc_is_gyro_calibrated() != 1){ // Check gyroscope calibration before starting to use the API
             std::cout << "WARNING: Gyroscope is not calibrated" << std::endl;
         }
@@ -50,8 +50,8 @@ int main(){
             }
         }
     }
-    rc_power_off_imu(); //To stop the IMU cleanly and put it into a low power state
-    rc_cleanup(); //undo everything done by initialize cape
+    rc_power_off_imu(); // To stop the IMU cleanly and put it into a low power state
+    rc_cleanup(); // Undo everything done by initialize cape
     fflush(stdout);
     return 0;
 }
