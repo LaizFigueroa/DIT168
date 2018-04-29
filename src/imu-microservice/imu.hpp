@@ -21,11 +21,9 @@
 #include <stdio.h>
 #include "cluon/OD4Session.hpp"
 #include "cluon/Envelope.hpp"
-#include "messages.hpp"
-#include "cluon-complete.hpp"
+#include "messages.hpp" 
 
-extern "C"
-{
+extern "C"{
 #include <roboticscape.h>
 }
 

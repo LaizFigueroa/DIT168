@@ -8,8 +8,10 @@ RUN apk update && \
         ca-certificates \
         cmake \
         g++ \
+        wget \
         make && \
-    apk add libcluon --no-cache --repository https://chrberger.github.io/libcluon/alpine/v3.7 --allow-untrusted
+    apk add libcluon --no-cache --repository https://chrberger.github.io/libcluon/alpine/v3.7 --allow-untrusted &&\
+    apk add --repository https://github.com/StrawsonDesign/Robotics_Cape_Installer/releases/download/v0.4.1/roboticscape_0.4.1_armhf.deb --allow-untrusted
 ADD . /src/imu-microservice
 WORKDIR /src/imu-microservice
 RUN ls &&\
@@ -27,6 +29,7 @@ RUN cat /etc/apk/repositories && \
     echo http://dl-4.alpinelinux.org/alpine/v3.7/community >> /etc/apk/repositories
 RUN apk update && \
     apk add libcluon --no-cache --repository https://chrberger.github.io/libcluon/alpine/v3.7 --allow-untrusted && \
+    apk add --no-cache --repository https://github.com/StrawsonDesign/Robotics_Cape_Installer/releases/download/v0.4.1/roboticscape_0.4.1_armhf.deb --allow-untrusted && \
     mkdir /opt
 WORKDIR /opt
 COPY --from=builder /tmp/imu .
