@@ -9,9 +9,9 @@ int main(int argc, char **argv) {
       if (0 == commandlineArguments.count("ip")){
           std::cout << " Error, IP set to default "<< std::endl;
       } else {
-    YOUR_CAR_IP = (commandlineArguments["ip"]);  
+    CAR_IP = (commandlineArguments["ip"]);  
       }
-     std::cout << "IP set to:" << YOUR_CAR_IP << std::endl;
+     std::cout << "IP set to:" << CAR_IP << std::endl;
 
     float angle = 0;
     float speed = 0;
