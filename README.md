@@ -10,7 +10,9 @@ This repository is divided into three main folders:
 
 **1. Joystick:** Where the code for the Android app is stored. 
 
-**2. src:** Where all the source code is available, including links to other repositories forked and the docker-compose file used to run the microservices.
+**2. scripts:** On this folder all the scripts used by travis to push the docker images can be found.
+
+**3. src:** Where all the source code is available, including links to other repositories forked and the docker-compose file used to run the microservices.
       **2.1. Ancient:** Code that was used in the development phases and is not required anymore.
       **2.2. imu-microservice:** On this folder the code for running the imu microservice can be found.
       **2.3. Interceptor:** This folder contains the interceptor microservice, which is responsible to handle sensors and internal communications. It is possible to build a docker image directly on this folder to run the related microservice individually.
@@ -20,9 +22,9 @@ This repository is divided into three main folders:
       **2.7. v2v-microservice:** On this folder you can find the microservice for communication across vehicles.
       **2.8. docker-compose.yml & configuration:** Files to run all the microservices on the car at the same time.
 
-**3. test:** This folder contains the TDD tests designed at the beginning of the project, but not used along the development phases and the dockerfile to build the test environment.
+**4. test:** This folder contains the TDD tests designed at the beginning of the project, but not used along the development phases and the dockerfile to build the test environment.
 
-On the root directory, there are documents that are important for the project's organization, existence, and maintenance, such as the code conventions used to build the project, the license, the contributing, the code of conduct, scripts, Travis, git modules list.
+On the root directory, there are documents that are important for the project's organization, existence, and maintenance, such as the code conventions used to build the project, the license, the contributing, the code of conduct, Travis, git modules list.
 
 ## Getting Started
 These instructions will get you a copy of the project up and run on your local machine for development and testing purposes.
@@ -68,7 +70,6 @@ docker pull laiz/v2v
 docker pull laiz/interceptor
 docker pull laiz/app
 docker pull laiz/webview
-docker pull laiz/imu
 ```
 Two docker images are built for the Ubuntu, in case of need or for testing purposes. They can be found on our [Webview_Ubuntu Docker hub repository](https://hub.docker.com/r/laiz/webview_ubuntu/), and [V2V_Ubuntu Docker hub repository](https://hub.docker.com/r/laiz/v2v_ubuntu/) or you can add the following command to your terminal:
 
