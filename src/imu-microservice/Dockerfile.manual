@@ -1,17 +1,18 @@
-FROM pipill/armhf-alpine:edge as builder
-RUN [ "cross-build-start" ]
-RUN cat /etc/apk/repositories && \
-    echo http://dl-4.alpinelinux.org/alpine/v3.7/main > /etc/apk/repositories && \
-    echo http://dl-4.alpinelinux.org/alpine/v3.7/community >> /etc/apk/repositories
-RUN apk update && \
-    apk --no-cache add \
-        ca-certificates \
+FROM arm32v7/debian as builder
+RUN apt update && \
+    apt-get -y install ca-certificates \
         cmake \
         g++ \
-        wget \
-        make && \
-    apk add libcluon --no-cache --repository https://chrberger.github.io/libcluon/alpine/v3.7 --allow-untrusted &&\
-    apk add --repository https://github.com/StrawsonDesign/Robotics_Cape_Installer/releases/download/v0.4.1/roboticscape_0.4.1_armhf.deb --allow-untrusted
+        wget\
+        make
+RUN apt-get install -my wget gnupg &&\
+    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 8EA63C9470BA0E595B75BBA2A92E492AC0B8C7EC &&\
+    apt install -y dirmngr software-properties-common &&\
+    add-apt-repository ppa:chrberger/libcluon &&\
+    apt update &&\
+    apt install libcluon &&\
+    wget https://github.com/StrawsonDesign/Robotics_Cape_Installer/releases/download/v0.4.1/roboticscape_0.4.1_armhf.deb
+RUN DEBIAN_FRONTEND=noninteractive dpkg -i roboticscape_0.4.1_armhf.deb
 ADD . /src/imu-microservice
 WORKDIR /src/imu-microservice
 RUN ls &&\
@@ -22,16 +23,16 @@ RUN ls &&\
 RUN [ "cross-build-end" ]
 
 
-FROM pipill/armhf-alpine:edge
-RUN [ "cross-build-start" ]
-RUN cat /etc/apk/repositories && \
-    echo http://dl-4.alpinelinux.org/alpine/v3.7/main > /etc/apk/repositories && \
-    echo http://dl-4.alpinelinux.org/alpine/v3.7/community >> /etc/apk/repositories
-RUN apk update && \
-    apk add libcluon --no-cache --repository https://chrberger.github.io/libcluon/alpine/v3.7 --allow-untrusted && \
-    apk add --no-cache --repository https://github.com/StrawsonDesign/Robotics_Cape_Installer/releases/download/v0.4.1/roboticscape_0.4.1_armhf.deb --allow-untrusted && \
+FROM arm32v7/debian
+RUN apt update && \
+    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 8EA63C9470BA0E595B75BBA2A92E492AC0B8C7EC &&\
+    apt install -y dirmngr software-properties-common &&\
+    add-apt-repository ppa:chrberger/libcluon &&\
+    apt update &&\
+    apt install libcluon &&\
+    wget https://github.com/StrawsonDesign/Robotics_Cape_Installer/releases/download/v0.4.1/roboticscape_0.4.1_armhf.deb
+RUN DEBIAN_FRONTEND=noninteractive dpkg -i roboticscape_0.4.1_armhf.deb &&\
     mkdir /opt
 WORKDIR /opt
 COPY --from=builder /tmp/imu .
-RUN [ "cross-build-end" ]
 CMD ["/opt/imu"]

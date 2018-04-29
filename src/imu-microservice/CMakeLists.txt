@@ -3,6 +3,7 @@ project(imu)
 set(CMAKE_CXX_STANDARD 14)
 
 find_package(libcluon REQUIRED)
+find_library(roboticscape roboticscape libraries)
 include_directories(SYSTEM ${CLUON_INCLUDE_DIRS})
 
 add_custom_command(OUTPUT ${CMAKE_BINARY_DIR}/messages.cpp
@@ -18,3 +19,5 @@ add_executable(${PROJECT_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/${PROJECT_NAME}.cpp $
 
 target_link_libraries(${PROJECT_NAME} ${CLUON_LIBRARIES})
 target_link_libraries(${PROJECT_NAME} roboticscape)
+add_library(roboticscape SHARED IMPORTED)
+set_property(TARGET roboticscape PROPERTY IMPORTED_LOCATION "/usr/lib/libroboticscape.so")

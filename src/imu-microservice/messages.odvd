@@ -39,5 +39,5 @@ message opendlv.proxy.DistanceReading [id = 1039] {
 
 message ImuData [id = 1412] {
   float accel [id = 1];
-  float gyro [id =2];
+  float gyro [id = 2];
 }
