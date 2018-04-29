@@ -5,8 +5,13 @@
 int main(int argc, char **argv) {
     std::shared_ptr<V2VService> v2vService = std::make_shared<V2VService>();
 
-    /*auto commandlineArguments = cluon::getCommandlineArguments(argc, argv);
-    CAR_IP = commandlineArguments["ip"];*/
+     auto commandlineArguments = cluon::getCommandlineArguments(argc, argv);    
+      if (0 == commandlineArguments.count("ip")){
+          std::cout << " Error, IP set to default "<< std::endl;
+      } else {
+    YOUR_CAR_IP = (commandlineArguments["ip"]);  
+      }
+     std::cout << "IP set to:" << YOUR_CAR_IP << std::endl;
 
     float angle = 0;
     float speed = 0;
