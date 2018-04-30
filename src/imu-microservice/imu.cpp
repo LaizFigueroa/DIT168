@@ -28,11 +28,11 @@ int main(){
             std::cout << "WARNING: Gyroscope is not calibrated" << std::endl;
         }
         else {
-        
-            rc_imu_config_t new_config = rc_get_default_imu_config(); // Setting the default configuration for the imu
+            
+            rc_imu_config_t conf = rc_default_imu_config(); // Setting the default configuration for the i$
             rc_imu_data_t imu_data; // Get the data from the imu using the library structure
             
-            if (rc_initialize_imu(&imu_data, new_config) != 0){ // Initialize imu
+            if (rc_initialize_imu(&imu_data, conf) != 0){ // Initialize imu
                 std::cout << "ERROR: Initialization failed" << std::endl;
                 return -1;
             }
@@ -46,15 +46,22 @@ int main(){
                     std::cout << "Accelerometer values" << std::endl; // Print the value stored as received
                     printf("%6.2f\n", accel_y);
                     
+                    if(accel_y <= 0.34 & accel_y > 0.00){
+                        accel_y = 0.00;
+                        std::cout << "Clean accelerometer values" << std::endl; // Print the value stored $
+                        printf("%6.2f\n", accel_y);
+                    }
                 }
             }
         }
     }
     rc_power_off_imu(); // To stop the IMU cleanly and put it into a low power state
-    rc_cleanup(); // Undo everything done by initialize cape
+    int rc_cleanup(); // Undo everything done by initialize cape
     fflush(stdout);
     return 0;
 }
+
+
 
 
 ///**

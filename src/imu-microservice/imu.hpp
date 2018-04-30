@@ -23,22 +23,20 @@
 #include <iostream>
 #include <sstream>
 #include <thread>
-#include "cluon/OD4Session.hpp"
-#include "cluon/Envelope.hpp"
-#include "messages.hpp" 
+//#include "cluon/OD4Session.hpp"
+//#include "cluon/Envelope.hpp"
+//#include "messages.hpp"
 
-#ifdef __cplusplus
 extern "C"{
 #include <roboticscape.h>
 }
-#endif
 
 /********************************************/
 /** INTERNAL COMMUNICATIONS *****************/
 /********************************************/
 
-static const int IMU_CHANNEL    = 249;
-static const int INTERNAL_CHANNEL    = 240;
+//static const int IMU_CHANNEL    = 249;
+//static const int INTERNAL_CHANNEL    = 240;
 
 /********************************************/
 /** VARIABLES *******************************/
@@ -50,10 +48,10 @@ float accel_y;
 /** CLASS ***********************************/
 /********************************************/
 
-class Imu {
-private:
-    std::shared_ptr<cluon::OD4Session>  imu;
-    std::shared_ptr<cluon::OD4Session>  internal;
-};
+//class Imu {
+//private:
+//    std::shared_ptr<cluon::OD4Session>  imu;
+//    std::shared_ptr<cluon::OD4Session>  internal;
+//};
 
 #endif /* imu_hpp */
