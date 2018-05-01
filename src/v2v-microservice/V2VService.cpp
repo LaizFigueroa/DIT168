@@ -110,7 +110,12 @@ V2VService::V2VService() {
     internal = 
         std::make_shared<cluon::OD4Session>(INTERNAL_CHANNEL, [this](cluon::data::Envelope &&envelope) noexcept {});
 
-
+    imu =
+    std::make_shared<cluon::UDPReceiver>("0.0.0.0", IMU_PORT,
+                                         [this](std::string &&data, std::string &&sender, std::chrono::system_clock::time_point &&ts) noexcept {
+                                             std::cout << "IMU received ";
+                                             std::pair<int16_t, std::string> imu_data = extract(data);
+                                         });
 
     /*
      * Each car declares an incoming UDPReceiver for messages directed at them specifically. This is where messages
