@@ -95,26 +95,19 @@ int main() {
                                 memset(buffer, 0, sizeof(buffer));
                                 
                                 //sends to the client
-                                if (sendto(server, &buffer, sizeof(buffer), 0, (struct sockaddr*) &server_addr, &size) == -1){
+                                if (send(server, &buffer, sizeof(buffer), 0)== -1){ //, (struct sockaddr*) &server_addr, &size) == -1){
                                     cout << "Sending failed" << endl;
                                     break;
+                                
                                 }else
+                                 // CONVERTING the float into a char     
+                                    sprintf (buffer, "%6.2f", accel_y);
                                 
-                                    // CONVERTING the float into a char
-                                    float *accel_y = &accel_y;
-                                    char *PByte_accel_y = (char*)accel_y;
-                                
-                                    for(int i =0; i < 4; i++){
-                                        buffer[i] = *PByte_accel_y;
-                                        PByte_accel_y++;
-                                    }
-                                
-                                sendto(server, &buffer, sizeof(buffer), 0, (struct sockaddr*) &server_addr, &size);
-                                cout << "Closing the socket" << endl;
-                                closesocket(SendSocket);
-                                
-                                cout << "Closing the socket" << endl;
-                                closesocket(SendSocket);
+                                    send(server, &buffer, sizeof(buffer), 0);// (struct sockaddr*) &server_addr, &size);
+                                 
+                                    cout << "Closing the socket" << endl;
+                                    #define closesocket(server)
+                                    closesocket(server);
                             }
                         }
                     }
