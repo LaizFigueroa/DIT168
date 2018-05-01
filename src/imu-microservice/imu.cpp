@@ -64,52 +64,49 @@ int main() {
                         std::cout << "Clean accelerometer values" << std::endl; // Print the value stored $
                         printf("%6.2f\n", accel_y);
                         
-                        /*************************************
-                         *                                   *
-                         *          SERVER (SENDING)         *
-                         *                                   *
-                         *************************************/
-                        
-                        if (server == -1) {
-                            cout << "\n Error establishing socket..." << endl;
-                            exit(1);
-                        }
-                        
-                        cout << "\n=> Socket server has been created..." << endl;
-                        server_addr.sin_family = AF_INET;
-                        server_addr.sin_addr.s_addr = inet_addr("172.20.10.2");
-                        server_addr.sin_port = htons(50002);
-                        bind(server, (sockaddr * ) & server_addr, size);
-                        
-                        /**
-                         * this while loop continously sending data to the port
-                         */
-                        while (1) {
-                            int returnvalue=0;
-                            char buffer[SOCKET_BUFFER_SIZE];
-                            size_t pos = 0;
-                            
-                            while (1) {
-                                size_t array = sizeof(buffer);
-                                cout << "before  ..." << endl;
-                                memset(buffer, 0, sizeof(buffer));
-                                
-                                //sends to the client
-                                if (send(server, &buffer, sizeof(buffer), 0)== -1){ //, (struct sockaddr*) &server_addr, &size) == -1){
-                                    cout << "Sending failed" << endl;
-                                    break;
-                                
-                                }else
-                                 // CONVERTING the float into a char     
-                                    sprintf (buffer, "%6.2f", accel_y);
-                                
-                                    send(server, &buffer, sizeof(buffer), 0);// (struct sockaddr*) &server_addr, &size);
-                                 
-                                    cout << "Closing the socket" << endl;
-                                    #define closesocket(server)
-                                    closesocket(server);
+                 /*************************************
+                  *                                   *
+                  *           (SENDING)               *
+                  *                                   *
+                  *************************************/
+    
+                    if (client == -1) {
+                     cout << "\n Error establishing socket..." << endl;
+                     exit(1);
+                     }
+    
+                     cout << "\n=> Socket client has been created..." << endl;
+                     client_addr.sin_family = AF_INET;
+                     client_addr.sin_addr.s_addr = inet_addr("127.0.0.1");
+                     client_addr.sin_port = htons(50002);
+    
+                     int returnvalue=0;
+                     char buffer[SOCKET_BUFFER_SIZE];
+                     size_t pos = 0;
+    
+                     size_t array = sizeof(buffer);
+                     cout << "before  ..." << endl;
+            
+                     /* this while loop continously sending data to the port */
+                     while (1) {
+                        memset(buffer, 0, sizeof(buffer));
+                        sprintf (buffer, "%6.2f", accel_y);
+            
+                        //checking the sent values
+                        if (sendto(client, &buffer, sizeof(buffer), 0, (struct sockaddr*) &client_addr, sizeof(sockaddr))== -1){
+                            cout << "Sending failed" << endl;
+                            break;
+                
+                        }else{
+                            // CONVERTING the float into a char
+                            sprintf (buffer, "%6.2f", accel_y);
+                            cout << "Sending success" << endl;
                             }
-                        }
+                      }
+                    #define closesocket(client)
+                    closesocket(client);
+                    cout << "Closing the socket" << endl;   
+                  
                     }
                 }
             }
