@@ -19,9 +19,22 @@
 
 #include "imu.hpp"
 
-int main(){
-    rc_initialize();
-    rc_set_state(RUNNING);
+using namespace std;
+int SOCKET_BUFFER_SIZE = 1024;
+socklen_t *addrlen;
+int on=1;
+
+int main() {
+    sockaddr_in server_addr;
+    int server;
+    socklen_t size = sizeof(server_addr);
+    server = socket(AF_INET, SOCK_DGRAM, 0);
+    
+    /*************************************
+     *                                   *
+     *               IMU PART            *
+     *                                   *
+     *************************************/
     
     while (rc_get_state() == RUNNING) {
         if (rc_is_gyro_calibrated() != 1){ // Check gyroscope calibration before starting to use the API
@@ -50,6 +63,60 @@ int main(){
                         accel_y = 0.00;
                         std::cout << "Clean accelerometer values" << std::endl; // Print the value stored $
                         printf("%6.2f\n", accel_y);
+                        
+                        /*************************************
+                         *                                   *
+                         *          SERVER (SENDING)         *
+                         *                                   *
+                         *************************************/
+                        
+                        if (server == -1) {
+                            cout << "\n Error establishing socket..." << endl;
+                            exit(1);
+                        }
+                        
+                        cout << "\n=> Socket server has been created..." << endl;
+                        server_addr.sin_family = AF_INET;
+                        server_addr.sin_addr.s_addr = inet_addr("172.20.10.2");
+                        server_addr.sin_port = htons(50002);
+                        bind(server, (sockaddr * ) & server_addr, size);
+                        
+                        /**
+                         * this while loop continously sending data to the port
+                         */
+                        while (1) {
+                            int returnvalue=0;
+                            char buffer[SOCKET_BUFFER_SIZE];
+                            size_t pos = 0;
+                            
+                            while (1) {
+                                size_t array = sizeof(buffer);
+                                cout << "before  ..." << endl;
+                                memset(buffer, 0, sizeof(buffer));
+                                
+                                //sends to the client
+                                if (sendto(server, &buffer, sizeof(buffer), 0, (struct sockaddr*) &server_addr, &size) == -1){
+                                    cout << "Sending failed" << endl;
+                                    break;
+                                }else
+                                
+                                    // CONVERTING the float into a char
+                                    float *accel_y = &accel_y;
+                                    char *PByte_accel_y = (char*)accel_y;
+                                
+                                    for(int i =0; i < 4; i++){
+                                        buffer[i] = *PByte_accel_y;
+                                        PByte_accel_y++;
+                                    }
+                                
+                                sendto(server, &buffer, sizeof(buffer), 0, (struct sockaddr*) &server_addr, &size);
+                                cout << "Closing the socket" << endl;
+                                closesocket(SendSocket);
+                                
+                                cout << "Closing the socket" << endl;
+                                closesocket(SendSocket);
+                            }
+                        }
                     }
                 }
             }
@@ -60,41 +127,3 @@ int main(){
     fflush(stdout);
     return 0;
 }
-
-
-
-
-///**
-//* Implementation of the Imu class declared in imu.hpp
-//*/
-//Imu::Imu() {
-//
-//cluon::OD4Session od3(224, {});
-//    internal =
-//    std::make_shared<cluon::OD4Session>(INTERNAL_CHANNEL, [this](cluon::data::Envelope &&envelope) noexcept {});
-//
-//    imu =
-//    std::make_shared<cluon::OD4Session>(IMU_CHANNEL, [this](cluon::data::Envelope &&envelope) noexcept {});
-//
-//}
-//
-//    void Imu::sendAcceleration() {
-//        if (!followerIp.empty()) return;
-//        ImuData imuData;
-//        imuData.accel();
-//        imuData.gyro();
-//        internal->send(imuData);
-//    }
-//
-//    GetAceleration acceleration = cluon::extractMessage<ImuData>(std::move(envelope));
-//    std::cout << "received 'IMU acceleration' : '" << acceleration.accel() << "received 'IMU gyroscope' : '" << acceleration.gyro() << "'." << std::endl;
-//
-//    internal->send(acceleration);
-//
-//
-//    if(accel_y<0.5 && accel_y>0.1) // Cleaning the values to 0
-//        accel_y = 0.0;
-//
-//    std::cout << "Data cleaned" << std::endl;
-//    std::cout << accel_y << std::endl;
-

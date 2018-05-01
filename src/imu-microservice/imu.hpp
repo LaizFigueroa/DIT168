@@ -27,6 +27,15 @@
 //#include "cluon/Envelope.hpp"
 //#include "messages.hpp"
 
+#include <iostream>
+#include <string.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <sys/select.h>
+#include <thread>
+
 extern "C"{
 #include <roboticscape.h>
 }
