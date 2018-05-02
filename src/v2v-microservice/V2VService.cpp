@@ -1,5 +1,6 @@
 	#include "V2VService.hpp"
-	 
+	 #include <iostream>       // std::cout
+	 #include <queue>          
 	 typedef struct {
 	    
 	    float pedal;
