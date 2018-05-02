@@ -25,10 +25,10 @@ socklen_t *addrlen;
 int on=1;
 
 int main() {
-    sockaddr_in server_addr;
-    int server;
-    socklen_t size = sizeof(server_addr);
-    server = socket(AF_INET, SOCK_DGRAM, 0);
+    sockaddr_in client_addr;
+    int client;
+    socklen_t size = sizeof(client_addr);
+    client = socket(AF_INET, SOCK_DGRAM, 0);
     
     /*************************************
      *                                   *
