@@ -63,6 +63,7 @@ int main() {
                         accel_y = 0.00;
                         std::cout << "Clean accelerometer values" << std::endl; // Print the value stored $
                         printf("%6.2f\n", accel_y);
+                     }
                         
                  /*************************************
                   *                                   *
@@ -87,8 +88,7 @@ int main() {
                      size_t array = sizeof(buffer);
                      cout << "before  ..." << endl;
             
-                     /* this while loop continously sending data to the port */
-                     while (1) {
+                     /* Sending data to the port */   
                         memset(buffer, 0, sizeof(buffer));
                         sprintf (buffer, "%6.2f", accel_y);
             
@@ -102,7 +102,7 @@ int main() {
                             sprintf (buffer, "%6.2f", accel_y);
                             cout << "Sending success" << endl;
                             }
-                      }
+                        
                     #define closesocket(client)
                     closesocket(client);
                     cout << "Closing the socket" << endl;   
@@ -111,7 +111,6 @@ int main() {
                 }
             }
         }
-    }
     rc_power_off_imu(); // To stop the IMU cleanly and put it into a low power state
     int rc_cleanup(); // Undo everything done by initialize cape
     fflush(stdout);
