@@ -6,6 +6,12 @@
 #include <arpa/inet.h>
 #include <sys/select.h>
 #include <thread>
+#include "cluon/OD4Session.hpp"
+#include "cluon/Envelope.hpp"
+#include "messages.hpp"
+
+
+static const int IMU_CHANNEL            = 249;
 
 
 using namespace std;
@@ -55,5 +61,15 @@ int main() {
             memset(buffer, 0, array);
             
         }
+        
+        cluon::OD4Session imuSender(IMU_CHANNEL,
+                              [](cluon::data::Envelope &&envelope) noexcept {});
+
+        ImuData id;
+        id.accel_y(imu_value);
+        id.accel_x(0.0);
+        id.accel_z(0.0);
+        imuSender.send(id);
+
     }
 }
