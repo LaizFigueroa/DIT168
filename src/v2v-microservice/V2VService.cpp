@@ -1,15 +1,54 @@
-#include "V2VService.hpp"
+﻿#include "V2VService.hpp"
+#include <iostream>       // std::cout
+#include <queue>          // std::queue
+#include <deque>
+
+
+ typedef struct {
+  
+  float pedal;
+  float steer; 
  
- cluon::OD4Session od3(224, {});
+} platooning;
+
+cluon::OD4Session od3(242, {});
+std::queue <platooning> values;
+std::queue <int64_t> timestamp;
+std::queue <float> turn;
+platooning  p;
+int64_t val=0;
+int64_t reset=0;
+float zero=0;
+float ang;
+bool follower=false;
+opendlv::proxy::GroundSteeringReading followerAngle;
+opendlv::proxy::PedalPositionReading followerSpeed;
+
 
 int main(int argc, char **argv) {
-    std::shared_ptr<V2VService> v2vService = std::make_shared<V2VService>();
+        std::shared_ptr<V2VService> v2vService = std::make_shared<V2VService>();
+         auto commandlineArguments = cluon::getCommandlineArguments(argc, argv);
+    
+                           
+    
+      if (0 == commandlineArguments.count("ip") && 0==commandlineArguments.count("limit")){
+          std::cout << "Please enter correct ip "<< std::endl;
+      } else {
+    CAR_IP = (commandlineArguments["ip"]);
+   reset=std::stoi(commandlineArguments["limit"]);
+      }
+     std::cout << "IP set to:" << CAR_IP << std::endl;
 
-    /*auto commandlineArguments = cluon::getCommandlineArguments(argc, argv);
-    CAR_IP = commandlineArguments["ip"];*/
-
+	 for (int ng=0;ng<reset;ng++){
+	 turn.push(zero); 
+	 }
     float angle = 0;
     float speed = 0;
+
+ 
+
+  //cluon::data::TimeStamp  *t  = timestamp.data();
+
     while (1) {
         int choice;
         std::string groupId;
@@ -44,8 +83,8 @@ int main(int argc, char **argv) {
                 break;
             }
             case 5: while(1){
-
-                        cluon::OD4Session od4(111,[&angle, &speed](cluon::data::Envelope &&envelope) noexcept {
+				//LeaderStatus leaderStatus;
+                        cluon::OD4Session od4(245,[&angle, &speed](cluon::data::Envelope &&envelope) noexcept {
 
                             if (envelope.dataType() == opendlv::proxy::GroundSteeringReading::ID()) {
                                 opendlv::proxy::GroundSteeringReading receivedMsg = cluon::extractMessage<opendlv::proxy::GroundSteeringReading>(std::move(envelope));
@@ -66,6 +105,11 @@ int main(int argc, char **argv) {
 
                         });
                         v2vService->leaderStatus(speed, angle, 100);
+			 //leaderStatus.speed(speed);
+            		 //leaderStatus.steeringAngle(angle);
+           		 //leaderStatus.distanceTraveled(100);
+            		 //od3->send(leaderStatus);
+
 			
                     } break;
             case 6: v2vService->followerStatus(); break;
@@ -78,7 +122,7 @@ int main(int argc, char **argv) {
  * Implementation of the V2VService class as declared in V2VService.hpp
  */
 V2VService::V2VService() {
-
+ //bool follower=false;
     /*
      * The broadcast field contains a reference to the broadcast channel which is an OD4Session. This is where
      * AnnouncePresence messages will be received.
@@ -98,7 +142,7 @@ V2VService::V2VService() {
 		      internal->send(ap);
                       break;
                   }
-                  default: std::cout << "¯\\_(ツ)_/¯" << std::endl;
+                  default: std::cout << "Â¯\\_(ã)_/Â¯" << std::endl;
               }
           });
 
@@ -107,7 +151,7 @@ V2VService::V2VService() {
 
 
 
-    /*
+ /*
      * Each car declares an incoming UDPReceiver for messages directed at them specifically. This is where messages
      * such as FollowRequest, FollowResponse, StopFollow, etc. are received.
      */
@@ -119,10 +163,11 @@ V2VService::V2VService() {
 
                switch (msg.first) {
                    case FOLLOW_REQUEST: {
+		
                        FollowRequest followRequest = decode<FollowRequest>(msg.second);
                        std::cout << "received '" << followRequest.LongName()
                                  << "' from '" << sender << "'!" << std::endl;
-		 
+		 	
                        // After receiving a FollowRequest, check first if there is currently no car already following.
                        if (followerIp.empty()) {
                            unsigned long len = sender.find(':');    // If no, add the requester to known follower slot
@@ -134,6 +179,8 @@ V2VService::V2VService() {
                        break;
                    }
                    case FOLLOW_RESPONSE: {
+		       follower=true;
+                       std::cout << "value of follower after assigning true   '" << follower << std::endl;
                        FollowResponse followResponse = decode<FollowResponse>(msg.second);
                        std::cout << "received '" << followResponse.LongName()
                                  << "' from '" << sender << "'!" << std::endl;
@@ -168,30 +215,43 @@ V2VService::V2VService() {
 
                        break;
                    }
-                   case LEADER_STATUS: {
-                        LeaderStatus leaderStatus = decode<LeaderStatus>(msg.second);
+                   case LEADER_STATUS: {        
+
+                       LeaderStatus leaderStatus = decode<LeaderStatus>(msg.second);
                        std::cout << " Received '" << leaderStatus.LongName()
                                  << "' from '" << sender << "'!" << std::endl;
 		               
                        std::cout << " Leader's steeringAngle: " << leaderStatus.steeringAngle() << std::endl;
                        std::cout << "Leader's speed: " << leaderStatus.speed() << std::endl;
-		        	         std::cout << "Distance traveled" << leaderStatus.distanceTraveled() << "'!" << std::endl;
+		       std::cout << "Distance traveled" << leaderStatus.distanceTraveled() << "'!" << std::endl;
 
-		                  internal->send(leaderStatus);
-                       /* TODO: implement follow logic */
-
- 		       		         opendlv::proxy::GroundSteeringReading followerAngle;
-                       followerAngle.steeringAngle(leaderStatus.steeringAngle());
-                       opendlv::proxy::PedalPositionReading followerSpeed;
-                       followerSpeed.percent(leaderStatus.speed());
-                       od3.send(followerAngle);
-                       od3.send(followerSpeed);
+		       internal->send(leaderStatus);
+					       std::cout << "sent internal" <<std::endl;
+	                       /* TODO: implement follow logic */
+		                
+				                       std::cout << "value of follower before if " << follower << std::endl;
+			
+			
+			if (leaderStatus.steeringAngle()!=0 && leaderStatus.speed()!=0){
+			 std::cout << "Recording... " << leaderStatus.steeringAngle() << std::endl;
+			turn.push(leaderStatus.steeringAngle());			
+			ang=turn.front();
+			turn.pop();
+			} else if (leaderStatus.steeringAngle()==0 && leaderStatus.speed()!=0){
+			ang=0;
+			}
+			followerAngle.steeringAngle(ang);
+			followerSpeed.percent(leaderStatus.speed());
+			od3.send(followerAngle);
+			od3.send(followerSpeed);
                        break;
                    }
-                   default: std::cout << "¯\\_(ツ)_/¯" << std::endl;
+                   default: std::cout << "Â¯\\_(ã)_/Â¯" << std::endl;
                }
            });
 }
+
+   
 
 /**
  * This function sends an AnnouncePresence (id = 1001) message on the broadcast channel. It will contain information
