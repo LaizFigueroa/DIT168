@@ -3,6 +3,7 @@
  cluon::OD4Session od3(224, {});
 
 int main(int argc, char **argv) {
+
     std::shared_ptr<V2VService> v2vService = std::make_shared<V2VService>();
 
      auto commandlineArguments = cluon::getCommandlineArguments(argc, argv);    
@@ -111,12 +112,14 @@ V2VService::V2VService() {
         std::make_shared<cluon::OD4Session>(INTERNAL_CHANNEL, [this](cluon::data::Envelope &&envelope) noexcept {});
 
     imu =
-    std::make_shared<cluon::UDPReceiver>("0.0.0.0", IMU_PORT,
-                                         [this](std::string &&data, std::string &&sender, std::chrono::system_clock::time_point &&ts) noexcept {
-                                             std::cout << "IMU received ";
-                                             std::pair<int16_t, std::string> imu_data = extract(data);
-                                         });
+        std::make_shared<cluon::OD4Session>(IMU_CHANNEL, [this](cluon::data::Envelope &&envelope) noexcept {
+            if (envelope.dataType() == 1412) {
+                ImuData accel = cluon::extractMessage<ImuData>(std::move(envelope));
 
+                std::cout << "Received 'ImuData': Accel_x-> '"
+                                << accel.accel_x() << "', Accel_y-> '"
+                                << accel.accel_y() << "', Accel_z-> '" 
+                                << accel.accel_z() << "'. " << std::endl;}});
     /*
      * Each car declares an incoming UDPReceiver for messages directed at them specifically. This is where messages
      * such as FollowRequest, FollowResponse, StopFollow, etc. are received.
