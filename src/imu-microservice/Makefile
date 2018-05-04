@@ -19,7 +19,7 @@ TARGET = imu
 
 CXX		:= g++
 LINKER		:= g++ -o
-CXXFLAGS	:= -c -Wall
+CXXFLAGS	:= -std=c++11
 LFLAGS		:= -pthread -lm -lrt -lroboticscape
 
 SOURCES		:= $(wildcard *.cpp)
