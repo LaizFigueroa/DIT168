@@ -31,9 +31,9 @@ RM		:= rm -f
 INSTALL		:= install -m 4755
 INSTALLDIR	:= install -d -m 755
 
-SYMLINK		:= ln -s -f
-SYMLINKDIR	:= /etc/roboticscape
-SYMLINKNAME	:= link_to_startup_program
+LINK		:= ln -s -f
+LINKDIR		:= /etc/roboticscape
+LINKNAME	:= link_to_startup_program
 
 
 # linking Objects
@@ -71,6 +71,6 @@ uninstall:
 
 runonboot:
 	@$(MAKE) install --no-print-directory
-	@$(SYMLINK) $(DESTDIR)$(prefix)/bin/$(TARGET) $(SYMLINKDIR)/$(SYMLINKNAME)
+	@$(LINK) $(DESTDIR)$(prefix)/bin/$(TARGET) $(LINKDIR)/$(LINKNAME)
 	@echo "$(TARGET) Set to Run on Boot"
 
