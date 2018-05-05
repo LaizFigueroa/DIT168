@@ -65,7 +65,7 @@ docker build -t test .
 docker run test
 ```
 ### Docker Image
-A docker image for the car is available on our [V2V Docker hub repository](https://hub.docker.com/r/laiz/v2v/), [App-Server Docker hub repository](https://hub.docker.com/r/laiz/app/), [Interceptor Docker hub repository](https://hub.docker.com/r/laiz/interceptor/),  [Webview Docker hub repository](https://hub.docker.com/r/laiz/webview/), and [Imu Docker hub repository](https://hub.docker.com/r/laiz/imu_receiver) or you can add the following command to your terminal:
+A docker image for the car is available on our [V2V Docker hub repository](https://hub.docker.com/r/laiz/v2v/), [App-Server Docker hub repository](https://hub.docker.com/r/laiz/app/), [Interceptor Docker hub repository](https://hub.docker.com/r/laiz/interceptor/),  [Webview Docker hub repository](https://hub.docker.com/r/laiz/webview/), and [Imu Docker hub repository](https://hub.docker.com/r/laiz/imu_receiver/) or you can add the following command to your terminal:
 ```
 docker pull laiz/v2v
 docker pull laiz/interceptor
