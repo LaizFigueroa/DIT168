@@ -1,0 +1,4 @@
+[submodule "opendlv-signal-viewer"]
+	branch = master
+[submodule "opendlv.miniature"]
+	branch = dit168

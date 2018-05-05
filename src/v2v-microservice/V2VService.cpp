@@ -3,10 +3,16 @@
  cluon::OD4Session od3(224, {});
 
 int main(int argc, char **argv) {
+
     std::shared_ptr<V2VService> v2vService = std::make_shared<V2VService>();
 
-    /*auto commandlineArguments = cluon::getCommandlineArguments(argc, argv);
-    CAR_IP = commandlineArguments["ip"];*/
+     auto commandlineArguments = cluon::getCommandlineArguments(argc, argv);    
+      if (0 == commandlineArguments.count("ip")){
+          std::cout << " Error, IP set to default "<< std::endl;
+      } else {
+    CAR_IP = (commandlineArguments["ip"]);  
+      }
+     std::cout << "IP set to:" << CAR_IP << std::endl;
 
     float angle = 0;
     float speed = 0;
@@ -101,12 +107,27 @@ V2VService::V2VService() {
                   default: std::cout << "¯\\_(ツ)_/¯" << std::endl;
               }
           });
-
+	
+/*
+* OD4Session Channel to send all the data exchanged on V2V and internally (differents CIDs) to one CID (240) and then be used 
+* by the webview.
+*/	
     internal = 
         std::make_shared<cluon::OD4Session>(INTERNAL_CHANNEL, [this](cluon::data::Envelope &&envelope) noexcept {});
-
-
-
+	
+/*
+* OD4Session Channel to receive accelometer data (accel_y) from the car to be used for the next step of development.
+*/	
+    imu =
+        std::make_shared<cluon::OD4Session>(IMU_CHANNEL, [this](cluon::data::Envelope &&envelope) noexcept {
+//            if (envelope.dataType() == 1412) {
+  //              ImuData accel = cluon::extractMessage<ImuData>(std::move(envelope));
+//
+  //              std::cout << "Received 'ImuData': Accel_x-> '"
+    //                            << accel.accel_x() << "', Accel_y-> '"
+      //                          << accel.accel_y() << "', Accel_z-> '" 
+        //                        << accel.accel_z() << "'. " << std::endl;}
+	});
     /*
      * Each car declares an incoming UDPReceiver for messages directed at them specifically. This is where messages
      * such as FollowRequest, FollowResponse, StopFollow, etc. are received.

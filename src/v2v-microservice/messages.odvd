@@ -49,7 +49,7 @@ message FollowerStatus [id = 3001] {
 }
 
 /*
-/* Internal
+* Internal
 */
 
 message opendlv.proxy.GroundSteeringReading [id = 1045] {
@@ -58,6 +58,16 @@ message opendlv.proxy.GroundSteeringReading [id = 1045] {
 
 message opendlv.proxy.PedalPositionReading [id = 1041] {
   float percent [id = 1];
+}
+
+/*
+* IMU 
+*/
+
+message ImuData [id = 1412] {
+  float accel_x [id = 1];
+  float accel_y [id = 2];
+  float accel_z [id = 3];
 }
 
 message opendlv.proxy.DistanceReading [id = 1039] {

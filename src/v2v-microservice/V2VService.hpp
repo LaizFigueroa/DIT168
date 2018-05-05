@@ -10,12 +10,20 @@
 #include "cluon/Envelope.hpp"
 #include "messages.hpp"
 #include <iostream>
+#include <string.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <sys/select.h>
+#include <thread>
+
 #include "cluon-complete.hpp"
 
 /** ADD YOUR CAR_IP AND GROUP_ID HERE:  *****************/
 
-static std::string CAR_IP = "172.20.10.7";
-static const std::string YOUR_GROUP_ID  = "100";
+static std::string CAR_IP;
+static const std::string YOUR_GROUP_ID  = "13";
 
 /********************************************************/
 /** DON'T CHANGE STUFF BELOW THIS LINE. *****************/
@@ -32,10 +40,11 @@ static const int LEADER_STATUS 		= 2001;
 static const int FOLLOWER_STATUS 	= 3001;
 
 /********************************************************/
-/** INTERNAL COMMUNICATIONS *****************/
+/** INTERNAL COMMUNICATIONS *****************************/
 /********************************************************/
 
-static const int INTERNAL_CHANNEL	= 111;
+static const int INTERNAL_CHANNEL	= 240;
+static const int IMU_CHANNEL	    = 249;
 
 static const int PEDAL_POSITION		= 1041;
 static const int GROUND_STEERING	= 1045;
@@ -60,6 +69,7 @@ private:
 
     std::shared_ptr<cluon::OD4Session>  broadcast;
     std::shared_ptr<cluon::OD4Session>  internal;
+    std::shared_ptr<cluon::OD4Session>  imu;
     std::shared_ptr<cluon::UDPReceiver> incoming;
     std::shared_ptr<cluon::UDPSender>   toLeader;
     std::shared_ptr<cluon::UDPSender>   toFollower;
