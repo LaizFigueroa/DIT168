@@ -11,19 +11,27 @@
 	  cluon::OD4Session od3(224, {});
 	  std::queue <platooning> values;
 	  std::queue <int64_t> timestamp;
-	   platooning  p;
+	  platooning  p;
 	  int64_t val=0;
-
+	  float limit=0;
 
 	int main(int argc, char **argv) {
 	    std::shared_ptr<V2VService> v2vService = std::make_shared<V2VService>();
 
-	    /*auto commandlineArguments = cluon::getCommandlineArguments(argc, argv);
-	    CAR_IP = commandlineArguments["ip"];*/
+	    auto commandlineArguments = cluon::getCommandlineArguments(argc, argv);
+	    
+	    if (0 == commandlineArguments.count("ip") && 0==commandlineArguments.count("limit")){
+            std::cout << "Please enter correct ip "<< std::endl;
+        } else {
+      		CAR_IP = (commandlineArguments["ip"]);
+     	    lim=std::stoi(commandlineArguments["limit"]);
+        }
+       std::cout << "IP set to:" << CAR_IP << std::endl;
 
 	    float angle = 0;
 	    float speed = 0;
 	    bool follower=false;
+	    
 	    while (1) {
 	        int choice;
 	        std::string groupId;
@@ -181,72 +189,65 @@
 	  		               
 	                         std::cout << " Leader's steeringAngle: " << leaderStatus.steeringAngle() << std::endl;
 	                         std::cout << "Leader's speed: " << leaderStatus.speed() << std::endl;
-	  		                   std::cout << "Distance traveled" << leaderStatus.distanceTraveled() << "'!" << std::endl;
+	  		                 std::cout << "Distance traveled" << leaderStatus.distanceTraveled() << "'!" << std::endl;
 
 	  		       internal->send(leaderStatus);
 	  					       std::cout << "sent internal" <<std::endl;
-	  	                       /* TODO: implement follow logic */
-	  			                   opendlv::proxy::GroundSteeringReading followerAngle;
+	  	                       /* TODO: implement follow logic
+								*the follower car mock the leaders movement if and only if either its steering angle or pedla position is 
+								*equal to 0. the moment the leader starts to turn with a given speed different to zero the follower will keep going forward 
+								*for a specific time. Meanwhile the values of the pedal and sterring of the leader will be stored in a queue and they will 
+								*sent to the follower when the pre-set time expires   
+	  	                        */
+	  			                        
+	  			                        opendlv::proxy::GroundSteeringReading followerAngle;
 	                           		    opendlv::proxy::PedalPositionReading followerSpeed;
 	                    			
-	                          if (follower) {
+	                         // if (follower) {
 	                    				float pedal = leaderStatus.speed();
-	                    				if ( pedal >0 ) {
-	                    			std::cout << "inside if " << std::endl;
-	                      		        cluon::data::TimeStamp start= cluon::time::now();
-	                    			timestamp.push(cluon::time::toMicroseconds(start));
-	                    			std::cout << "the current time  "  <<  std::endl;
+	                    				float  steer= leaderStatus.steeringAngle();
+
+	                    				if ( steer != 0 && pedal != 0 ) {
+	                    			
+	                      		    cluon::data::TimeStamp start= cluon::time::now();
+	                    			timestamp.push(cluon::time::toMicroseconds(start)/100000);
 
 	                    			 p.pedal= leaderStatus.speed();
 	                    			 p.steer=leaderStatus.steeringAngle();
 
 	                    			 values.push(p);
 	                    			 						      
-	                    			 std::cout << "store in the array  " <<   std::endl;
 	                    			if (timestamp.size() > 1) {
 
 	                    			val=timestamp.back()-timestamp.front();
 	                    			timestamp.pop();
-	                    			std::cout << "count val and push to timestamp  "  <<  std::endl;
 	                                            } 
-	                    			if (  val > 2000 ) {
-	                    		       std::cout << "inside second if val is  "  << val  << std::endl;
+	                    			if (  val > lim ) {
 
-	                    		                   platooning first=values.front();
+	                    		               platooning first=values.front();
 	                                           followerAngle.steeringAngle(first.steer);
 	                                           followerSpeed.percent(first.pedal);
-	                                           od3.send(followerAngle);
-	                                           od3.send(followerSpeed);
 	                    		       
-	                    			values.pop();
+	                    					   values.pop();
 	                    			
 	                    	
 	                    			} else {
-	                    		                   followerAngle.steeringAngle(0);
-	                                           followerSpeed.percent(0.22);
-	                                           od3.send(followerAngle);
-	                                           od3.send(followerSpeed);
+	                    		               followerAngle.steeringAngle(0);
+	                                           followerSpeed.percent(leaderStatus.speed());
 
-		                    			}
-		                    			}else {
+		                    		}
+
+		                    		
+		                    		}else {
 
 		                                           followerAngle.steeringAngle(leaderStatus.steeringAngle());
-		                    		             followerSpeed.percent(leaderStatus.speed());
-		                                           od3.send(followerAngle);
-		                                           od3.send(followerSpeed);
-
-		                                          
+		                    		               followerSpeed.percent(leaderStatus.speed());
+                    
 		                    			}
-		                    }
-							/**
-							//initial folower implementation (mocking the leader's movement)
-							opendlv::proxy::GroundSteeringReading followerAngle;
-	                       followerAngle.steeringAngle(leaderStatus.steeringAngle());
-	                       opendlv::proxy::PedalPositionReading followerSpeed;
-	                       followerSpeed.percent(leaderStatus.speed());
-	                       od3.send(followerAngle);
-	                       od3.send(followerSpeed);
-	                       **/
+
+		                    					   od3.send(followerAngle);
+		                                           od3.send(followerSpeed);
+		                 
 		                       break;
 		                   }
 	                   default: std::cout << "¯\\_(ツ)_/¯" << std::endl;
