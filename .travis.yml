@@ -19,7 +19,7 @@ jobs:
       - docker build -t app . -f src/app-server/Dockerfile
       - docker build -t interceptor . -f src/Interceptor/Dockerfile
       - docker build -t webview . -f src/opendlv-signal-viewer/Dockerfile.armhf
-#      - docker build -t imu . -f src/imu-microservice/Dockerfile.armhf
+      - docker build -t imu_receiver . -f src/imu-receiver-microservice/Dockerfile.manual
       - docker build -t v2v_ubuntu . -f src/v2v-microservice/Dockerfile.amd64
       - docker build -t webview_ubuntu . -f src/opendlv-signal-viewer/Dockerfile.amd64
 
@@ -29,6 +29,7 @@ deploy:
     skip_cleanup: true
     on:
       branch: master
+      branch: imu
       
   - provider: script
     script: bash script/docker_pushInterceptor.sh
@@ -53,6 +54,7 @@ deploy:
     skip_cleanup: true
     on:
       branch: master
+      branch: imu
       
   - provider: script
     script: bash script/docker_pushWebview_ubuntu.sh
@@ -60,11 +62,12 @@ deploy:
     on:
       branch: master
 
-#  - provider: script
-#    script: bash script/docker_pushImu.sh
-#    skip_cleanup: true
-#    on:
-#     branch: master
+  - provider: script
+    script: bash script/docker_pushImu.sh
+    skip_cleanup: true
+    on:
+     branch: master
+     branch: imu
     
 notifications:
    slack: 
