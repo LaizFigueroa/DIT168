@@ -31,7 +31,6 @@ static const std::string YOUR_GROUP_ID  = "13";
 
 static const int BROADCAST_CHANNEL 	= 250;
 static const int DEFAULT_PORT 		= 50001;
-static const int IMU_PORT               = 50002;
 
 static const int ANNOUNCE_PRESENCE	= 1001;
 static const int FOLLOW_REQUEST 	= 1002;
@@ -45,7 +44,7 @@ static const int FOLLOWER_STATUS 	= 3001;
 /********************************************************/
 
 static const int INTERNAL_CHANNEL	= 240;
-static const int IMU_CHANNEL	        = 249;
+static const int IMU_CHANNEL	    = 249;
 
 static const int PEDAL_POSITION		= 1041;
 static const int GROUND_STEERING	= 1045;
