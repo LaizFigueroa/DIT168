@@ -25,7 +25,7 @@ Contribute in the style of the project to the best of your abilities. This may m
 If you find a bug, please report it to us using the Issue tracker. On the comment section, you also can provide a solution to fix it, or just explain when and how the bug happens.
 
 ### Documentation
-This project has a documentation folder that contains all the bug reports, project requirements and any other documentation created along its lifecycle. If you develop a new functionality or find a bug, please add it the respective documentation. 
+This project's documentation is composed by comments on the code, headers on the files, readme files. In order to contribuite for it, please leave comments, ownerships, headers, readme files to your code.
 
 ### Other
 For any other questions about the project, please contact us:
