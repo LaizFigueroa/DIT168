@@ -20,7 +20,7 @@ TARGET = imu
 CXX		:= g++
 LINKER		:= g++ -o
 CXXFLAGS	:= -std=c++11
-LFLAGS		:= -pthread -lm -lrt -lroboticscape
+LFLAGS		:= -lpthread -lm -lrt -lroboticscape
 
 SOURCES		:= $(wildcard *.cpp)
 INCLUDES	:= $(wildcard *.hpp)
@@ -38,13 +38,12 @@ SYMLINKNAME	:= link_to_startup_program
 
 # linking Objects
 $(TARGET): $(OBJECTS)
-	@$(LINKER) -o $@ $(OBJECTS) $(LFLAGS)
-	@echo "Made: $@"
+	@$(LINKER) $@ $(OBJECTS) $(LFLAGS)
 
 
 # compiling command
 $(OBJECTS): %.o : %.cpp $(INCLUDES)
-	@$(CC) $(CFLAGS) $(DEBUGFLAG) $< -o $@
+	@$(CXX) $(CXXFLAGS) -c $< -o $@
 	@echo "Compiled: $@"
 
 all:	$(TARGET)
