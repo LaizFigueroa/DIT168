@@ -16,8 +16,14 @@ RUN ls && \
     cd src/imu-receiver-microservice && \
     mkdir build && \
     cd build && \
-    cmake -D CMAKE_BUILD_TYPE=Release .. && \
-    make
+    cmake -D CMAKE_BUILD_TYPE=Release -D CMAKE_INSTALL_PREFIX=/tmp .. && \
+    make && make install
 RUN [ "cross-build-end" ]
 
-ENTRYPOINT ["/src/imu-receiver-microservice/build/imu_receiver"]
+# Deploy.
+FROM pipill/armhf-alpine:edge
+RUN [ "cross-build-start" ]
+WORKDIR /usr/bin
+COPY --from=builder /tmp/bin/ .
+CMD ["/usr/bin/imu_receiver"]
+
