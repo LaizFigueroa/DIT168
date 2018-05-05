@@ -17,7 +17,7 @@ RUN ls && \
     mkdir build && \
     cd build && \
     cmake -D CMAKE_BUILD_TYPE=Release .. && \
-    make imu-receiver-microservice && cp imu-receiver-microservice /tmp
+    make && cp imu-receiver-microservice /tmp
 RUN [ "cross-build-end" ]
 
 # Deploy.
