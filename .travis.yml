@@ -25,45 +25,45 @@ jobs:
 
 deploy:
   - provider: script
-    script: bash script/docker_pushV2v.sh
+    script: bash scripts/docker_pushV2v.sh
     skip_cleanup: true
     on:
       branch: master
       branch: imu
       
   - provider: script
-    script: bash script/docker_pushInterceptor.sh
+    script: bash scripts/docker_pushInterceptor.sh
     skip_cleanup: true
     on:
       branch: master
       
   - provider: script
-    script: bash script/docker_pushApp.sh
+    script: bash scripts/docker_pushApp.sh
     skip_cleanup: true
     on:
       branch: master
       
   - provider: script
-    script: bash script/docker_pushV2v_ubuntu.sh
+    script: bash scripts/docker_pushV2v_ubuntu.sh
     skip_cleanup: true
     on:
       branch: master
 
   - provider: script
-    script: bash script/docker_pushWebview.sh
+    script: bash scripts/docker_pushWebview.sh
     skip_cleanup: true
     on:
       branch: master
       branch: imu
       
   - provider: script
-    script: bash script/docker_pushWebview_ubuntu.sh
+    script: bash scripts/docker_pushWebview_ubuntu.sh
     skip_cleanup: true
     on:
       branch: master
 
   - provider: script
-    script: bash script/docker_pushImu.sh
+    script: bash scripts/docker_pushImu.sh
     skip_cleanup: true
     on:
      branch: master
