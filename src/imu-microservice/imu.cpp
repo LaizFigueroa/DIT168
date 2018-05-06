@@ -14,6 +14,7 @@
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 //  Created by Laiz Figueroa on 2018-04-28.
+//  Edited by Rema Salman -> Added UDP Sender
 //  IMU code is based on: <http://www.strawsondesign.com/#!manual-imu>.
 
 #include <cstdint>
