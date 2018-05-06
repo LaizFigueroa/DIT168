@@ -50,31 +50,31 @@ int main() {
     rc_set_state(RUNNING);
 
     while (rc_get_state() == RUNNING) {
-        if (rc_is_gyro_calibrated() != 1){ // Check gyroscope calibration befor$
+        if (rc_is_gyro_calibrated() != 1){ // Check gyroscope calibration before it starts
             std::cout << "WARNING: Gyroscope is not calibrated" << std::endl;
         }
         else {
 
-            rc_imu_config_t conf = rc_default_imu_config(); // Setting the defa$
-            rc_imu_data_t imu_data; // Get the data from the imu using the libr$
+            rc_imu_config_t conf = rc_default_imu_config(); // Setting the default configuration
+            rc_imu_data_t imu_data; // Get the data from the imu using the library 
             if (rc_initialize_imu(&imu_data, conf) != 0){ // Initialize imu
                 std::cout << "ERROR: Initialization failed" << std::endl;
                 return -1;
             }
         else{
 
-                 if(rc_read_accel_data(&imu_data) != 0){// Check the accelomete$
+                 if(rc_read_accel_data(&imu_data) != 0){// Check the accelometer
                     std::cout << "ERROR: Accelometer read failed" << std::endl;
                 }
                 else{
-                   accel_y = imu_data.accel[1]; // Store Y values in a local v$
+                   accel_y = imu_data.accel[1]; // Store Y values in a local variables
 
-                    std::cout << "Accelerometer values" << std::endl; // Print $
+                    std::cout << "Accelerometer values" << std::endl; // Print the values
                     printf("%6.2f\n", accel_y);
 
-                        if(accel_y <= 0.34 & accel_y > 0.00){
+                        if(accel_y <= 0.34 & accel_y > 0.00){ // Oscilation identified when car is parked
                         accel_y = 0.00;
-                        std::cout << "Clean accelerometer values" << std::endl; // Print the value stored as r$
+                        std::cout << "Clean accelerometer values" << std::endl; // Print the value after cleaned.
                         printf("%6.2f\n", accel_y);
 
                         }
@@ -126,7 +126,7 @@ int main() {
                                  }
         }
 }
-    rc_power_off_imu(); // To stop the IMU cleanly and put it into a low power $
+    rc_power_off_imu(); // To stop the IMU cleanly and put it into a low power state
     int rc_cleanup(); // Undo everything done by initialize cape
     fflush(stdout);
     return 0;
