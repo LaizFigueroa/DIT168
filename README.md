@@ -23,15 +23,15 @@ This repository is divided into three main folders:
 **2. scripts:** On this folder all the scripts used by travis to push the docker images can be found.
 
 **3. src:** Where all the source code is available, including links to other repositories forked and the docker-compose file used to run the microservices.
-      **2.1. Ancient:** Code that was used in the development phases and is not required anymore.
-      **2.2. imu-microservice:** On this folder the code for running the imu microservice can be found.
-      **2.3. imu-receiver-microservice:** The microservice code to receive imu data from the car and to send it to v2v can be found here.
-      **2.4. Interceptor:** This folder contains the interceptor microservice, which is responsible to handle sensors and internal communications. It is possible to build a docker image directly on this folder to run the related microservice individually.
-      **2.5. app-server:** On this folder the server microservice to run on the car for the android application can be found.
-      **2.6. opendlv-signal-viewer:** On this submodule, you are going to be redirected to a new repository. This code is used to visualize the data exchanged during the communication.
-      **2.7. opendlv.miniature:** On this submodule, you can find the ps4 microservice. By clicking on that you will be redirected to a new repository. There you should select the `dit168` branch, go under `usecases/latest/test.ps4controller` and run docker-compose up.
-      **2.8. v2v-microservice:** On this folder you can find the microservice for communication across vehicles.
-      **2.9. docker-compose.yml & configuration:** Files to run all the microservices on the car at the same time.
+   - **3.1. Ancient:** Code that was used in the development phases and is not required anymore.   
+   - **3.2. imu-microservice:** On this folder the code for running the imu microservice can be found.
+   - **3.3. imu-receiver-microservice:** The microservice code to receive imu data from the car and to send it to v2v can be found here.
+   - **3.4. Interceptor:** This folder contains the interceptor microservice, which is responsible to handle sensors and internal communications. It is possible to build a docker image directly on this folder to run the related microservice individually.
+   - **3.5. app-server:** On this folder the server microservice to run on the car for the android application can be found.
+   - **3.6. opendlv-signal-viewer:** On this submodule, you are going to be redirected to a new repository. This code is used to visualize the data exchanged during the communication.
+   - **3.7. opendlv.miniature:** On this submodule, you can find the ps4 microservice. By clicking on that you will be redirected to a new repository. There you should select the `dit168` branch, go under `usecases/latest/test.ps4controller` and run docker-compose up.
+   - **3.8. v2v-microservice:** On this folder you can find the microservice for communication across vehicles.
+   - **3.9. docker-compose.yml & configuration:** Files to run all the microservices on the car at the same time.
 
 **4. test:** This folder contains the TDD tests designed at the beginning of the project, but not used along the development phases and the dockerfile to build the test environment.
 
