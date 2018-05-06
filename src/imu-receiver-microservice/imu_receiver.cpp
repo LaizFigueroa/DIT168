@@ -99,7 +99,13 @@ int main() {
         id.accel_y(imu_value);
         id.accel_x(0.0);
         id.accel_z(0.0);
+        /*
+        * send the imu data to V2V
+        */
         imuSender.send(id);
+        /*
+        * Send the imu data to the webview
+        */
         internal.send(id);
         
 
