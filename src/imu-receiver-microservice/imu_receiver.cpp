@@ -30,7 +30,7 @@
 
 
 static const int IMU_CHANNEL            = 249;
-
+static const int INTERNAL_CHANNEL       = 240;
 
 using namespace std;
 int SOCKET_BUFFER_SIZE = 1024;
@@ -80,6 +80,15 @@ int main() {
             
         }
         
+        /*
+        * OD4Session to send to the internal channel -> One responsible to display on the webview.
+        */
+        
+        cluon::OD4Session internal(INTERNAL_CHANNEL, [](cluon::data::Envelope &&envelope) noexcept {});
+        
+        /*
+        * OD4Session to send the accelometer data to V2V. 
+        */
         cluon::OD4Session imuSender(IMU_CHANNEL,
                               [](cluon::data::Envelope &&envelope) noexcept {});
 
@@ -88,6 +97,8 @@ int main() {
         id.accel_x(0.0);
         id.accel_z(0.0);
         imuSender.send(id);
+        internal.send(id);
+        
 
     }
 }
