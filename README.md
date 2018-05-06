@@ -81,7 +81,7 @@ docker pull laiz/v2v_ubuntu
 ```
 
 ### Docker Compose
-The file docker-compose.yml on the `src` directory contains all project's included microservices, except imu-microservice, to run on the car. For run the imu-microservice, please follow its Readme file. For the docker-compose.yml, on its respective folder you need to add the following command to the terminal:
+The file docker-compose.yml on the `src` directory contains most of the project's microservices, except imu-microservice and V2V. For the imu-microservice and v2v-microservice, please follow their Readme file. For the docker-compose.yml, on its respective folder you need to add the following command to the terminal:
 ```
 docker-compose up
 ```
