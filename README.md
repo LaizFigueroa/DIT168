@@ -4,6 +4,7 @@ This repository provides the source code for the DIT 168 Project from group 13.
 
 ## Table of Contents
 * [Introduction](#introduction)
+* [License](#license)
 * [Organization](#organization)
 * [Getting Started](#getting-started)
 * [Cloning](#cloning)
@@ -15,10 +16,13 @@ This repository provides the source code for the DIT 168 Project from group 13.
 * [Open source projects](#open-source-projects)
 * [Open source libraries](#open-source-libraries)
 * [Websites/Tutorials](#websites-tutorials)
-* [License](#license)
+
 
 ## Introduction
 This project is about a car that is controlled via ps4 controller or by our Android app to navigate the road during driving process. The main feature of this car is a platooning system in which the car connects to other cars using the V2V-protocol and safely follow or lead the others, by sending/receiving the commands.
+
+## License
+The project is licenced under **GNU Lesser General Public License v3.0**, gives a total free permission to use, copy, and distribute the copies, while considering any changes are completely not allowed. For more detailed information, check the [LICENSE file](https://github.com/LaizFigueroa/DIT168/blob/master/LICENSE) provided in the source directory.
 
 ## Organization
 This repository is divided into three main folders:
@@ -127,6 +131,3 @@ The library [libcluon](https://chrberger.github.io/libcluon/index.html) was used
 - **2. The [V2V-protocol](https://github.com/DIT168-V2V-responsibles/v2v-protocol) microservice:** adjusted and used by the course's different groups, which is established for the `external communication` between the vehicles.
 ### Websites/Tutorials:
 Code sources' references can be found individually under the `header` of each source code file in the `src`.
-
-## License
-The project is licenced under **GNU Lesser General Public License v3.0**, gives a total free permittion to use, copy, and distribute the copies, while consedering any changes are completly not allowed. For more detailed information, check the [LICENSE file](https://github.com/LaizFigueroa/DIT168/blob/master/LICENSE) provided in the source directory.
