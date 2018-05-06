@@ -92,9 +92,9 @@ docker pull laiz/v2v_ubuntu
 
 ### Docker Compose
 Under the `src` directory, the docker-compose.yml files exist, where each link the project's microservices, except imu-microservice and V2V. For the imu-microservice and v2v-microservice, please follow their Readme file.
-- ** docker-compose-app.yml :**  contains the project's microservices, for running the and remoting the car by the Android application.
-- ** docker-compose-leader.yml :**  contains most of the project's microservices, for running the car's functionality as a leader car.
-- ** docker-compose-follower.yml :**  contains most of the project's microservices, for running the car's functionality as a follower car.
+- **docker-compose-app.yml :**  contains the project's microservices, for running the and remoting the car by the Android application.
+- **docker-compose-leader.yml :** contains most of the project's microservices, for running the car's functionality as a leader car.
+- **docker-compose-follower.yml :** contains most of the project's microservices, for running the car's functionality as a follower car.
 For running the `docker-comopse.yml file` on its respective folder you need to add the following command to the terminal:
 ```
 docker-compose -f [docker-compose file] up
@@ -103,20 +103,20 @@ For stopping the `docker-comopse.yml file`:
 ```
 docker-compose -f [docker-compose file] stop
 ```
-For removing the created containers by the executed `docker-comopse.yml file`.Hence, for conforming the deletion request choose the option `yes`:
+For removing the created containers by the executed `docker-comopse.yml file`.Hence, for conforming the deletion request choose the option **yes**:
 ```
 docker-compose -f [docker-compose file] rm
 ```
 
 ## References
-### Open source projects:
+#### Open source projects:
 The open source `Chalmers Revere` project is the main reference to this project, where the following repositories were adapted as sub-modules parts in this project:
-**1.opendlv.miniature: ** in `dit168 branch`, under `usecases/latest/test.ps4controller`, used as PS4 controller microservice. Furthermore, for running both `pwm-motor` and `odsupercomponent`.
-**2.opendlv-device-ultrasonic-srf08: ** used for collecting data from the ultrasonic sensors, incorporated in interceptor microservice.
-**3.opendlv-signal-viewer: ** used as the web-visualisation microservice.
-### Open source libraries:
+- **1. opendlv.miniature:** in `dit168 branch`, under `usecases/latest/test.ps4controller`, used as PS4 controller microservice. Furthermore, for running both `pwm-motor` and `odsupercomponent`.
+- **2. opendlv-device-ultrasonic-srf08:** used for collecting data from the ultrasonic sensors, incorporated in interceptor microservice.
+- **3.opendlv-signal-viewer:** used as the web-visualisation microservice.
+#### Open source libraries:
 The library `libcluon` was adapted for establishing network communications between:
-**1. Project's different microservices: ** `internal communication` between the microservices.
-**2. The created v2v protocol microservice: ** adjusted and used by the course's different groups, for establishing the `external communications` between the vehicles.
-### Websites/Tutorials:
-Code sources' references can be found individually under the `header` of each source code file in the `src` and the `specific microservice`.
+- **1. Project's different microservices:** `internal communication` between the microservices.
+- **2. The created v2v protocol microservice:** adjusted and used by the course's different groups, for establishing the `external communications` between the vehicles.
+#### Websites/Tutorials:
+Code sources' references can be found individually under the `header` of each source code file in the `src` and the specific microservice.
