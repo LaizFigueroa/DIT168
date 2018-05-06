@@ -78,17 +78,21 @@ restart: always
 command: "/usr/bin/V2VService --cid=224 --freq=10"
 
 # Micro service for web-Visualisation.
+# It is responsible to collect all data exchanged thru differents CIDs in V2V to CID 240 using OD4Session.
 web-visualisation:
-image: laiz/web
+image: laiz/webview
 network_mode: "host"
 ports:
-- "8081:8081"
+- "8082:8082"
 restart: always
 privileged: true
-command:
-- "/opt/bin/websocketd"
-- "--staticdir=/opt/signal-viewer"
-- "--port=8081"
-- "--binary=true"
-- "/bin/cluon-OD4toStdout"
+command: "--cid=240"
 
+# Microservice for IMU UDP receiver and OD4Sesssion.
+# Receives the IMU data thru a UDP sender/receiver and send it to CID 249 thru OD4Session to V2V.
+imu_receiver:
+image: laiz/imu_receiver
+network_mode: "host"
+restart: always
+privileged: true
+command: "/opt/imu_receiver"
