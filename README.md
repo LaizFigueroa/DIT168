@@ -11,6 +11,11 @@ This repository provides the source code for the DIT 168 Project from group 13.
 * [Running Tests](#running-tests)
 * [Docker Images](#docker-images)
 * [Docker Compose](#docker-compose)
+* [References](#references)
+* [Open source projects](#open-source-projects)
+* [Open source libraries](#open-source-libraries)
+* [Websites/Tutorials](#websites-tutorials)
+* [License](#license)
 
 ## Introduction
 This project is about a car that is controlled via ps4 controller or by our Android app to navigate the road during driving process. The main feature of this car is a platooning system in which the car connects to other cars using the V2V-protocol and safely follow or lead the others, by sending/receiving the commands.
@@ -91,11 +96,14 @@ docker pull laiz/v2v_ubuntu
 ```
 
 ### Docker Compose
-Under the `src` directory, the docker-compose.yml files exist, where each link the project's microservices, except imu-microservice and V2V. For the imu-microservice and v2v-microservice, please follow their Readme file.
-- **docker-compose-app.yml :**  contains the project's microservices, for running the and remoting the car by the Android application.
-- **docker-compose-leader.yml :** contains most of the project's microservices, for running the car's functionality as a leader car.
+There are different docker-compose.yml files, under the `src` directory, where each link the project's microservices for executing a particular functionality, except for imu-microservice and V2V. Regarding these two microservices, please follow their Readme files.
+
+The following list represents the different docker-compose.yml files :
+- **docker-compose-app.yml :**  contains the project's microservices, for running and remoting the car by the Android application.
+- **docker-compose-leader.yml :** contains most of the project's microservices, for executing the car's functionality as a leader car.
 - **docker-compose-follower.yml :** contains most of the project's microservices, for running the car's functionality as a follower car.
-For running the `docker-comopse.yml file` on its respective folder you need to add the following command to the terminal:
+
+For running a desired `docker-comopse.yml file`, you need to add the following command on the bash command line, on the respective folder `src` :
 ```
 docker-compose -f [docker-compose file] up
 ```
@@ -107,16 +115,18 @@ For removing the created containers by the executed `docker-comopse.yml file`.He
 ```
 docker-compose -f [docker-compose file] rm
 ```
-
 ## References
-#### Open source projects:
-The open source `Chalmers Revere` project is the main reference to this project, where the following repositories were adapted as sub-modules parts in this project:
-- **1. opendlv.miniature:** in `dit168 branch`, under `usecases/latest/test.ps4controller`, used as PS4 controller microservice. Furthermore, for running both `pwm-motor` and `odsupercomponent`.
-- **2. opendlv-device-ultrasonic-srf08:** used for collecting data from the ultrasonic sensors, incorporated in interceptor microservice.
-- **3.opendlv-signal-viewer:** used as the web-visualisation microservice.
-#### Open source libraries:
-The library `libcluon` was adapted for establishing network communications between:
-- **1. Project's different microservices:** `internal communication` between the microservices.
-- **2. The created v2v protocol microservice:** adjusted and used by the course's different groups, for establishing the `external communications` between the vehicles.
-#### Websites/Tutorials:
-Code sources' references can be found individually under the `header` of each source code file in the `src` and the specific microservice.
+### Open source projects:
+Some open source projects developed by **[Chalmers Revere](https://github.com/chalmers-revere)** are used mainly as sub-modules parts in this project, the repositories as following:
+- **1. [opendlv.miniature](https://github.com/chalmers-revere/opendlv.miniature/tree/dit168):** under `usecases/latest/test.ps4controller` used as PS4 controller microservice. Furthermore, for running both `pwm-motor` and `odsupercomponent`.
+- **2. [opendlv-device-ultrasonic-srf08](https://github.com/chalmers-revere/opendlv-device-ultrasonic-srf08):** used for collecting data from the ultrasonic sensors, incorporated in interceptor microservice.
+- **3.[opendlv-signal-viewer](https://github.com/chalmers-revere/opendlv-signal-viewer):** used as the web-visualisation microservice.
+### Open source libraries:
+The library [libcluon](https://chrberger.github.io/libcluon/index.html) was used for establishing the network communications between:
+- **1. The project's different microservices:** `internal communication` between the microservices.
+- **2. The [V2V-protocol](https://github.com/DIT168-V2V-responsibles/v2v-protocol) microservice:** adjusted and used by the course's different groups, which is established for the `external communication` between the vehicles.
+### Websites/Tutorials:
+Code sources' references can be found individually under the `header` of each source code file in the `src`.
+
+## License
+The project is licenced under **GNU Lesser General Public License v3.0**, gives a total free permittion to use, copy, and distribute the copies, while consedering any changes are completly not allowed. For more detailed information, check the [LICENSE file](https://github.com/LaizFigueroa/DIT168/blob/master/LICENSE) provided in the source directory.
