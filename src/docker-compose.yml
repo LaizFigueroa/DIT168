@@ -70,13 +70,6 @@ network_mode: "host"
 restart: always
 command: "/usr/bin/app-server --cid=111 --freq=10"
 
-# Micro service for V2V.
-V2V-service:
-image: laiz/v2v
-network_mode: "host"
-restart: always
-command: "/usr/bin/V2VService --cid=224 --freq=10"
-
 # Micro service for web-Visualisation.
 # It is responsible to collect all data exchanged thru differents CIDs in V2V to CID 240 using OD4Session.
 web-visualisation:
