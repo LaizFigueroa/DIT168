@@ -5,12 +5,12 @@ This repository provides the source code for the DIT 168 Project from group 13.
 ## Table of Contents
 * [Introduction](#introduction)
 * [Organization](#organization)
-* [Getting Started](#getting started)
-* [Clonning](#clonning)
+* [Getting Started](#getting-started)
+* [Cloning](#cloning)
 * [Building](#building)
-* [Running Tests](#running tests)
-* [Docker Images](#docker images)
-* [Docker Compose](#docker compose)
+* [Running Tests](#running-tests)
+* [Docker Images](#docker-images)
+* [Docker Compose](#docker-compose)
 
 ## Introduction
 This project is about a car that is controlled via ps4 controller or by our Android app to navigate the road during driving process. The main feature of this car is a platooning system in which the car connects to other cars using the V2V-protocol and safely follow or lead the others, by sending/receiving the commands.
