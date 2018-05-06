@@ -38,8 +38,6 @@
 #include <sys/select.h>
 #include <thread>
 
-#include "cluon-complete.hpp"
-
 /** ADD YOUR CAR_IP AND GROUP_ID HERE:  *****************/
 
 static std::string CAR_IP;
