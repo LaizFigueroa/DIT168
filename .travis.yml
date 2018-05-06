@@ -29,7 +29,6 @@ deploy:
     skip_cleanup: true
     on:
       branch: master
-      branch: imu
       
   - provider: script
     script: bash scripts/docker_pushInterceptor.sh
@@ -54,7 +53,6 @@ deploy:
     skip_cleanup: true
     on:
       branch: master
-      branch: imu
       
   - provider: script
     script: bash scripts/docker_pushWebview_ubuntu.sh
@@ -67,7 +65,6 @@ deploy:
     skip_cleanup: true
     on:
      branch: master
-     branch: imu
     
 notifications:
    slack: 

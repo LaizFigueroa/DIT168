@@ -14,6 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *
+ * Created by Rema Salman
+ * Edited by Laiz Figueroa -> OD4Sessions for internal communications
  */
 
 #include <iostream>
@@ -30,7 +33,7 @@
 
 
 static const int IMU_CHANNEL            = 249;
-
+static const int INTERNAL_CHANNEL       = 240;
 
 using namespace std;
 int SOCKET_BUFFER_SIZE = 1024;
@@ -80,6 +83,15 @@ int main() {
             
         }
         
+        /*
+        * OD4Session to send to the internal channel -> One responsible to display on the webview.
+        */
+        
+        cluon::OD4Session internal(INTERNAL_CHANNEL, [](cluon::data::Envelope &&envelope) noexcept {});
+        
+        /*
+        * OD4Session to send the accelometer data to V2V. 
+        */
         cluon::OD4Session imuSender(IMU_CHANNEL,
                               [](cluon::data::Envelope &&envelope) noexcept {});
 
@@ -87,7 +99,15 @@ int main() {
         id.accel_y(imu_value);
         id.accel_x(0.0);
         id.accel_z(0.0);
+        /*
+        * send the imu data to V2V
+        */
         imuSender.send(id);
+        /*
+        * Send the imu data to the webview
+        */
+        internal.send(id);
+        
 
     }
 }
