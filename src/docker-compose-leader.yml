@@ -18,14 +18,16 @@ version: '2'
 
 services:
 
+# Micro service for odsupercomponent controller.
 odsupercomponent:
 image: seresearch/2018-dit-168:v0.3.5-armhf
 network_mode: "host"
 restart: always
 volumes:
 - .:/opt/miniature.data
-command: "/opt/od4/bin/odsupercomponent --cid=111 --verbose=1 --configuration=/opt/miniature.data/configuration"
+command: "/opt/od4/bin/odsupercomponent --cid=241 --verbose=1 --configuration=/opt/miniature.data/configuration"
 
+# Micro service for pwm-motor controller.
 proxy-miniature-pwm-motor:
 image: seresearch/2018-dit-168:v0.3.5-armhf
 depends_on:
@@ -36,7 +38,7 @@ privileged: true
 volumes:
 - /sys/:/sys/
 - /dev/:/dev/
-command: "/opt/opendlv.miniature/bin/opendlv-proxy-miniature-pwm-motor --cid=111 --freq=50 --id=1"
+command: "/opt/opendlv.miniature/bin/opendlv-proxy-miniature-pwm-motor --cid=241 --freq=50 --id=1"
 
 # Micro service for PS4 controller.
 proxy-miniature-ps4controller:
@@ -45,7 +47,7 @@ network_mode: "host"
 restart: always
 devices:
 - "/dev/input/js0:/dev/input/js0"
-command: "/opt/opendlv.miniature/bin/opendlv-proxy-miniature-ps4controller --cid=224 --freq=10 --verbose=1"
+command: "/opt/opendlv.miniature/bin/opendlv-proxy-miniature-ps4controller --cid=242 --freq=10 --verbose=1"
 
 # Micro service for ultrassonic sensor.
 device-ultrasonic-srf08-front:
@@ -54,24 +56,26 @@ network_mode: "host"
 privileged: true
 volumes:
 - /dev/i2c-1:/dev/i2c-1
-command: "/usr/bin/opendlv-device-ultrasonic-srf08 --dev=/dev/i2c-1 --bus-address=112 --cid=111 --freq=5 --id=0"
+command: "/usr/bin/opendlv-device-ultrasonic-srf08 --dev=/dev/i2c-1 --bus-address=113 --cid=243 --freq=5 --id=0 --verbose=1"
 
 # Micro service for Interceptor.
 interceptor:
 image: laiz/interceptor
 network_mode: "host"
 restart: always
-command: "/opt/interceptor --cid=224 --freq=10"
 
-# Micro service for Android Application's server.
-android-application's-server:
-image: laiz/app
+# Micro service for a mocked odsupercomponent.
+odsupercomponentMock:
+image: seresearch/2018-dit-168:v0.3.5-armhf
 network_mode: "host"
 restart: always
-command: "/usr/bin/app-server --cid=111 --freq=10"
+volumes:
+- .:/opt/miniature.data
+command: "/opt/od4/bin/odsupercomponent --cid=242 --verbose=1 --configuration=/opt/miniature.data/configuration"
+
 
 # Micro service for web-Visualisation.
-# It is responsible to collect all data exchanged thru differents CIDs in V2V to CID 240 using OD4Session.
+# It is responsible to collect all data exchanged through different CIDs in V2V to CID 240 using OD4Session.
 web-visualisation:
 image: laiz/webview
 network_mode: "host"
@@ -82,7 +86,7 @@ privileged: true
 command: "--cid=240"
 
 # Microservice for IMU UDP receiver and OD4Sesssion.
-# Receives the IMU data thru a UDP sender/receiver and send it to CID 249 thru OD4Session to V2V.
+# Receives the IMU data from a UDP sender/receiver and send it to CID 249 through OD4Session to V2V.
 imu_receiver:
 image: laiz/imu_receiver
 network_mode: "host"
