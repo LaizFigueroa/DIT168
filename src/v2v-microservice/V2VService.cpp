@@ -16,23 +16,35 @@
 	  bool follower=false;
 	  float lim=0;
       float flush=0;
+      platooning  p;
+      int skeep=0;
+	  int angle=0;
+
+	  int del = 0;
+	  int w = 0;
+	  int acc=0;
 
 	int main(int argc, char **argv) {
 	    std::shared_ptr<V2VService> v2vService = std::make_shared<V2VService>();
 
 	    auto commandlineArguments = cluon::getCommandlineArguments(argc, argv);
 	    
-	    if (0 == commandlineArguments.count("ip") && 0==commandlineArguments.count("limit")){
+	    if (0 == commandlineArguments.count("ip") && 0==commandlineArguments.count("limit") && commandlineArguments.count("skeep")==0 
+	    	&& commandlineArguments.count("angle")==0  && commandlineArguments.count("speed")==0){
             std::cout << "Please enter correct ip "<< std::endl;
         } else {
       		CAR_IP = (commandlineArguments["ip"]);
      	    lim=std::stoi(commandlineArguments["limit"]);
+     	    skeep=std::stoi(commandlineArguments["skeep"]);
+    		angle=std::stoi(commandlineArguments["angle"]);
+    		//del=std::stoi(commandlineArguments["delay"]);
+    		acc=std::stof(commandlineArguments["speed"]);
         }
        std::cout << "IP set to:" << CAR_IP << std::endl;
 
 	    float angle = 0;
 	    float speed = 0;
-	    bool follower=false;
+	    
 	    
 	    while (1) {
 	        int choice;
@@ -194,10 +206,16 @@
 		      		   std::cout << "Distance traveled" << leaderStatus.distanceTraveled() << "'!" << std::endl;
 	              	   std::cout << "Distance traveled" << leaderStatus.timestamp() << "'!" << std::endl;
     			}
-
+    						//put in beginning leader status:
+           					// w++;
+            					//if (w>=del){                      
+            					//add resetting here
+									
+            						//w=0;
+            				//}
 
 		        internal->send(leaderStatus);
-					       std::cout << "sent internal" <<std::endl;
+					            std::cout << "sent internal" <<std::endl;
 	                       /* TODO: implement follow logic */
 		                		opendlv::proxy::GroundSteeringReading followerAngle;
                       	        opendlv::proxy::PedalPositionReading followerSpeed;
@@ -209,10 +227,12 @@
 				
 						if (  steer != 0 && run != 0) {
 							 std::cout << "inside if " << std::endl;
+							 if (timestamp.empty()) {
   		       				 cluon::data::TimeStamp start= cluon::time::now();
 							 timestamp.push(cluon::time::toMicroseconds(start)/100000);
 							 std::cout << " val and val /100000  "  << cluon::time::toMicroseconds(start)<< "//" 
 							 <<cluon::time::toMicroseconds(start)/100000  <<   std::endl;
+							 }
 
 							 p.pedal= leaderStatus.speed();
 							 p.steer=leaderStatus.steeringAngle();
@@ -221,20 +241,20 @@
 			 			   	 std::cout << "stored in values " <<p.pedal <<"///"<< p.steer<<std::endl;	
 							 leaderstamp.push_front(leaderStatus.timestamp());
 						 } 
-						//else {
-					         //std::cout << "Mock "  << std::endl;
-   		 			         //followerAngle.steeringAngle(leaderStatus.steeringAngle());
-     		  		         //followerSpeed.percent(leaderStatus.speed());
-
-     	         		//}
+							if (!timestamp.empty()) {
+								cluon::data::TimeStamp start= cluon::time::now();
+								timestamp.push(cluon::time::toMicroseconds(start)/100000);
+								std::cout << " val2 and val2 /100000  "  << cluon::time::toMicroseconds(start)<< "//" <<cluon::time::toMicroseconds(start)/100000  
+								<<   std::endl;
+				}
 	
 					if(timestamp.size()> 1) {
-						if (leaderstamp.back() < leaderstamp[leaderstamp.size()-1]) {
-							delay+=leaderstamp[leaderstamp.size()-1] - leaderstamp.back();
-							}
+						//if (leaderstamp.back() < leaderstamp[leaderstamp.size()-1]) {
+							//delay+=leaderstamp[leaderstamp.size()-1] - leaderstamp.back();
+							//}
 
-                			val+=timestamp.back()-timestamp.front();
-							delay+=leaderstamp.back()-leaderstamp.front();
+                			val=timestamp.back()-timestamp.front();
+							//delay+=leaderstamp.back()-leaderstamp.front();
          				if ( delay > lim && values.size() > 1  )   {
 
 		       				std::cout << "inside second if val is  "  << val  << std::endl;
@@ -250,11 +270,11 @@
             					followerSpeed.percent(leaderStatus.speed());
 
 	    						std::cout << "flush at second is " << flush <<std::endl;
-							//if(flush==1) {
-							//std::queue<int64_t> empty;
-     						//std::swap( timestamp, empty );
+							if(flush==1) {
+								std::queue<int64_t> empty;
+     							std::swap( timestamp, empty );
 			
-							//}
+							}
 		
 							}
 
