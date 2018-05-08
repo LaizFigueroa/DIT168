@@ -24,7 +24,7 @@ network_mode: "host"
 restart: always
 volumes:
 - .:/opt/miniature.data
-command: "/opt/od4/bin/odsupercomponent --cid=111 --verbose=1 --configuration=/opt/miniature.data/configuration"
+command: "/opt/od4/bin/odsupercomponent --cid=241 --verbose=1 --configuration=/opt/miniature.data/configuration"
 
 proxy-miniature-pwm-motor:
 image: seresearch/2018-dit-168:v0.3.5-armhf
@@ -36,7 +36,7 @@ privileged: true
 volumes:
 - /sys/:/sys/
 - /dev/:/dev/
-command: "/opt/opendlv.miniature/bin/opendlv-proxy-miniature-pwm-motor --cid=111 --freq=50 --id=1"
+command: "/opt/opendlv.miniature/bin/opendlv-proxy-miniature-pwm-motor --cid=241 --freq=50 --id=1"
 
 # Micro service for PS4 controller.
 proxy-miniature-ps4controller:
@@ -68,7 +68,6 @@ android-application's-server:
 image: laiz/app
 network_mode: "host"
 restart: always
-command: "/usr/bin/app-server --cid=111 --freq=10"
 
 # Micro service for V2V.
 V2V-service:
@@ -77,18 +76,30 @@ network_mode: "host"
 restart: always
 command: "/usr/bin/V2VService --cid=224 --freq=10"
 
-# Micro service for web-Visualisation.
-web-visualisation:
-image: laiz/web
+# Micro service for a mocked odsupercomponent .
+odsupercomponentMock:
+image: seresearch/2018-dit-168:v0.3.5-armhf
+network_mode: "host"
+restart: always
+volumes:
+- .:/opt/miniature.data
+command: "/opt/od4/bin/odsupercomponent --cid=242 --verbose=1 --configuration=/opt/miniature.data/configuration"
+        
+# Micro service for web-interface.
+web-interface:
+image: laiz/webview
 network_mode: "host"
 ports:
-- "8081:8081"
+- "8082:8082"
 restart: always
 privileged: true
-command:
-- "/opt/bin/websocketd"
-- "--staticdir=/opt/signal-viewer"
-- "--port=8081"
-- "--binary=true"
-- "/bin/cluon-OD4toStdout"
+command: "--cid=240"
+
+# Microservice for IMU UDP receiver and OD4Session.
+imu_receiver:
+image: laiz/imu_receiver
+network_mode: "host"
+restart: always
+privileged: true
+command: "/opt/imu_receiver"
 
