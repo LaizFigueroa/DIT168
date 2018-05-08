@@ -8,7 +8,7 @@
 	   
 	  } platooning;
 
-	  cluon::OD4Session od3(224, {});
+	  cluon::OD4Session od3(242, {});
 	  std::queue <platooning> values;
 	  std::deque <uint64_t> leaderstamp;
 	  std::queue <int64_t> timestamp;
@@ -30,14 +30,14 @@
 	    auto commandlineArguments = cluon::getCommandlineArguments(argc, argv);
 	    
 	    if (0 == commandlineArguments.count("ip") && 0==commandlineArguments.count("limit") && commandlineArguments.count("skeep")==0 
-	    	&& commandlineArguments.count("angle")==0  && commandlineArguments.count("speed")==0){
+	    	&& commandlineArguments.count("angle")==0  && commandlineArguments.count("delay")==0){
             std::cout << "Please enter correct ip "<< std::endl;
         } else {
       		CAR_IP = (commandlineArguments["ip"]);
      	    lim=std::stoi(commandlineArguments["limit"]);
      	    skeep=std::stoi(commandlineArguments["skeep"]);
     		angle=std::stoi(commandlineArguments["angle"]);
-    		//del=std::stoi(commandlineArguments["delay"]);
+    		del=std::stoi(commandlineArguments["delay"]);
     		acc=std::stof(commandlineArguments["speed"]);
         }
        std::cout << "IP set to:" << CAR_IP << std::endl;
@@ -81,7 +81,7 @@
 	            }
 	            case 5: while(1){
 
-	                        cluon::OD4Session od4(111,[&angle, &speed](cluon::data::Envelope &&envelope) noexcept {
+	                        cluon::OD4Session od4(245,[&angle, &speed](cluon::data::Envelope &&envelope) noexcept {
 
 	                            if (envelope.dataType() == opendlv::proxy::GroundSteeringReading::ID()) {
 	                                opendlv::proxy::GroundSteeringReading receivedMsg = cluon::extractMessage<opendlv::proxy::GroundSteeringReading>(std::move(envelope));
@@ -206,21 +206,26 @@
 		      		   std::cout << "Distance traveled" << leaderStatus.distanceTraveled() << "'!" << std::endl;
 	              	   std::cout << "Distance traveled" << leaderStatus.timestamp() << "'!" << std::endl;
     			}
-    						//put in beginning leader status:
-           					// w++;
-            					//if (w>=del){                      
-            					//add resetting here
-									
-            						//w=0;
-            				//}
+           					 w++;
+            					if (w>=del){                      
+									std::queue<int64_t> empty;
+     								std::swap( timestamp, empty );
+            						w=0;
+            					}
 
 		        internal->send(leaderStatus);
 					            std::cout << "sent internal" <<std::endl;
 	                       /* TODO: implement follow logic */
+					            /**
+					            *the follower car mock the leaders movement if and only if either its steering angle or pedla position is 
+								*equal to 0. the moment the leader starts to turn with a given speed different to zero the follower will keep going forward 
+								*for a specific time. Meanwhile the values of the pedal and sterring of the leader will be stored in a queue and they will 
+								*sent to the follower when the pre-set time expires   
+								**/
 		                		opendlv::proxy::GroundSteeringReading followerAngle;
                       	        opendlv::proxy::PedalPositionReading followerSpeed;
 
-						//if (follower) {
+						if (follower) {
 					
 						float  steer= leaderStatus.steeringAngle();
 						float  run = leaderStatus.speed();
@@ -249,12 +254,9 @@
 				}
 	
 					if(timestamp.size()> 1) {
-						//if (leaderstamp.back() < leaderstamp[leaderstamp.size()-1]) {
-							//delay+=leaderstamp[leaderstamp.size()-1] - leaderstamp.back();
-							//}
 
                 			val=timestamp.back()-timestamp.front();
-							//delay+=leaderstamp.back()-leaderstamp.front();
+         				
          				if ( delay > lim && values.size() > 1  )   {
 
 		       				std::cout << "inside second if val is  "  << val  << std::endl;
@@ -286,7 +288,7 @@
 
 		                    					   od3.send(followerAngle);
 		                                           od3.send(followerSpeed);
-		                 
+		            }
 		                       break;
 		                   }
 	                   default: std::cout << "¯\\_(ツ)_/¯" << std::endl;
