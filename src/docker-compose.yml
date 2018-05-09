@@ -86,7 +86,7 @@ volumes:
 command: "/opt/od4/bin/odsupercomponent --cid=242 --verbose=1 --configuration=/opt/miniature.data/configuration"
         
 # Micro service for web-interface.
-web-interface:
+web-visualisation:
 image: laiz/webview
 network_mode: "host"
 ports:
@@ -95,11 +95,12 @@ restart: always
 privileged: true
 command: "--cid=240"
 
-# Microservice for IMU UDP receiver and OD4Session.
+
+# Microservice for IMU UDP receiver and OD4Sesssion.
+# Receives the IMU data thru a UDP sender/receiver and send it to CID 249 thru OD4Session to V2V.
 imu_receiver:
 image: laiz/imu_receiver
 network_mode: "host"
 restart: always
 privileged: true
 command: "/opt/imu_receiver"
-

@@ -4,3 +4,5 @@
 [submodule "src/opendlv.miniature"]
 	path = src/opendlv.miniature
 	url = https://github.com/LaizFigueroa/opendlv.miniature.git
+[submodule "opendlv.miniature"]
+	branch = dit168
