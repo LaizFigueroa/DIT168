@@ -31,12 +31,8 @@
 #include "messages.hpp"
 #include <iostream>
 #include <string.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-#include <sys/select.h>
 #include <thread>
+#include <queue>
 
 /** ADD YOUR CAR_IP AND GROUP_ID HERE:  *****************/
 
@@ -44,7 +40,7 @@ static std::string CAR_IP;
 static const std::string YOUR_GROUP_ID  = "13";
 
 /********************************************************/
-/** DON'T CHANGE STUFF BELOW THIS LINE. *****************/
+/** V2V PROTOCOL ****************************************/
 /********************************************************/
 
 static const int BROADCAST_CHANNEL 	= 250;
@@ -99,5 +95,31 @@ private:
     template <class T>
     static T decode(std::string data);
 };
+
+/********************************************************/
+/** VARIABLES *******************************************/
+/********************************************************/
+
+typedef struct {
+    
+    float pedal;
+    float steer;
+    
+} platooning;
+
+std::queue<platooning> values;
+std::deque<uint64_t> leaderstamp;
+std::queue<int64_t> timestamp;
+platooning first;
+platooning p;
+bool follower = false;
+float lim = 0;
+float flush = 0;
+int skeep = 0;
+int angle = 0;
+int del = 0;
+int w = 0;
+int acc = 0;
+
 
 #endif //V2V_PROTOCOL_DEMO_V2VSERVICE_H
