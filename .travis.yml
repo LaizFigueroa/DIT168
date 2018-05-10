@@ -12,54 +12,57 @@ env:
 
 jobs:
   include:
-    - stage: build car images
+    - stage: build V2V images
       script:
       - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
       - docker build -t v2v . -f src/v2v-microservice/Dockerfile.armhf
-      - docker build -t app . -f src/app-server/Dockerfile
-      - docker build -t interceptor . -f src/Interceptor/Dockerfile
-      - docker build -t webview . -f src/opendlv-signal-viewer/Dockerfile.armhf
-      - docker build -t imu_receiver . -f src/imu-receiver-microservice/Dockerfile.armhf
       - docker build -t v2v_ubuntu . -f src/v2v-microservice/Dockerfile.amd64
-      - docker build -t webview_ubuntu . -f src/opendlv-signal-viewer/Dockerfile.amd64
-
 deploy:
+      - provider: script
+      script: 
+      - bash scripts/docker_pushV2v.sh
+      - bash scripts/docker_pushV2v_ubuntu.sh
+      skip_cleanup: true
+      on:
+        branch: master
+   
+    - stage: build App image
+      - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+      - docker build -t app . -f src/app-server/Dockerfile
+deploy:    
   - provider: script
-    script: bash scripts/docker_pushV2v.sh
+    script: bash scripts/docker_pushApp.sh
     skip_cleanup: true
     on:
       branch: master
-      
+  
+    - stage: build Interceptor image   
+      - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+      - docker build -t interceptor . -f src/Interceptor/Dockerfile
+deploy:    
   - provider: script
     script: bash scripts/docker_pushInterceptor.sh
     skip_cleanup: true
     on:
       branch: master
       
+    - stage: build Webview image  
+      - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+      - docker build -t webview . -f src/opendlv-signal-viewer/Dockerfile.armhf
+      - docker build -t webview_ubuntu . -f src/opendlv-signal-viewer/Dockerfile.amd64
+deploy:      
   - provider: script
-    script: bash scripts/docker_pushApp.sh
+    script: 
+    - bash scripts/docker_pushWebview.sh
+    - bash scripts/docker_pushWebview_ubuntu.sh
     skip_cleanup: true
     on:
       branch: master
       
-  - provider: script
-    script: bash scripts/docker_pushV2v_ubuntu.sh
-    skip_cleanup: true
-    on:
-      branch: master
-
-  - provider: script
-    script: bash scripts/docker_pushWebview.sh
-    skip_cleanup: true
-    on:
-      branch: master
-      
-  - provider: script
-    script: bash scripts/docker_pushWebview_ubuntu.sh
-    skip_cleanup: true
-    on:
-      branch: master
-
+    - stage: build Imu image  
+      - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+      - docker build -t imu_receiver . -f src/imu-receiver-microservice/Dockerfile.armhf
+deploy:       
   - provider: script
     script: bash scripts/docker_pushImu.sh
     skip_cleanup: true
