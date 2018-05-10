@@ -24,5 +24,15 @@ docker push YOUR_DOCKER_HUB_REPO/NAME
 After that, you will be able to perform the following on your car's terminal:
 
 ```
-docker run -ti --net=host YOUR_DOCKER_HUB_REPO/NAME /usr/bin/V2VService --ip="YOUR_CAR'S_IP"
+docker run -ti --net=host YOUR_DOCKER_HUB_REPO/NAME /usr/bin/V2VService --ip="YOUR_CAR'S_IP" --limit=18 --skeep=5  --angle=1  --delay=160  --speed=0.22
+
+The aformentionned command line arguments are used due to hardware reliability.
+
+--ip: is the ip of the leader's car 
+--limit: (equal to 1.8 seconds) which is the time required for the follower's car to reach the postion of the leader the moment of the first occurence of a turning to the left or to the right.
+--skeep: is the number of pairs(angle,pedal) that the follower needs to bypass in order to reduce an extra turning
+--angle: is used to reduce the offset of the follower car.
+--delay: equal to 20 seconds which is the time set for flushing the queue responsible for storing timestamps from the leader's car.
+--speed:used to hardcode the speed of the follower in case of a incompability in performance between the leader and the follower, which is close to the maximum speed sent by the PS4 controller
+
 ```
