@@ -25,7 +25,8 @@ deploy:
       skip_cleanup: true
       on:
         branch: master
-   
+jobs:
+  include:   
     - stage: build App image
       - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
       - docker build -t app . -f src/app-server/Dockerfile
@@ -35,7 +36,8 @@ deploy:
     skip_cleanup: true
     on:
       branch: master
-  
+jobs:
+  include:  
     - stage: build Interceptor image   
       - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
       - docker build -t interceptor . -f src/Interceptor/Dockerfile
@@ -45,7 +47,8 @@ deploy:
     skip_cleanup: true
     on:
       branch: master
-      
+jobs:
+  include:      
     - stage: build Webview image  
       - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
       - docker build -t webview . -f src/opendlv-signal-viewer/Dockerfile.armhf
@@ -58,7 +61,8 @@ deploy:
     skip_cleanup: true
     on:
       branch: master
-      
+jobs:
+  include:      
     - stage: build Imu image  
       - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
       - docker build -t imu_receiver . -f src/imu-receiver-microservice/Dockerfile.armhf
