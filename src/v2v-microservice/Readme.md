@@ -8,7 +8,7 @@ This folder contains the v2v microservice to be run directly on the car.
 On the car's terminal (BeagleBone) add the following command adding your car's ip to it:
 
 ```
-docker run -ti --net=host laiz/v2v /usr/bin/V2VService --ip="YOUR_CAR'S_IP"
+docker run -ti --net=host laiz/v2v /usr/bin/V2VService --ip="YOUR_CAR'S_IP" --limit=18 --skeep=5  --angle=1  --delay=160  --speed=0.22
 ```
 
 2. From the repository:
