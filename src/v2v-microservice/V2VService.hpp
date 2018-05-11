@@ -15,6 +15,7 @@
 * 
 * Created by V2V representatives
 * Edited by Laiz Figueroa -> OD4Session for internal and Imu communication.
+* Edited by Fahd Debbiche -> Implement V2V follower logic 
 */
 
 
