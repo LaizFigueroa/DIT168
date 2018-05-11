@@ -18,7 +18,7 @@ version: '2'
 
 services:
 
-# Micro service for odsupercomponent controller.
+# Microservice for odsupercomponent controller.
 odsupercomponent:
 image: seresearch/2018-dit-168:v0.3.5-armhf
 network_mode: "host"
@@ -27,7 +27,7 @@ volumes:
 - .:/opt/miniature.data
 command: "/opt/od4/bin/odsupercomponent --cid=241 --verbose=1 --configuration=/opt/miniature.data/configuration"
 
-# Micro service for pwm-motor controller.
+# Microservice for pwm-motor controller.
 proxy-miniature-pwm-motor:
 image: seresearch/2018-dit-168:v0.3.5-armhf
 depends_on:
@@ -40,7 +40,7 @@ volumes:
 - /dev/:/dev/
 command: "/opt/opendlv.miniature/bin/opendlv-proxy-miniature-pwm-motor --cid=241 --freq=50 --id=1"
 
-# Micro service for PS4 controller.
+# Microservice for PS4 controller.
 proxy-miniature-ps4controller:
 image: seresearch/2018-dit-168:v0.3.5-armhf
 network_mode: "host"
@@ -49,7 +49,7 @@ devices:
 - "/dev/input/js0:/dev/input/js0"
 command: "/opt/opendlv.miniature/bin/opendlv-proxy-miniature-ps4controller --cid=242 --freq=10 --verbose=1"
 
-# Micro service for ultrassonic sensor.
+# Microservice for ultrassonic sensor.
 device-ultrasonic-srf08-front:
 image: chalmersrevere/opendlv-device-ultrasonic-srf08-armhf:v0.0.6
 network_mode: "host"
@@ -58,13 +58,13 @@ volumes:
 - /dev/i2c-1:/dev/i2c-1
 command: "/usr/bin/opendlv-device-ultrasonic-srf08 --dev=/dev/i2c-1 --bus-address=113 --cid=243 --freq=5 --id=0 --verbose=1"
 
-# Micro service for Interceptor.
+# Microservice for Interceptor.
 interceptor:
 image: laiz/interceptor
 network_mode: "host"
 restart: always
 
-# Micro service for a mocked odsupercomponent.
+# Microservice for a mocked odsupercomponent.
 odsupercomponentMock:
 image: seresearch/2018-dit-168:v0.3.5-armhf
 network_mode: "host"
@@ -73,8 +73,7 @@ volumes:
 - .:/opt/miniature.data
 command: "/opt/od4/bin/odsupercomponent --cid=242 --verbose=1 --configuration=/opt/miniature.data/configuration"
 
-
-# Micro service for web-Visualisation.
+# Microservice for web-Visualisation.
 # It is responsible to collect all data exchanged through different CIDs in V2V to CID 240 using OD4Session.
 web-visualisation:
 image: laiz/webview
