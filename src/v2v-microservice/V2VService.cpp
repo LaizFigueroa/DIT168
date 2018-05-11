@@ -286,9 +286,9 @@ V2VService::V2VService() {
 
                                                                  if (timestamp.size() > 1) {
 
-                                                                    int val = timestamp.back() - timestamp.front();
+                                                                     int val = timestamp.back() - timestamp.front();
 
-                                                                     if (del > lim && values.size() > 1) {
+                                                                     if (val > lim && values.size() > 1) {
 
                                                                          std::cout << "inside second if val is  " << val
                                                                                    << std::endl;
