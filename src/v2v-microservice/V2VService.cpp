@@ -1,4 +1,4 @@
-#include "V2VService.hpp"
+﻿#include "V2VService.hpp"
 
 cluon::OD4Session od3(242, {});
 
@@ -7,10 +7,11 @@ int main(int argc, char **argv) {
 
     auto commandlineArguments = cluon::getCommandlineArguments(argc, argv);
 
-    if (0 == commandlineArguments.count("ip") && 0 == commandlineArguments.count("limit") &&
-        commandlineArguments.count("skeep") == 0
+    if (0 == commandlineArguments.count("ip") && 0 == commandlineArguments.count("limit") && commandlineArguments.count("skeep") == 0
         && commandlineArguments.count("angle") == 0 && commandlineArguments.count("delay") == 0) {
-        std::cout << "Please enter correct ip " << std::endl;
+
+        std::cout << "Please enter correct parameters " << std::endl;
+
     } else {
         CAR_IP = (commandlineArguments["ip"]);
         lim = std::stoi(commandlineArguments["limit"]);

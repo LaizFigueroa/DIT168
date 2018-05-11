@@ -49,7 +49,7 @@ int main() {
         }
     });
 
-while(1){
+               while(1){
 
                       cluon::OD4Session od4(242,[&steer,&pedal](cluon::data::Envelope &&envelope) noexcept { //get commands from V2V (if car is follower)/PS4/Controller app 
 
@@ -65,31 +65,27 @@ while(1){
                            }
                        });
 
-std::cout << "Pre-IF steer: "<< steer  << " Pre-IF pedal: "<< pedal << "Sensor check: " << sens<< std::endl;
+	std::cout << "Pre-IF steer: "<< steer  << " Pre-IF pedal: "<< pedal << "Sensor check: " << sens<< std::endl;
 
-if ((sens<limit) && (pedal > pedalNeutral) && (sens !=0)){ //check if there is an obstalce in the front and if sensor is working properly
+	if ((sens<limit) && (pedal > pedalNeutral) && (sens !=0)){ //check if there is an obstalce in the front and if sensor is working properly
 
-        p1.percent(0); //obstacle detected, 0 sent to motor and V2V
- 
-        od3.send(p1);
-        s1.steeringAngle(steer);
-std::this_thread::sleep_for(std::chrono::milliseconds(2));
-std::cout << "Sent angle:"<< s1.steeringAngle()  << " Sent zero:"<< p1.percent()<< std::endl;
-        od3.send(s1);
-} else {
-        p1.percent(pedal); //no obstacle detected (or sensor is defunct), normal motor command sent to motor and V2V
+        	p1.percent(0); //obstacle detected, 0 sent to motor and V2V
+        	od3.send(p1);
+        	s1.steeringAngle(steer);
+		std::this_thread::sleep_for(std::chrono::milliseconds(2));
+		std::cout << "Sent angle:"<< s1.steeringAngle()  << " Sent zero:"<< p1.percent()<< std::endl;
+        	od3.send(s1);
 
-        od3.send(p1);
-        s1.steeringAngle(steer);
-std::this_thread::sleep_for(std::chrono::milliseconds(2));
-std::cout << "Sent angle:" <<s1.steeringAngle() << " Sent pedal "<< p1.percent() << std::endl;
-        od3.send(s1);
-}
+	} else {
+        	p1.percent(pedal); //no obstacle detected (or sensor is defunct), normal motor command sent to motor and V2V
+        	od3.send(p1);
+        	s1.steeringAngle(steer);
+		std::this_thread::sleep_for(std::chrono::milliseconds(2));
+		std::cout << "Sent angle:" <<s1.steeringAngle() << " Sent pedal "<< p1.percent() << std::endl;
+       	 	od3.send(s1);
+		}
 
-	//s1.steeringAngle(steer);
-        //od3.send(s1);
-
-}
+	}
     return 0;
 }
 

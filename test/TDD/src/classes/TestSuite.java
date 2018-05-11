@@ -6,8 +6,6 @@ import org.junit.Test;
 public class TestSuite {
 Ultrasonic u1 = new Ultrasonic (new int []{25,30,12,17});
 Ultrasonic u2 = new Ultrasonic (new int []{27,22,34,23});
-
-  
 	  
 	  private Car follow1; 	  
 	  private Car lead1; 

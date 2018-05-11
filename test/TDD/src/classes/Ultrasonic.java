@@ -1,6 +1,7 @@
 package classes;
 
 public class Ultrasonic {
+
 private int [] dists;
 private int i=0;
 
