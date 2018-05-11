@@ -112,8 +112,8 @@ int main() {
                                     [](cluon::data::Envelope &&envelope) noexcept {});
         
         /* In case, neither OD4Session is not working */
-        if (od4.isRunning() == 0) {
-            cout << "ERROR: No od4 session is running!!!" << endl;
+        if (imuSender.isRunning() == 0) {
+            cout << "ERROR: No imuSender session is running!!!" << endl;
             return -1;
         }
         
