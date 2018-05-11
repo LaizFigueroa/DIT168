@@ -103,17 +103,16 @@ int main() {
          * OD4Session to send to the internal channel -> One responsible to display on the webview.
          */
         
-        cluon::OD4Session internal(INTERNAL_CHANNEL, [](cluon::data::Envelope &&envelope) noexcept {});
+        cluon::OD4Session internal(INTERNAL_CHANNEL, {});
         
         /*
          * OD4Session to send the accelerometer data to V2V.
          */
-        cluon::OD4Session imuSender(IMU_CHANNEL,
-                                    [](cluon::data::Envelope &&envelope) noexcept {});
+        cluon::OD4Session imuSender(IMU_CHANNEL, {});
         
         /* In case, neither OD4Session is not working */
-        if (od4.isRunning() == 0) {
-            cout << "ERROR: No od4 session is running!!!" << endl;
+        if (imuSender.isRunning() == 0) {
+            cout << "ERROR: No imuSender session is running!!!" << endl;
             return -1;
         }
         
