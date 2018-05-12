@@ -64,7 +64,7 @@ int main(int argc, char **argv) {
             case 5:
                 while (1) {
 
-                    cluon::OD4Session od4(111, [&angle, &speed](cluon::data::Envelope &&envelope) noexcept {
+                    cluon::OD4Session od4(242, [&angle, &speed](cluon::data::Envelope &&envelope) noexcept {
 
                         if (envelope.dataType() == opendlv::proxy::GroundSteeringReading::ID()) {
                             opendlv::proxy::GroundSteeringReading receivedMsg = cluon::extractMessage<opendlv::proxy::GroundSteeringReading>(
