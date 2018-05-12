@@ -146,7 +146,7 @@ int main() {
                 internal.send(msgPedal);
                 // A delay for the messages' thread
                 this_thread::sleep_for(chrono::milliseconds(delay));
-            }
+            	}
         }
     }
 }

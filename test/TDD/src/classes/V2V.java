@@ -10,11 +10,13 @@ public int posY;
 
 public Car leader;
 public Car follower;
-public V2V (Ultrasonic u,Car leader,Car follower){
-	this.sensor=u;
-	this.leader=leader;
-	this.follower=follower;
-}
+
+	public V2V (Ultrasonic u,Car leader,Car follower){
+		this.sensor=u;
+		this.leader=leader;	
+		this.follower=follower;
+	}
+
     public int measure(){
     	return sensor.getDistance();
     }
@@ -50,15 +52,8 @@ public V2V (Ultrasonic u,Car leader,Car follower){
 		}
 	}
 	
-	/*public void followerStatus(String msg){
-		if (leader!=null)
-		leader.v2v.receiveMsg(msg);
-	}*/
-	
 	public void leaderStatus(String msg){
 		if (follower!=null)
-		follower.v2v.receiveMsg(msg);
-			
-		
+		follower.v2v.receiveMsg(msg);		
 	}
 }
