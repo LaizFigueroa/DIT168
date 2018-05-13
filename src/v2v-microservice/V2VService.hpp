@@ -116,7 +116,7 @@ platooning p;
 bool follower = false;
 float lim = 0;
 float flush = 0;
-int skeep = 0;
+int skip = 0;
 int angle = 0;
 int del = 0;
 int w = 0;
