@@ -7,7 +7,7 @@ int main(int argc, char **argv) {
 
     auto commandlineArguments = cluon::getCommandlineArguments(argc, argv);
 
-    if (0 == commandlineArguments.count("ip") && 0 == commandlineArguments.count("limit") && commandlineArguments.count("skeep") == 0
+    if (0 == commandlineArguments.count("ip") && 0 == commandlineArguments.count("limit") && commandlineArguments.count("skip") == 0
         && commandlineArguments.count("angle") == 0 && commandlineArguments.count("delay") == 0) {
 
         std::cout << "Please enter correct parameters " << std::endl;
@@ -15,7 +15,7 @@ int main(int argc, char **argv) {
     } else {
         CAR_IP = (commandlineArguments["ip"]);
         lim = std::stoi(commandlineArguments["limit"]);
-        skeep = std::stoi(commandlineArguments["skeep"]);
+        skip = std::stoi(commandlineArguments["skeep"]);
         angle = std::stoi(commandlineArguments["angle"]);
         del = std::stoi(commandlineArguments["delay"]);
         acc = std::stof(commandlineArguments["speed"]);
@@ -287,9 +287,9 @@ V2VService::V2VService() {
 
                                                                  if (timestamp.size() > 1) {
 
-                                                                     int val = timestamp.back() - timestamp.front();
+                                                                      val = timestamp.back() - timestamp.front();
 
-                                                                     if (val > lim && values.size() > 1) {
+                                                                     if (val > lim && values.size() > skip) {
 
                                                                          std::cout << "inside second if val is  " << val
                                                                                    << std::endl;
