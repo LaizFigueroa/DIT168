@@ -46,7 +46,7 @@ services:
         image: laiz/app
         network_mode: "host"
         restart: always
-        command: "/usr/bin/app-server --cid=242 --freq=10"
+        command: "/usr/bin/Server --cid=242 --freq=10"
 
     # Micro service for ultrassonic sensor.
     device-ultrasonic-srf08-front:
