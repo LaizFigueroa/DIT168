@@ -38,7 +38,7 @@ services:
         volumes:
         - /sys/:/sys/
         - /dev/:/dev/
-         command: "/opt/opendlv.miniature/bin/opendlv-proxy-miniature-pwm-motor --cid=241 --freq=50 --id=1"
+        command: "/opt/opendlv.miniature/bin/opendlv-proxy-miniature-pwm-motor --cid=241 --freq=50 --id=1"
 
     # Micro service for ultrassonic sensor.
     device-ultrasonic-srf08-front:
