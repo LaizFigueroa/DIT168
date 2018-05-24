@@ -31,9 +31,20 @@ RUN ls && \
     cd src/v2v-microservice &&\
     mkdir build && \
     cd build && \
-    cmake -D CMAKE_BUILD_TYPE=Release .. && \
-    make
+    cmake -D CMAKE_BUILD_TYPE=Release -D CMAKE_INSTALL_PREFIX=/tmp/ .. &&\
+    make && make install
 RUN [ "cross-build-end" ]
 
+# Deploy.
+FROM pipill/armhf-alpine:edge
+RUN [ "cross-build-start" ]
+RUN cat /etc/apk/repositories && \
+    echo http://dl-4.alpinelinux.org/alpine/v3.7/main > /etc/apk/repositories && \
+    echo http://dl-4.alpinelinux.org/alpine/v3.7/community >> /etc/apk/repositories
+RUN apk update && \
+    apk add libcluon --no-cache --repository https://chrberger.github.io/libcluon/alpine/v3.7 --allow-untrusted && \
+    mkdir /opt
+WORKDIR /opt
+COPY --from=builder /tmp/V2VService .
+RUN [ "cross-build-end" ]
 ENTRYPOINT ["/src/v2v-microservice/build/V2VService"]
-
