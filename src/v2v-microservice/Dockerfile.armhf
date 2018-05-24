@@ -31,9 +31,8 @@ RUN ls && \
     cd src/v2v-microservice &&\
     mkdir build && \
     cd build && \
-    cmake -D CMAKE_BUILD_TYPE=Release -D CMAKE_INSTALL_PREFIX=/tmp .. && \
-    make && make install &&\
-    ls
+    cmake -D CMAKE_BUILD_TYPE=Release .. && \
+    make
 RUN [ "cross-build-end" ]
 
 ENTRYPOINT ["/src/v2v-microservice/build/V2VService"]
