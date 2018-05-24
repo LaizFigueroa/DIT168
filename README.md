@@ -107,15 +107,15 @@ The following list represents the different docker-compose.yml files :
 - **docker-compose-leader.yml :** contains most of the project's microservices, for executing the car's functionality as a leader car.
 - **docker-compose-follower.yml :** contains most of the project's microservices, for running the car's functionality as a follower car.
 
-For running a desired `docker-comopse.yml file`, you need to add the following command on the bash command line, on the respective folder `src` :
+For running a desired `docker-compose.yml` file, you need to add the following command on the bash command line, on the respective folder `src` :
 ```
 docker-compose -f [docker-compose file] up
 ```
-For stopping the `docker-comopse.yml file`:
+For stopping the `docker-compose.yml` file:
 ```
 docker-compose -f [docker-compose file] stop
 ```
-For removing the created containers by the executed `docker-comopse.yml file`.Hence, for conforming the deletion request choose the option **yes**:
+For removing the created containers by the executed `docker-compose.yml` file.Hence, for conforming the deletion request choose the option **yes**:
 ```
 docker-compose -f [docker-compose file] rm
 ```
