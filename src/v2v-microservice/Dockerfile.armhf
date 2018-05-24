@@ -31,8 +31,8 @@ RUN ls && \
     cd src/v2v-microservice &&\
     mkdir build && \
     cd build && \
-    cmake -D CMAKE_BUILD_TYPE=Release -D CMAKE_INSTALL_PREFIX=/tmp/ .. &&\
-    make && make install
+    cmake -D CMAKE_BUILD_TYPE=Release .. &&\
+    make && cp V2VService /tmp
 RUN [ "cross-build-end" ]
 
 # Deploy.
@@ -47,4 +47,4 @@ RUN apk update && \
 WORKDIR /opt
 COPY --from=builder /tmp/V2VService .
 RUN [ "cross-build-end" ]
-ENTRYPOINT ["/src/v2v-microservice/build/V2VService"]
+ENTRYPOINT ["/opt/V2VService"]
