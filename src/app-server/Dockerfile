@@ -41,4 +41,4 @@ FROM pipill/armhf-alpine:edge
 RUN [ "cross-build-start" ]
 WORKDIR /usr/bin
 COPY --from=builder /tmp/bin/ .
-CMD ["/usr/bin/app-server"]
+CMD ["/usr/bin/Server"]
