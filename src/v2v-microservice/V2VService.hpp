@@ -120,7 +120,7 @@ int skip = 0;
 int angle = 0;
 int del = 0;
 int w = 0;
-int acc = 0;
+float acc = 0;
 int64_t val=0;
 
 #endif //V2V_PROTOCOL_DEMO_V2VSERVICE_H
