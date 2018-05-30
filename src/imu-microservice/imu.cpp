@@ -78,7 +78,7 @@ int main() {
                     cout << "Accelerometer values" << endl; // Print the values
                     printf("%6.2f\n", accel_y);
                     
-                    if(accel_y <= 0.34 & accel_y > 0.00){ // Oscillation identified when car is parked
+                    if(accel_y <= 0.34 && accel_y > 0.00){ // Oscillation identified when car is parked
                         accel_y = 0.00;
                         cout << "Clean accelerometer values" << endl; // Print the value after cleaned.
                         printf("%6.2f\n", accel_y);
